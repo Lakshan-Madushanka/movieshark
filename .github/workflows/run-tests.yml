@@ -1,0 +1,48 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+
+    name: Run tests on docker environment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Start up docker compose
+        run: docker-compose up -d
+
+      - name: Wait 1 minute until docker finish its setup
+        run: |
+          sleep 1m
+          docker ps
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Build vite assets
+        run: npm run build
+
+      - name: Setup project for testing
+        run: |
+          cp .env.testing.docker .env.testing
+
+      - name: Run tests
+        run: docker exec -t laravel-php php artisan test
+
+
+
+
+

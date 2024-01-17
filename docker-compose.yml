@@ -1,0 +1,89 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: laravel
+        uid: 1175358
+      context: ./docker/images/php
+      dockerfile: Dockerfile
+    image: lakm/php-fpm:7.4
+    container_name: laravel-php
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+      - ./docker/configs/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./docker/configs/php/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+      - ./docker/data/xdebug/:/tmp/xdebug/:cached
+    depends_on:
+      - mysql
+      - redis
+      - mailhog
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:8.0
+    container_name: laravel-mysql
+    restart: unless-stopped 
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-test}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-laravel}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-laravel}
+      MYSQL_USER: ${DB_USERNAME:-laravel}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - 3306:3306    
+    volumes:
+      - ./docker/data/mysql/lib_data:/var/lib/mysql  
+      - ./docker/data/mysql/initdb:/docker-entrypoint-initdb.d  
+    networks:
+      - laravel
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+      retries: 3
+      timeout: 5s
+  
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    restart: unless-stopped
+    ports:
+      - 821:80
+    volumes:
+      - ./:/var/www/html
+      - ./docker/configs/nginx/laravel_nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/data/nginx/:/var/log/nginx/:cached
+    networks:
+      - laravel
+  
+  redis:
+    image: redis:7.0-rc1-alpine3.15
+    container_name: larevel-redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - laravel   
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      retries: 3
+      timeout: 5s
+      
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    restart: unless-stopped
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - laravel
+      
+networks:
+  laravel:
+    driver: bridge
