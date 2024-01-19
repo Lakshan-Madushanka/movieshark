@@ -17,9 +17,9 @@ class MovieData implements WithResponse
         public readonly int $year,
         public readonly float $rating,
         public readonly string $language,
-        /** @var array<int, string> $genres*/
+        /** @var array<int, string> $genres */
         public readonly array $genres,
         public readonly string $medium_cover_image,
-    ) {}
-
+    ) {
+    }
 }

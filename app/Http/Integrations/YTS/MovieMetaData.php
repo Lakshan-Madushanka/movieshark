@@ -15,6 +15,6 @@ class MovieMetaData implements WithResponse
         public readonly int $movie_count,
         public readonly int $limit,
         public readonly int $page
-    ) {}
-
+    ) {
+    }
 }
