@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
@@ -7,22 +9,27 @@ use App\Http\Integrations\YTS\Requests\GetMoviesRequest;
 use App\Http\Integrations\YTS\YTSConnector;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function index(): \Inertia\Response
+    public function index(Request $httpRequest): Response
     {
-        $yts = new YTSConnector;
-        $request = new GetMoviesRequest;
+        /** @var array<string, mixed> $queryString */
+        $queryString = $httpRequest->query();
 
-        $response = $yts->send($request);
+        $yts = new YTSConnector();
 
-        //dd($response->json()['data']['movies']);
+        $ytsRequest = new GetMoviesRequest();
+        $ytsRequest->query()->merge($queryString);
+
+        $ytsResponse = $yts->send($ytsRequest);
 
         return Inertia::render(
             component: 'Home',
             props: [
-                'movies' => $response->dto(),
+                'movies' => $ytsResponse->dtoOrFail()->get('movies'),
+                'meta' => $ytsResponse->dtoOrFail()->get('meta')->first(),
             ]
         );
     }

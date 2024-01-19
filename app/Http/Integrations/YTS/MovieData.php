@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Integrations\YTS;
 
 use Saloon\Contracts\DataObjects\WithResponse;
-use Saloon\Http\Response;
 use Saloon\Traits\Responses\HasResponse;
 
 class MovieData implements WithResponse
@@ -18,10 +17,9 @@ class MovieData implements WithResponse
         public readonly int $year,
         public readonly float $rating,
         public readonly string $language,
+        /** @var array<int, string> $genres*/
         public readonly array $genres,
         public readonly string $medium_cover_image,
-
-    )
-    {}
+    ) {}
 
 }
