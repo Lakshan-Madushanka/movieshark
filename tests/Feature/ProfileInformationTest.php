@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 
-test('profile information can be updated', function () {
+test('profile information can be updated', function (): void {
     $this->actingAs($user = User::factory()->create());
 
     $response = $this->put('/user/profile-information', [

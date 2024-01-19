@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 
-test('other browser sessions can be logged out', function () {
+test('other browser sessions can be logged out', function (): void {
     $this->actingAs($user = User::factory()->create());
 
     $response = $this->delete('/user/other-browser-sessions', [
