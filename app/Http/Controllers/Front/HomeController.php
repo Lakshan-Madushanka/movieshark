@@ -26,7 +26,7 @@ class HomeController extends Controller
         $ytsRequest = new GetMoviesRequest();
         $ytsRequest->query()->merge($queryString);
 
-        /** @var Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>> $ytsResponseData*/
+        /** @var Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>> $ytsResponseData */
         $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
 
         return Inertia::render(

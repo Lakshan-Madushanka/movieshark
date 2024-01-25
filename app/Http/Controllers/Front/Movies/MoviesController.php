@@ -28,7 +28,6 @@ class MoviesController extends Controller
 
         //        dd($ytsMovieDetailsResponseData);
 
-
         return Inertia::render(
             component: 'Movies/Show',
             props: [

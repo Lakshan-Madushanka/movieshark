@@ -7,16 +7,18 @@ namespace App\Http\Integrations\YTS\Requests;
 use App\Http\Integrations\YTS\MovieData;
 use App\Http\Integrations\YTS\MovieResponse;
 use Illuminate\Support\Collection;
+use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use JsonException;
 
 class GetMovieSuggestionsRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(private readonly int $id) {}
+    public function __construct(private readonly int $id)
+    {
+    }
 
     public function resolveEndpoint(): string
     {
@@ -26,13 +28,14 @@ class GetMovieSuggestionsRequest extends Request
     protected function defaultQuery(): array
     {
         return [
-            'movie_id' => $this->id
+            'movie_id' => $this->id,
         ];
     }
 
     /**
      * @param  MovieResponse  $response
      * @return Collection<int, MovieData>
+     *
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): Collection

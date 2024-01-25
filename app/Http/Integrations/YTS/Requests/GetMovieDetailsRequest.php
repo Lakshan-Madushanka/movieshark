@@ -15,7 +15,9 @@ class GetMovieDetailsRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(private readonly int $id) {}
+    public function __construct(private readonly int $id)
+    {
+    }
 
     public function resolveEndpoint(): string
     {
@@ -33,6 +35,7 @@ class GetMovieDetailsRequest extends Request
     /**
      * @param  MovieResponse  $response
      * @return array{}|MovieData
+     *
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): MovieData|array
@@ -69,5 +72,4 @@ class GetMovieDetailsRequest extends Request
 
         return $movieData;
     }
-
 }
