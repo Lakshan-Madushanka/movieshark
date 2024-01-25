@@ -13,7 +13,7 @@ test('user accounts can be deleted', function (): void {
     ]);
 
     expect($user->fresh())->toBeNull();
-})->skip(fn () => ! Features::hasAccountDeletionFeatures(), 'Account deletion is not enabled.');
+})->skip(fn() => ! Features::hasAccountDeletionFeatures(), 'Account deletion is not enabled.');
 
 test('correct password must be provided before account can be deleted', function (): void {
     $this->actingAs($user = User::factory()->create());
@@ -23,4 +23,4 @@ test('correct password must be provided before account can be deleted', function
     ]);
 
     expect($user->fresh())->not->toBeNull();
-})->skip(fn () => ! Features::hasAccountDeletionFeatures(), 'Account deletion is not enabled.');
+})->skip(fn() => ! Features::hasAccountDeletionFeatures(), 'Account deletion is not enabled.');

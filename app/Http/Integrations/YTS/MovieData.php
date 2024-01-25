@@ -32,8 +32,7 @@ class MovieData implements Arrayable, WithResponse
         public readonly ?string $image3 = null,
         /** @var array<int, TorrentData>|null $torrents */
         public readonly ?array $torrents = null,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

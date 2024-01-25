@@ -22,6 +22,5 @@ class TorrentData implements WithResponse
         public readonly int $seeds,
         public readonly int $peers,
         public readonly string $size,
-    ) {
-    }
+    ) {}
 }

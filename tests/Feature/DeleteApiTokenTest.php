@@ -22,4 +22,4 @@ test('api tokens can be deleted', function (): void {
     $response = $this->delete('/user/api-tokens/'.$token->id);
 
     expect($user->fresh()->tokens)->toHaveCount(0);
-})->skip(fn () => ! Features::hasApiFeatures(), 'API support is not enabled.');
+})->skip(fn() => ! Features::hasApiFeatures(), 'API support is not enabled.');
