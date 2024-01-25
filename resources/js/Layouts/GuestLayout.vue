@@ -21,11 +21,27 @@ defineProps({
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
-            <!-- Page Content -->
+        <!-- Page Content -->
+        <div class="min-h-screen text-white">
+            <nav class="flex px-2 space-x-4 mt-1 justify-between">
+               <div>
+                   <Link class="flex items-center" :href="route('home.index')">
+                       <img src="/images/logo.avif" class="w-8 mr-1" alt="logo"/>
+                       <span>Home</span>
+                   </Link>
+               </div>
+                <div class="space-x-4">
+                    <span>Login</span>
+                    <span>Register</span>
+                </div>
+            </nav>
             <main>
                 <slot />
             </main>
         </div>
     </div>
 </template>
+
+<style>
+
+</style>

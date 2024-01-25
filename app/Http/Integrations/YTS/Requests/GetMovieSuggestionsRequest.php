@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Integrations\YTS\Requests;
 
 use App\Http\Integrations\YTS\MovieData;
-use App\Http\Integrations\YTS\MovieMetaData;
 use App\Http\Integrations\YTS\MovieResponse;
 use Illuminate\Support\Collection;
 use Saloon\Enums\Method;
@@ -13,33 +12,38 @@ use Saloon\Http\Request;
 use Saloon\Http\Response;
 use JsonException;
 
-class GetMoviesRequest extends Request
+class GetMovieSuggestionsRequest extends Request
 {
     protected Method $method = Method::GET;
 
+    public function __construct(private readonly int $id) {}
+
     public function resolveEndpoint(): string
     {
-        return '/list_movies.json';
+        return '/movie_suggestions.json';
+    }
+
+    protected function defaultQuery(): array
+    {
+        return [
+            'movie_id' => $this->id
+        ];
     }
 
     /**
      * @param  MovieResponse  $response
-     * @return Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>>>
+     * @return Collection<int, MovieData>
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): Collection
     {
         $data = $response->getMovieListData();
-
         $movies = $data['movies'] ?? [];
 
-        /** @var Collection<int, MovieData> $moviesDTO**/
-        $moviesDTO = collect();
-        /** @var Collection<int, MovieMetaData> $metaDTO**/
-        $metaDTO = collect();
+        $suggestions = collect();
 
         foreach ($movies as $movie) {
-            $moviesDTO->add(
+            $suggestions->add(
                 new MovieData(
                     id: $movie['id'],
                     name: $movie['title_english'],
@@ -48,20 +52,10 @@ class GetMoviesRequest extends Request
                     language: $movie['language'],
                     genres: $movie['genres'],
                     cover_image: $movie['medium_cover_image'],
-                )
+                ),
             );
         }
 
-        if ($data) {
-            $metaData = new MovieMetaData(
-                movie_count: $data['movie_count'],
-                limit: $data['limit'],
-                page: $data['page_number']
-            );
-
-            $metaDTO->add($metaData);
-        }
-
-        return collect(['movies' => $moviesDTO, 'meta' => $metaDTO]);
+        return $suggestions;
     }
 }

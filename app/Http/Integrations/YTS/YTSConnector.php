@@ -11,12 +11,14 @@ class YTSConnector extends Connector
 {
     use AcceptsJson;
 
+    protected ?string $response = MovieResponse::class;
+
     /**
      * The Base URL of the API
      */
     public function resolveBaseUrl(): string
     {
-        return 'https://yts.mx/api/v2/list_movies.json';
+        return 'https://yts.mx/api/v2';
     }
 
     /**

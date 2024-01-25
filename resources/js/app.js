@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
-import "primevue/resources/themes/lara-light-green/theme.css";
+// import "primevue/resources/themes/lara-light-green/theme.css";
+import "primevue/resources/themes/lara-dark-purple/theme.css";
+
 import "primevue/resources/primevue.min.css";
 import 'primeicons/primeicons.css'
 
@@ -23,6 +25,7 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#FFFFFF',
+        showSpinner: true,
     },
 });

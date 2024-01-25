@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\Movies\MoviesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,3 +27,5 @@ Route::middleware([
 Route::name('home.')->group(function (): void {
     Route::get('/', [HomeController::class, 'index'])->name('index');
 });
+
+Route::get('/movies/{id}', [MoviesController::class, 'show'])->name('movies.show');

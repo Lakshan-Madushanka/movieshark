@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Integrations\YTS\MovieData;
+use App\Http\Integrations\YTS\MovieMetaData;
 use App\Http\Integrations\YTS\Requests\GetMoviesRequest;
 use App\Http\Integrations\YTS\YTSConnector;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,13 +26,14 @@ class HomeController extends Controller
         $ytsRequest = new GetMoviesRequest();
         $ytsRequest->query()->merge($queryString);
 
-        $ytsResponse = $yts->send($ytsRequest);
+        /** @var Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>> $ytsResponseData*/
+        $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
 
         return Inertia::render(
             component: 'Home',
             props: [
-                'movies' => $ytsResponse->dtoOrFail()->get('movies'),
-                'meta' => $ytsResponse->dtoOrFail()->get('meta')->first(),
+                'movies' => $ytsResponseData->get('movies'),
+                'meta' => $ytsResponseData->get('meta'),
             ]
         );
     }

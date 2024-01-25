@@ -6,6 +6,11 @@
     display: none;
 }
 
+@layer base {
+    h2 {
+        @apply text-2xl font-bold mb-4
+    }
+}
 
 @layer tailwind-base, primevue, tailwind-utilities;
 
