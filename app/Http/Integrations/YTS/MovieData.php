@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Saloon\Contracts\DataObjects\WithResponse;
 use Saloon\Traits\Responses\HasResponse;
 
-class MovieData implements WithResponse, Arrayable
+class MovieData implements Arrayable, WithResponse
 {
     use HasResponse;
 
@@ -18,7 +18,7 @@ class MovieData implements WithResponse, Arrayable
         public readonly int $year,
         public readonly float $rating,
         public readonly string $language,
-        /** @var array<int, string> $genres*/
+        /** @var array<int, string> $genres */
         public readonly array $genres,
         public readonly string $cover_image,
         public readonly ?string $mpa_rating = null,

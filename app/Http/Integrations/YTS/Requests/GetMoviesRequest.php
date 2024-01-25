@@ -8,10 +8,10 @@ use App\Http\Integrations\YTS\MovieData;
 use App\Http\Integrations\YTS\MovieMetaData;
 use App\Http\Integrations\YTS\MovieResponse;
 use Illuminate\Support\Collection;
+use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
-use JsonException;
 
 class GetMoviesRequest extends Request
 {
@@ -25,6 +25,7 @@ class GetMoviesRequest extends Request
     /**
      * @param  MovieResponse  $response
      * @return Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>>>
+     *
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): Collection
@@ -33,9 +34,9 @@ class GetMoviesRequest extends Request
 
         $movies = $data['movies'] ?? [];
 
-        /** @var Collection<int, MovieData> $moviesDTO**/
+        /** @var Collection<int, MovieData> $moviesDTO* */
         $moviesDTO = collect();
-        /** @var Collection<int, MovieMetaData> $metaDTO**/
+        /** @var Collection<int, MovieMetaData> $metaDTO* */
         $metaDTO = collect();
 
         foreach ($movies as $movie) {

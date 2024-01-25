@@ -33,6 +33,7 @@ class GetMovieDetailsRequest extends Request
     /**
      * @param  MovieResponse  $response
      * @return array{}|MovieData
+     *
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): MovieData|array
@@ -69,5 +70,4 @@ class GetMovieDetailsRequest extends Request
 
         return $movieData;
     }
-
 }

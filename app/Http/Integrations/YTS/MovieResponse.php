@@ -24,6 +24,7 @@ class MovieResponse extends Response
      *                            large_cover_image: string
      *                           }>
      *      }|null
+     *
      * @throws JsonException
      */
     public function getMovieListData(): ?array
@@ -69,6 +70,7 @@ class MovieResponse extends Response
      *              }>
      *          }
      *      }
+     *
      * @throws JsonException
      */
     public function getMovieDetails(): ?array
@@ -79,9 +81,10 @@ class MovieResponse extends Response
 
     /**
      * @return array<int, TorrentData>|null
+     *
      * @throws JsonException
      */
-    public function buildTorrentData(): array|null
+    public function buildTorrentData(): ?array
     {
         $data = $this->getMovieDetails();
 
@@ -91,7 +94,7 @@ class MovieResponse extends Response
             return null;
         }
 
-        $torrents  = [];
+        $torrents = [];
 
         foreach ($torrentsData as $torrent) {
             $torrents[] = new TorrentData(
