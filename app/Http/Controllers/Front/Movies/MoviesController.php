@@ -6,9 +6,11 @@ namespace App\Http\Controllers\Front\Movies;
 
 use App\Http\Controllers\Controller;
 use App\Http\Integrations\YTS\MovieData;
+use App\Http\Integrations\YTS\Requests\BrowseMoviesRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieDetailsRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieSuggestionsRequest;
 use App\Http\Integrations\YTS\YTSConnector;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -26,8 +28,6 @@ class MoviesController extends Controller
         /** @var Collection<int, MovieData> $ytsMovieSuggestionsResponseData */
         $ytsMovieSuggestionsResponseData = $ytsConnector->send($ytsMovieSuggestionsRequest)->dtoOrFail();
 
-        //        dd($ytsMovieDetailsResponseData);
-
         return Inertia::render(
             component: 'Movies/Show',
             props: [
@@ -35,5 +35,22 @@ class MoviesController extends Controller
                 'suggestions' => $ytsMovieSuggestionsResponseData,
             ]
         );
+    }
+
+    public function browse(Request $httpRequest)
+    {
+        /** @var array<string, mixed> $queryString */
+        $queryString = $httpRequest->query();
+
+        $yts = new YTSConnector();
+
+        $ytsRequest = new BrowseMoviesRequest($httpRequest);
+        $ytsRequest->query()->merge($queryString);
+
+        $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
+
+
+        return redirect()->back()->with('browsedMovieData', $ytsResponseData->get('movies'));
+
     }
 }

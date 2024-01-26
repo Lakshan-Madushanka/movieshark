@@ -28,4 +28,7 @@ Route::name('home.')->group(function (): void {
     Route::get('/', [HomeController::class, 'index'])->name('index');
 });
 
-Route::get('/movies/{id}', [MoviesController::class, 'show'])->name('movies.show');
+Route::name('movies.')->prefix('/movies')->group(function (): void {
+    Route::get('/{id}', [MoviesController::class, 'show'])->name('show');
+});
+Route::get('movies-browse', [MoviesController::class, 'browse'])->name('movies.browse');

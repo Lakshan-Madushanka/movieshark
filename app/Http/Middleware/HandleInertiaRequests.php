@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,6 +37,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+
+        if (Session::has('browsedMovieData')) {
+            Inertia::share('browsedMovieData', Session::get('browsedMovieData'));
+        }
+
         return array_merge(parent::share($request), [
             //
         ]);
