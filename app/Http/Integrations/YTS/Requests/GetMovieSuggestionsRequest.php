@@ -41,6 +41,8 @@ class GetMovieSuggestionsRequest extends Request
         $data = $response->getMovieListData();
         $movies = $data['movies'] ?? [];
 
+        $movies = collect($movies)->filter(fn($movie) => $movie['id'] !== 0)->all();
+
         $suggestions = collect();
 
         foreach ($movies as $movie) {
