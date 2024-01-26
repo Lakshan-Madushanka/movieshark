@@ -21,7 +21,7 @@ class MovieResponse extends Response
      *                            rating: float,
      *                            language: string,
      *                            genres: array<int, string>,
-     *                            large_cover_image: string
+     *                            medium_cover_image: string
      *                           }>
      *      }|null
      *
