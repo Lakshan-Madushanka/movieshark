@@ -24,8 +24,7 @@ class GetMoviesRequest extends Request
 
     /**
      * @param  MovieResponse  $response
-     * @return Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>>>
-     *
+     * @return Collection<string, MovieMetaData|array{}|Collection<int, MovieData>>
      * @throws JsonException
      */
     public function createDtoFromResponse(Response $response): Collection
@@ -34,13 +33,12 @@ class GetMoviesRequest extends Request
 
         $movies = $data['movies'] ?? [];
 
-        /** @var Collection<int, MovieData> $moviesDTO* */
-        $moviesDTO = collect();
-        /** @var Collection<int, MovieMetaData> $metaDTO* */
-        $metaDTO = collect();
+        /** @var Collection<int, MovieData> $moviesData **/
+        $moviesData = collect();
+        $metaData = [];
 
         foreach ($movies as $movie) {
-            $moviesDTO->add(
+            $moviesData->add(
                 new MovieData(
                     id: $movie['id'],
                     name: $movie['title_english'],
@@ -59,10 +57,8 @@ class GetMoviesRequest extends Request
                 limit: $data['limit'],
                 page: $data['page_number']
             );
-
-            $metaDTO->add($metaData);
         }
 
-        return collect(['movies' => $moviesDTO, 'meta' => $metaDTO]);
+        return collect(['movies' => $moviesData, 'meta' => $metaData]);
     }
 }
