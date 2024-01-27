@@ -173,7 +173,7 @@ const buildMagnetLink = function (quality, type) {
                 <!-- Suggestions -->
                 <div class="col-span-2 lg:col-span-1 justify-self-start lg:justify-self-end">
                     <h2 class="lg:hidden">Suggestions</h2>
-                    <div class="flex flex-wrap gap-x-2 lg:grid grid-cols-2 items-center md:justify-center">
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 lg:grid grid-cols-2 items-center md:justify-center">
                         <div v-for="suggestion in suggestions" class="justify-self-end hover:cursor-pointer">
                             <Link :href="route('movies.show', {id: suggestion['id']})">
                                 <MovieTile
