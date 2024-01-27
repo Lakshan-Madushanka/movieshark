@@ -1,12 +1,19 @@
 <script setup>
 
-import { Head, Link} from '@inertiajs/vue3';
+import {Head, Link, usePage} from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import MovieBrowser from "@/Components/Movie/MovieBrowser.vue";
+import NavLink from "@/Components/NavLink.vue";
+import {truncate} from "@/Helpers.js";
 
 defineProps({
     title: String,
 });
+
+const page = usePage();
+
+const authenticated = page.props.auth?.user?.id;
+const authName = page.props.auth?.user?.name;
 
 </script>
 
@@ -18,7 +25,7 @@ defineProps({
 
         <!-- Page Content -->
         <div class="min-h-screen text-white">
-            <nav class="flex px-2 space-x-4 mt-1 justify-between items-center bg-[#424b57]">
+            <nav class="flex px-2 space-x-4 justify-between items-center bg-[#424b57]">
                <div>
                    <Link class="flex items-center" :href="route('home.index')">
                        <img src="/images/logo.avif" class="w-8 mr-1" alt="logo"/>
@@ -27,8 +34,18 @@ defineProps({
                </div>
                 <MovieBrowser inputClass="py-1"/>
                 <div class="space-x-4">
-                    <span>Login</span>
-                    <span>Register</span>
+                    <div v-if="!authenticated">
+                        <NavLink :href="route('login')">Login</NavLink>
+                        <NavLink :href="route('register')">Register</NavLink>
+                    </div>
+                    <div v-else>
+                        <div v-if="authName?.length < 10">
+                            {{authName}}
+                        </div>
+                        <div v-else>
+                            <NavLink :href="route('dashboard')" v-html="truncate(authName)"></NavLink>
+                        </div>
+                    </div>
                 </div>
             </nav>
             <main>
