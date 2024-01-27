@@ -2,7 +2,7 @@
 import {nextTick, ref, watch} from "vue";
 import InputText from 'primevue/inputtext';
 import Menu from 'primevue/menu';
-import {useForm, usePage} from "@inertiajs/vue3";
+import {useForm, usePage, router} from "@inertiajs/vue3";
 import {debounce} from 'lodash';
 
 const props = defineProps({
@@ -31,7 +31,10 @@ watch(() => page.props.browsedMovieData, function (movies) {
 
         movies.forEach(function (movie) {
             tempItems.push({
-                'label': movie['name']
+                'label': movie['name'],
+                command: () => {
+                    router.get(route('movies.show', {'id': movie['id']}));
+                }
             })
         })
 
