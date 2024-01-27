@@ -10,6 +10,7 @@ import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import Tag from 'primevue/tag';
 import Dialog from 'primevue/dialog';
+import Panel from 'primevue/panel';
 import MovieTile from "@/Components/Movie/MovieTile.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Anchor from "@/Components/Anchor.vue";
@@ -73,7 +74,7 @@ const buildMagnetLink = function (quality, type) {
 <template>
 
     <GuestLayout :title="movie['name']">
-        <div class="grid grid-cols-1 auto-rows-auto gap-y-8 items-start py-4 px-4 lg:px-24">
+        <div class="grid grid-cols-1 auto-rows-auto gap-y-8 items-start py-8 px-4 lg:px-24">
             <!--Intro-->
             <section
                 class="grid sm:grid-cols-[30%_70%] sm:grid-rows-[minmax(0, auto)] lg:grid-cols-4 lg:grid-rows-1 gap-x-4 gap-y-6 lg:gap-x-8">
@@ -193,15 +194,6 @@ const buildMagnetLink = function (quality, type) {
             <section>
                 <h2 class="lg:hidden">Trailer</h2>
                 <div class="flex flex-wrap m-auto">
-<!--                    <iframe-->
-<!--                        width="350"-->
-<!--                        height="150"-->
-<!--                        :src="buildTrailerLink(movie['yt_trailer_code'])"-->
-<!--                        title="YouTube video player"-->
-<!--                        frameborder="0"-->
-<!--                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
-<!--                        allowfullscreen-->
-<!--                    />-->
                     <figure @click="showTrailer = !showTrailer" class="relative hover:cursor-pointer">
                         <Image :src="movie['image1']" width="350" imageClass="h-[150px]" preview/>
                         <figcaption class="absolute top-0 left-0 w-full h-full flex-col gap-y-2 flex justify-center items-center">
@@ -236,8 +228,14 @@ const buildMagnetLink = function (quality, type) {
 
             <!-- Description-->
             <section>
-                <h2>Plot Summary</h2>
-                <p>{{ movie['description_full'] }}</p>
+                <Panel toggleable>
+                    <template #header>
+                        <h2 class="mb-0">Ploat Summary</h2>
+                    </template>
+                    <p class="m-0">
+                        {{ movie['description_full'] }}
+                    </p>
+                </Panel>
             </section>
             <!--End of Description-->
 

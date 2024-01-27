@@ -18,7 +18,7 @@ defineProps({
 
         <!-- Page Content -->
         <div class="min-h-screen text-white">
-            <nav class="flex px-2 space-x-4 mt-1 justify-between items-center">
+            <nav class="flex px-2 space-x-4 mt-1 justify-between items-center bg-[#424b57]">
                <div>
                    <Link class="flex items-center" :href="route('home.index')">
                        <img src="/images/logo.avif" class="w-8 mr-1" alt="logo"/>
