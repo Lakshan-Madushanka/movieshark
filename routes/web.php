@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Front\DashboardController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\Movies\MoviesController;
 use App\Http\Controllers\Front\WatchList\WatchListController;
@@ -22,7 +23,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function (): void {
-    Route::get('/dashboard', fn() => Inertia::render('Dashboard'))->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::name('home.')->group(function (): void {
