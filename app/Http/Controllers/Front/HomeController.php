@@ -9,6 +9,7 @@ use App\Http\Integrations\YTS\MovieData;
 use App\Http\Integrations\YTS\MovieMetaData;
 use App\Http\Integrations\YTS\Requests\GetMoviesRequest;
 use App\Http\Integrations\YTS\YTSConnector;
+use App\Models\WatchList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
@@ -29,11 +30,14 @@ class HomeController extends Controller
         /** @var Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>> $ytsResponseData */
         $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
 
+        $watchListIds = WatchList::query()->pluck('yts_id');
+
         return Inertia::render(
             component: 'Home',
             props: [
                 'movies' => $ytsResponseData->get('movies'),
                 'meta' => $ytsResponseData->get('meta'),
+                'watchListIds' => $watchListIds,
             ]
         );
     }

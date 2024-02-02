@@ -9,10 +9,24 @@ use App\Http\Requests\WatchList\WatchListStoreRequest;
 use App\Models\WatchList;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class WatchListController extends Controller
 {
+    public function index(Request $request): Response
+    {
+        $watchList = WatchList::applyFilters($request)
+            ->paginate(10);
+
+        return Inertia::render(
+            component: 'Dashboard',
+            props: ['watchList' => $watchList]
+        );
+    }
+
     public function store(WatchListStoreRequest $request): Redirector|RedirectResponse|Application
     {
         $payload = $request->payload();

@@ -1,6 +1,5 @@
 <script setup>
-import {Link, useForm} from '@inertiajs/vue3';
-import Paginator from 'primevue/paginator';
+import {Link, useForm, usePage} from '@inertiajs/vue3';
 import Dropdown from 'primevue/dropdown';
 import PrimeButton from 'primevue/button';
 import InputText from 'primevue/inputtext';
@@ -10,16 +9,19 @@ import MovieTile from "@/Components/Movie/MovieTile.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
+import Paginator from 'primevue/paginator'
 
 const props = defineProps({
     'movies': {},
     'meta': {'movie_count': 0, 'limit': 0, 'page': 0},
+    watchListIds: {},
 });
+
+const page = usePage();
+const authenticated = !!page.props.auth?.user?.id;
 
 const offset = ref(0);
 const searchStatus = ref();
-const showMovieInfoForId = ref(-100000);
-
 
 const filters = reactive({
     ...MovieFiltersData,
@@ -41,10 +43,6 @@ watch(() => props.meta, function (meta) {
     queryStringData.limit = meta.limit
 }, {immediate: true})
 
-const setMovieInfoId = function (id) {
-    showMovieInfoForId.value = id;
-}
-
 const setPage = function (event) {
     queryStringData.page = event.page + 1;
     queryStringData.limit = event.rows;
@@ -63,10 +61,8 @@ const search = function () {
                 return;
             }
             searchStatus.value = 'success';
-            console.log('success');
         },
         (errors) => {
-            console.log('errors', errors)
         }
     );
 }
@@ -80,7 +76,6 @@ const sendRequest = function (
     const data = queryStringData.data();
 
     queryStringData.transform(function (data) {
-        console.log(data);
         let query = {};
 
         for (const key in data) {
@@ -144,17 +139,19 @@ const sendRequest = function (
                             <!--    pagination-->
                             <div class="lg:mx-32">
                                 <Paginator
-                                    :template="{
-                                    '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-                                    '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                                    '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                                    default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown JumpToPageInput'
-                                }"
-                                    :rows=queryStringData.limit :totalRecords="meta.movie_count"
+                                    :rows=queryStringData.limit
+                                    :totalRecords="meta.movie_count"
                                     :rowsPerPageOptions="[10, 20, 30]"
-                                    v-model:first="offset" @page="setPage">
+                                    v-model:first="offset"
+                                    :template="{
+                                        '640px': 'PrevPageLink CurrentPageReport NextPageLink',
+                                        '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                                        '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                                         default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown JumpToPageInput'
+                                        }"
+                                    @page="setPage"
+                                />
 
-                                </Paginator>
                             </div>
                             <!-- End of pagination-->
 
@@ -173,8 +170,11 @@ const sendRequest = function (
                                     </div>
                                     <div>
                                         <p class="mb-1">Genre</p>
-                                        <Dropdown v-model="queryStringData.genre" :options="filters.genre"
-                                                  placeholder="All"/>
+                                        <Dropdown
+                                            v-model="queryStringData.genre"
+                                            :options="filters.genre"
+                                            placeholder="All"
+                                        />
                                     </div>
                                     <div>
                                         <p class="mb-1">Rating</p>
@@ -228,7 +228,11 @@ const sendRequest = function (
                     class="hover:cursor-pointer transition"
                 >
                     <Link :href="route('movies.show', {id: movie['id']})">
-                        <MovieTile :movie="movie"/>
+                      <MovieTile
+                          :movie="movie"
+                          :watchListIds="watchListIds"
+                          :showWatchListButton="authenticated"
+                      />
                     </Link>
                 </div>
             </section>
