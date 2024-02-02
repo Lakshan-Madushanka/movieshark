@@ -53,7 +53,7 @@ class GetMovieDetailsRequest extends Request
                 year: $movie['year'],
                 rating: $movie['rating'],
                 language: $movie['language'],
-                genres: $movie['genres'],
+                genres: $movie['genres'] ?? [],
                 cover_image: $movie['medium_cover_image'],
                 mpa_rating: $movie['mpa_rating'],
                 imdb_code: $movie['imdb_code'],

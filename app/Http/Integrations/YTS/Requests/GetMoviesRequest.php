@@ -45,7 +45,7 @@ class GetMoviesRequest extends Request
                     year: $movie['year'],
                     rating: $movie['rating'],
                     language: $movie['language'],
-                    genres: $movie['genres'],
+                    genres: $movie['genres'] ?? [],
                     cover_image: $movie['medium_cover_image'],
                 )
             );
