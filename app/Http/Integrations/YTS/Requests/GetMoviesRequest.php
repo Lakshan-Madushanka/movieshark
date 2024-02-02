@@ -30,6 +30,7 @@ class GetMoviesRequest extends Request
     public function createDtoFromResponse(Response $response): Collection
     {
         $data = $response->getMovieListData();
+        dd($data);
 
         $movies = $data['movies'] ?? [];
 

@@ -16,6 +16,10 @@ use Inertia\Response;
 
 class WatchListController extends Controller
 {
+    public function create(): Response
+    {
+        return Inertia::render(component: 'Dashboard');
+    }
     public function index(Request $request): Response
     {
         $watchList = WatchList::applyFilters($request)
@@ -37,6 +41,6 @@ class WatchListController extends Controller
             WatchList::query()->create($payload->toArray());
         }
 
-        return redirect(route('home.index'));
+        return back();
     }
 }

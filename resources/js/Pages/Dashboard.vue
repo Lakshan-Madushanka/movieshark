@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ListAll from "@/Components/Dashboard/WatchList/ListAll.vue";
+import CreateMovie from "@/Components/Dashboard/WatchList/CreateMovie.vue";
 
 defineProps({
     watchList: {},
@@ -17,8 +18,9 @@ defineProps({
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <ListAll :watchList/>
+                <div class="text-black pb-4 bg-[#424b57] overflow-hidden shadow-xl sm:rounded-lg">
+                    <ListAll :watchList v-if="route().current('movies-watch-list.index')"/>
+                    <CreateMovie v-if="route().current('movies-watch-list.create')"/>
                 </div>
             </div>
         </div>

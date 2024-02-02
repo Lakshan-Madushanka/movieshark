@@ -1,6 +1,6 @@
 <script setup>
 import {reactive, ref, watch} from "vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import DataTable from "primevue/datatable";
 import Column from 'primevue/column';
 import Image from 'primevue/image';
@@ -174,12 +174,20 @@ const sendFiltersRequest = (
             preserveScroll: true,
         })
 };
+
+const showCreateMoviePage = () => {
+    useForm([])
+        .get(route('movies-watch-list.create'), {
+            preserveScroll: true,
+            preserveState: true,
+        });
+}
 </script>
 
 <template>
-    <div class="text-black space-y-4 pb-4 bg-[#424b57]">
+    <div class="space-y-4">
         <!--Start-->
-        <Toolbar class="mb-4">
+        <Toolbar>
             <template #start>
                 <PrimeButton @click="showFiltersMenu = !showFiltersMenu" label="Filters" size="small"/>
                 <Dialog
@@ -290,7 +298,7 @@ const sendFiltersRequest = (
                 </Dialog>
             </template>
             <template #end>
-                <PrimeButton label="Add Movie" size="small"/>
+                <PrimeButton @click="showCreateMoviePage" label="Add Movie" size="small"/>
             </template>
         </Toolbar>
         <!--End of Start-->

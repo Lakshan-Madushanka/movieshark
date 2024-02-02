@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('imdb_id')->nullable();
             $table->bigInteger('yts_id')->nullable();
             $table->string('image')->nullable();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->json('genres')->nullable();
             $table->date('released_date')->nullable()->index();
             $table->date('downloaded_status')->nullable()->index();
