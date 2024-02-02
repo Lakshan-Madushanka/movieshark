@@ -289,6 +289,9 @@ const sendFiltersRequest = (
                     </div>
                 </Dialog>
             </template>
+            <template #end>
+                <PrimeButton label="Add Movie" size="small"/>
+            </template>
         </Toolbar>
         <!--End of Start-->
 
