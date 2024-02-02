@@ -5,6 +5,7 @@ import Banner from '@/Components/Banner.vue';
 import MovieBrowser from "@/Components/Movie/MovieBrowser.vue";
 import NavLink from "@/Components/NavLink.vue";
 import {truncate} from "@/Helpers.js";
+import Toast from "primevue/toast";
 import ApplicationMark from "@/Components/ApplicationMark.vue";
 
 defineProps({
@@ -20,6 +21,8 @@ const authName = page.props.auth?.user?.name;
 
 <template>
     <div>
+        <Toast />
+
         <Head :title="title" />
 
         <Banner />
@@ -50,7 +53,7 @@ const authName = page.props.auth?.user?.name;
                 </div>
             </nav>
             <main>
-                <slot />
+                <slot/>
             </main>
         </div>
     </div>

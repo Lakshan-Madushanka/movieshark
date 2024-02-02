@@ -181,6 +181,7 @@ const buildMagnetLink = function (quality, type) {
                                     :movie=suggestion
                                     widthClass="!w-24"
                                     heightClass="!h-32"
+                                    :showWatchListButton="false"
                                 />
                             </Link>
                         </div>
