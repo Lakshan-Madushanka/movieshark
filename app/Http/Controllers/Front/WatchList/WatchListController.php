@@ -27,16 +27,31 @@ class WatchListController extends Controller
         );
     }
 
+    public function toggle(WatchListStoreRequest $request): RedirectResponse
+    {
+        $payload = $request->payload();
+
+        /** @var WatchList $record */
+        if ($record = WatchList::query()->where('yts_id', $payload->yts_id)->first()) {
+            return $this->destroy($record);
+        }
+
+        return $this->store($request);
+    }
+
     public function store(WatchListStoreRequest $request): Redirector|RedirectResponse|Application
     {
         $payload = $request->payload();
 
-        if ($record = WatchList::query()->where('yts_id', $payload->yts_id)->first()) {
-            $record->delete();
-        } else {
-            WatchList::query()->create($payload->toArray());
-        }
+        WatchList::query()->create($payload->toArray());
 
-        return redirect(route('home.index'));
+        return back();
+    }
+
+    public function destroy(WatchList $watchList): RedirectResponse
+    {
+        $watchList->delete();
+
+        return back();
     }
 }

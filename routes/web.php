@@ -41,4 +41,6 @@ Route::middleware(['auth:sanctum'])
     ->group(function (): void {
         Route::get('/', [WatchListController::class, 'index'])->name('index');
         Route::post('/store', [WatchListController::class, 'store'])->name('store');
+        Route::delete('{watchList}/destroy', [WatchListController::class, 'store'])->name('destroy');
+        Route::post('/toggle', [WatchListController::class, 'toggle'])->name('toggle');
     });
