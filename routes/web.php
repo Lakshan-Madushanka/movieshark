@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\Movies\MoviesController;
+use App\Http\Controllers\Front\WatchList\WatchListController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [
@@ -32,3 +32,10 @@ Route::name('movies.')->prefix('/movies')->group(function (): void {
     Route::get('/{id}', [MoviesController::class, 'show'])->name('show');
 });
 Route::get('movies-browse', [MoviesController::class, 'browse'])->name('movies.browse');
+
+Route::middleware(['auth:sanctum'])
+    ->name('movies-watch-list.')
+    ->prefix('/movies-watch-list')
+    ->group(function (): void {
+        Route::post('/store', [WatchListController::class, 'store'])->name('store');
+    });

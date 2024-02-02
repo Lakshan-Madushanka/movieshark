@@ -5,6 +5,7 @@ import Banner from '@/Components/Banner.vue';
 import MovieBrowser from "@/Components/Movie/MovieBrowser.vue";
 import NavLink from "@/Components/NavLink.vue";
 import {truncate} from "@/Helpers.js";
+import ApplicationMark from "@/Components/ApplicationMark.vue";
 
 defineProps({
     title: String,
@@ -28,7 +29,7 @@ const authName = page.props.auth?.user?.name;
             <nav class="flex px-2 space-x-4 justify-between items-center bg-[#424b57]">
                <div>
                    <Link class="flex items-center" :href="route('home.index')">
-                       <img src="/images/logo.avif" class="w-8 mr-1" alt="logo"/>
+                       <ApplicationMark class="w-8 mr-1"/>
                        <span>Home</span>
                    </Link>
                </div>
