@@ -6,6 +6,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\Movies\MoviesController;
 use App\Http\Controllers\Front\WatchList\WatchListController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [
