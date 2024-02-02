@@ -41,7 +41,7 @@ const watchListButtonClicked = () => {
     watch(status, (status) => {
         if (status.success) {
             watchListHas.value = !watchListHas.value
-            toast.add({severity: 'Success', summary: status.summary, detail: status.details, life: 3000});
+            toast.add({severity: 'success', summary: status.summary, detail: status.details, life: 3000});
         }
     })
 }

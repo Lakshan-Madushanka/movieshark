@@ -26,7 +26,7 @@ const toggleFromWatchList = (movie) => {
         'image': movie.cover_image,
         'genres': movie.genres,
         'released_date': movie.year?.toString()
-    }).post(route('movies-watch-list.store'), {
+    }).post(route('movies-watch-list.toggle'), {
         onSuccess: () => {
             let index = watchList.value.indexOf(movie.id);
 

@@ -42,4 +42,6 @@ Route::middleware(['auth:sanctum'])
         Route::get('/', [WatchListController::class, 'index'])->name('index');
         Route::get('/create', [WatchListController::class, 'create'])->name('create');
         Route::post('/store', [WatchListController::class, 'store'])->name('store');
+        Route::delete('{watchList}/destroy', [WatchListController::class, 'store'])->name('destroy');
+        Route::post('/toggle', [WatchListController::class, 'toggle'])->name('toggle');
     });
