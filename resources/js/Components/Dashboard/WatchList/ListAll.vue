@@ -16,6 +16,7 @@ import SelectButton from "primevue/selectbutton";
 import MultiSelect from "primevue/multiselect";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import moment from "moment";
+import NavLink from "@/Components/NavLink.vue";
 
 const props = defineProps({
     watchList: {
@@ -443,6 +444,11 @@ const showCreateMoviePage = () => {
                     <div>
                         <span>{{ slotProps.data.watched_status }}</span>
                     </div>
+                </template>
+            </Column>
+            <Column header="Edit">
+                <template #body="slotProps">
+                    <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})" class="text-green-500"> Edit </NavLink>
                 </template>
             </Column>
             <Column
