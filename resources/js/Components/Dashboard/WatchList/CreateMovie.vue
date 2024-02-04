@@ -40,6 +40,9 @@ const test = () => {
 }
 
 const createMovie = () => {
+    if (form.processing) {
+        return;
+    }
     form
         .transform((data) => {
             let tempGenres = [];
@@ -61,6 +64,7 @@ const createMovie = () => {
             preserveScroll: true,
             onSuccess: () => {
                 form.clearErrors();
+                form.reset();
                 toast.add({severity: 'success', summary: 'Movie added to watch list', detail: 'Success', life: 3000});
             },
             onError: (error) => {
@@ -72,9 +76,9 @@ const createMovie = () => {
 <template>
     <p @click="test">test me</p>
     <Card class="">
-        <template #title>Create Movie</template>
+        <template #title><h1>Create Movie</h1></template>
         <template #content>
-            <form @submit.prevent="createMovie" class="grid grid-cols-2 gap-8">
+            <form @submit.prevent="createMovie" @keydown.enter="createMovie" class="grid grid-cols-2 gap-8">
                 <div>
                     <label for="input-imdbId">IMDB Id</label>
                     <InputText
@@ -153,7 +157,8 @@ const createMovie = () => {
                     <span v-if="form.errors.description" class="text-sm text-red-500">{{form.errors.description}}</span>
                 </div>
                 <hr class="col-span-2"/>
-                <PrimeButton type="submit" label="Create" @click="test" :loading="form.processing"/>
+                <PrimeButton type="submit" icon="pi pi-save" label="Create" @click="test" :loading="form.processing"/>
+                <PrimeButton type="button" icon="pi pi-times" label="Reset" @click="form.reset()" :loading="form.processing"/>
             </form>
         </template>
     </Card>
