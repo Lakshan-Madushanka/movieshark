@@ -15,27 +15,15 @@ use Illuminate\Support\Arr;
  */
 trait HasFilters
 {
-    public static Builder $filterQuery;
+    private  Builder $filterQuery;
 
-    public static function bootHasFilters(): void
+    public function scopeFilter(Builder $query): Builder
     {
-        if (property_exists(self::class, 'sortQuery') && isset(self::$sortQuery)) {
-            self::$filterQuery = self::$sortQuery;
-            return;
-        }
-        self::$filterQuery = static::query();
-    }
+        $this->filterQuery = $query;
 
-    public static function applyFilters(Request $request): Builder
-    {
-        $model = new static();
-        $model->applyRequestFilters($request);
+        $this->applyRequestFilters(request());
 
-        if (method_exists(self::class, 'applySorts')) {
-            $model->applySorts($request);
-        }
-
-        return self::$filterQuery;
+        return $this->filterQuery;
     }
 
     private function checkFilterValidity(string $filterName): bool
@@ -72,12 +60,12 @@ trait HasFilters
             $this->applyFilter($columnName, $value, $filterType);
         });
 
-        return self::$filterQuery;
+        return $this->filterQuery;
     }
 
     public function applyJsonFilters(string $columnName, $value): void
     {
-        self::$filterQuery->whereJsonContains($columnName, $value);
+        $this->filterQuery->whereJsonContains($columnName, $value);
     }
 
     private function applyFilter(string $columnName, $value, ?string $type = null): void
@@ -88,26 +76,26 @@ trait HasFilters
 
         switch ($type) {
             case 'partial':
-                self::$filterQuery->where($columnName, 'like', "%{$value}%");
+                $this->filterQuery->where($columnName, 'like', "%{$value}%");
                 break;
 
             case 'dateBetween':
-                self::$filterQuery->whereBetween($columnName, [
+                $this->filterQuery->whereBetween($columnName, [
                     Arr::get($value, 'from', now()->subCenturies(2)),
                     Arr::get($value, 'to', now()),
                 ]);
                 break;
 
             case 'notNull':
-                self::$filterQuery->whereNotNull($columnName);
+                $this->filterQuery->whereNotNull($columnName);
                 break;
 
             case 'null':
-                self::$filterQuery->whereNull($columnName);
+                $this->filterQuery->whereNull($columnName);
                 break;
 
             default:
-                self::$filterQuery->where($columnName, $value);
+                $this->filterQuery->where($columnName, $value);
         }
     }
 }

@@ -23,7 +23,7 @@ class WatchListController extends Controller
 
     public function index(Request $request): Response
     {
-        $watchList = WatchList::applyFilters($request)
+        $watchList = WatchList::Filter()->Sort()
             ->paginate(10);
 
         return Inertia::render(
