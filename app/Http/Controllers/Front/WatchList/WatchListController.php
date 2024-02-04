@@ -23,7 +23,8 @@ class WatchListController extends Controller
 
     public function index(Request $request): Response
     {
-        $watchList = WatchList::Filter()->Sort()
+        $watchList = WatchList::Filter()
+            ->Sort()
             ->paginate(10);
 
         return Inertia::render(
@@ -56,10 +57,10 @@ class WatchListController extends Controller
     public function edit(WatchList $watchList): Response
     {
 
-       return Inertia::render(
-           component: 'Dashboard',
-           props: ['watchList' => $watchList]
-       );
+        return Inertia::render(
+            component: 'Dashboard',
+            props: ['watchList' => $watchList]
+        );
     }
 
     public function update(WatchList $watchList, WatchListStoreRequest $request): RedirectResponse

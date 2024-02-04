@@ -6,10 +6,16 @@ namespace App\Models;
 
 use App\Models\Concerns\HasFilters;
 use App\Models\Concerns\HasSorts;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Collection\Sort;
 
+/**
+ * @method static Builder Sort
+ * @method static Builder Filter
+ */
 class WatchList extends Model
 {
     use HasFactory;
