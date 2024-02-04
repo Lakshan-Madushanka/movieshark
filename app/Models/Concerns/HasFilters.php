@@ -15,7 +15,7 @@ use Illuminate\Support\Arr;
  */
 trait HasFilters
 {
-    private  Builder $filterQuery;
+    private Builder $filterQuery;
 
     public function scopeFilter(Builder $query): Builder
     {
