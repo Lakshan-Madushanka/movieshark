@@ -12,7 +12,7 @@ trait HasSorts
 {
     private Builder $sortQuery;
 
-    public  function scopeSort(Builder $query): Builder
+    public function scopeSort(Builder $query): Builder
     {
         $this->sortQuery = $query;
         return $this->applyRequestSorts(request());
