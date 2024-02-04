@@ -1,6 +1,6 @@
 <script setup>
 import {reactive, ref, watch} from "vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import DataTable from "primevue/datatable";
 import Column from 'primevue/column';
 import Image from 'primevue/image';
@@ -16,6 +16,7 @@ import SelectButton from "primevue/selectbutton";
 import MultiSelect from "primevue/multiselect";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import moment from "moment";
+import NavLink from "@/Components/NavLink.vue";
 
 const props = defineProps({
     watchList: {
@@ -174,12 +175,20 @@ const sendFiltersRequest = (
             preserveScroll: true,
         })
 };
+
+const showCreateMoviePage = () => {
+    useForm([])
+        .get(route('movies-watch-list.create'), {
+            preserveScroll: true,
+            preserveState: true,
+        });
+}
 </script>
 
 <template>
-    <div class="text-black space-y-4 pb-4 bg-[#424b57]">
+    <div class="space-y-4">
         <!--Start-->
-        <Toolbar class="mb-4">
+        <Toolbar>
             <template #start>
                 <PrimeButton @click="showFiltersMenu = !showFiltersMenu" label="Filters" size="small"/>
                 <Dialog
@@ -290,7 +299,7 @@ const sendFiltersRequest = (
                 </Dialog>
             </template>
             <template #end>
-                <PrimeButton label="Add Movie" size="small"/>
+                <PrimeButton @click="showCreateMoviePage" label="Add Movie" size="small"/>
             </template>
         </Toolbar>
         <!--End of Start-->
@@ -435,6 +444,11 @@ const sendFiltersRequest = (
                     <div>
                         <span>{{ slotProps.data.watched_status }}</span>
                     </div>
+                </template>
+            </Column>
+            <Column header="Edit">
+                <template #body="slotProps">
+                    <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})" class="text-green-500"> Edit </NavLink>
                 </template>
             </Column>
             <Column

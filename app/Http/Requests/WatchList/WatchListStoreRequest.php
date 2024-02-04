@@ -8,6 +8,7 @@ use App\Http\Payloads\WatchListPayload;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class WatchListStoreRequest extends FormRequest
 {
@@ -30,12 +31,12 @@ class WatchListStoreRequest extends FormRequest
             'imdb_id' => ['string', 'nullable'],
             'yts_id' => ['integer', 'nullable'],
             'image' => ['string', 'nullable'],
-            'name' => ['string', 'required'],
+            'name' => ['string', 'required', Rule::unique('watch_list')->ignore($this->watchList?->getKey())],
             'genres' => ['array', 'nullable'],
             'released_date' => ['string', 'nullable'],
             'downloaded_status' => ['date', 'nullable'],
             'watched_status' => ['date', 'nullable'],
-            'description' => ['string, nullable'],
+            'description' => ['string', 'nullable'],
         ];
     }
 

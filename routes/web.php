@@ -40,5 +40,10 @@ Route::middleware(['auth:sanctum'])
     ->prefix('/movies-watch-list')
     ->group(function (): void {
         Route::get('/', [WatchListController::class, 'index'])->name('index');
+        Route::get('/create', [WatchListController::class, 'create'])->name('create');
         Route::post('/store', [WatchListController::class, 'store'])->name('store');
+        Route::get('{watchList}/edit', [WatchListController::class, 'edit'])->name('edit');
+        Route::put('{watchList}/update', [WatchListController::class, 'update'])->name('update');
+        Route::delete('{watchList}/destroy', [WatchListController::class, 'store'])->name('destroy');
+        Route::post('/toggle', [WatchListController::class, 'toggle'])->name('toggle');
     });

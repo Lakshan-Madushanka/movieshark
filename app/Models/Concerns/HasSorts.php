@@ -10,20 +10,12 @@ use Illuminate\Support\Arr;
 
 trait HasSorts
 {
-    public static Builder $sortQuery;
+    private Builder $sortQuery;
 
-    public static function bootHasSorts(): void
+    public function scopeSort(Builder $query): Builder
     {
-        if (property_exists(self::class, 'filterQuery') && isset(self::$filterQuery)) {
-            self::$sortQuery = self::$filterQuery;
-            return;
-        }
-        self::$sortQuery = static::query();
-    }
-
-    public static function applySorts(Request $request): Builder
-    {
-        return (new static())->applyRequestSorts($request);
+        $this->sortQuery = $query;
+        return $this->applyRequestSorts(request());
     }
 
     public function checkSortColumnValidity($column): bool
@@ -65,21 +57,21 @@ trait HasSorts
             $this->applyAscendingSort($columnName);
         });
 
-        return self::$sortQuery;
+        return $this->sortQuery;
     }
 
     private function applyDescendingSort($value): void
     {
-        self::$sortQuery->orderByRaw("{$value} is null")->orderByDesc($value);
+        $this->sortQuery->orderByRaw("{$value} is null")->orderByDesc($value);
     }
 
     private function applyAscendingSort($value): void
     {
-        self::$sortQuery->orderByRaw("{$value} is null")->orderBy($value);
+        $this->sortQuery->orderByRaw("{$value} is null")->orderBy($value);
     }
 
     private function applyDefaultSort(): Builder
     {
-        return self::$sortQuery->latest();
+        return $this->sortQuery->latest();
     }
 }
