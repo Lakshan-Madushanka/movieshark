@@ -49,9 +49,6 @@ onMounted(() => {
 
     form.genres = selectedGenres;
 })
-const test = () => {
-    console.log(form.data(), props.watchList)
-}
 
 const editMovie = () => {
     if (form.processing) {
@@ -70,7 +67,6 @@ const editMovie = () => {
                     })
                 }
             }
-            console.log({...data, genres: tempGenres})
             return {...data, genres: tempGenres}
         })
         .put(route('movies-watch-list.update', {'watchList': props.watchList.id}), {
@@ -87,7 +83,6 @@ const editMovie = () => {
 </script>
 
 <template>
-    <p @click="test">test me</p>
     <Card class="">
         <template #title><h1>Edit Movie</h1></template>
         <template #content>
