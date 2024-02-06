@@ -121,6 +121,10 @@ const onSortApplied = (event) => {
     sendFiltersRequest();
 }
 
+const onCellEditComplete = (event) => {
+    console.log('edit complete', event)
+};
+
 const resetFilters = () => {
     for (const [key, value] of Object.entries(filtersForm.filter)) {
         if (value && typeof value === 'object') {
@@ -315,6 +319,8 @@ const showCreateMoviePage = () => {
             scrollHeight="800px"
             @sort="onSortApplied"
             removableSort
+            editMode="cell"
+            @cell-edit-complete="onCellEditComplete"
             class="text-nowrap"
         >
             <template #header>
@@ -343,6 +349,11 @@ const showCreateMoviePage = () => {
                        <span>
                            {{ slotProps.data.imdb_id }}
                        </span>
+                    </div>
+                </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <InputText v-model="data[field]"/>
                     </div>
                 </template>
             </Column>

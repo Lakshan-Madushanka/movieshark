@@ -152,7 +152,7 @@ const createMovie = () => {
                     <span v-if="form.errors.description" class="text-sm text-red-500">{{form.errors.description}}</span>
                 </div>
                 <hr class="col-span-2"/>
-                <PrimeButton type="submit" icon="pi pi-save" label="Create" @click="test" :loading="form.processing"/>
+                <PrimeButton type="submit" icon="pi pi-save" label="Create" :loading="form.processing"/>
                 <PrimeButton type="button" icon="pi pi-times" label="Reset" @click="form.reset()" :loading="form.processing"/>
             </form>
         </template>
