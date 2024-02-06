@@ -56,10 +56,10 @@ class WatchListController extends Controller
     public function edit(WatchList $watchList): Response
     {
 
-       return Inertia::render(
-           component: 'Dashboard',
-           props: ['watchList' => $watchList]
-       );
+        return Inertia::render(
+            component: 'Dashboard',
+            props: ['watchList' => $watchList]
+        );
     }
 
     public function update(WatchList $watchList, WatchListStoreRequest $request): RedirectResponse
