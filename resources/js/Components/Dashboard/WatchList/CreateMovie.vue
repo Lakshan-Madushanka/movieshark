@@ -35,9 +35,6 @@ onMounted(() => {
         columns.value.push({header: gen, value: gen.toLowerCase()})
     })
 })
-const test = () => {
-    console.log(form.data())
-}
 
 const createMovie = () => {
     if (form.processing) {
@@ -56,7 +53,6 @@ const createMovie = () => {
                     })
                 }
             }
-            console.log({...data, genres: tempGenres})
             return {...data, genres: tempGenres}
         })
         .post(route('movies-watch-list.store'), {
@@ -74,8 +70,7 @@ const createMovie = () => {
 </script>
 
 <template>
-    <p @click="test">test me</p>
-    <Card class="">
+    <Card>
         <template #title><h1>Create Movie</h1></template>
         <template #content>
             <form @submit.prevent="createMovie" @keydown.enter="createMovie" class="grid grid-cols-2 gap-8">
