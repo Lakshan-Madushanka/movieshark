@@ -83,7 +83,7 @@ const editMovie = () => {
 </script>
 
 <template>
-    <Card class="">
+    <Card>
         <template #title><h1>Edit Movie</h1></template>
         <template #content>
             <form @submit.prevent="editMovie" @keydown.enter="editMovie" class="grid grid-cols-2 gap-8">

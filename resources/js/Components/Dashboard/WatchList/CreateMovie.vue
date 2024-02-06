@@ -70,7 +70,7 @@ const createMovie = () => {
 </script>
 
 <template>
-    <Card class="">
+    <Card>
         <template #title><h1>Create Movie</h1></template>
         <template #content>
             <form @submit.prevent="createMovie" @keydown.enter="createMovie" class="grid grid-cols-2 gap-8">
