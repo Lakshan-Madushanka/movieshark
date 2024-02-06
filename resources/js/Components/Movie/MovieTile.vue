@@ -19,10 +19,17 @@ const props = defineProps({
 const toast = useToast();
 
 const watchListHas = ref();
-const {toggleFromWatchList, checkWatchListHas} = useToggleMovieFromWatchList(props.watchListIds);
+let toggleFromWatchList;
+let checkWatchListHas;
 
 onMounted(() => {
-    watchListHas.value = checkWatchListHas(props.movie.id)
+    if (props.showWatchListButton) {
+        let getToggleMovieFromWatchList = useToggleMovieFromWatchList(props.watchListIds);
+        toggleFromWatchList = getToggleMovieFromWatchList.toggleFromWatchList;
+        checkWatchListHas = getToggleMovieFromWatchList.checkWatchListHas;
+
+        watchListHas.value = checkWatchListHas(props.movie.id);
+    }
 })
 
 const showMovieInfoForId = ref(-100000);
