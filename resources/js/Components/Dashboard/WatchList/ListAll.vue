@@ -17,6 +17,8 @@ import MultiSelect from "primevue/multiselect";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import moment from "moment";
 import NavLink from "@/Components/NavLink.vue";
+import {useToast} from "primevue/usetoast";
+import Calender from "primevue/calendar";
 
 const props = defineProps({
     watchList: {
@@ -24,6 +26,8 @@ const props = defineProps({
         default: {}
     },
 });
+
+const toast = useToast();
 
 const initialColumns = [
     {header: 'IMDB Id', field: 'imdb_id'},
@@ -60,6 +64,8 @@ const filtersForm = useForm({
         },
     },
 });
+
+const editForm = useForm({});
 
 const showColumns = reactive({
     imdb_id: true,
@@ -122,7 +128,20 @@ const onSortApplied = (event) => {
 }
 
 const onCellEditComplete = (event) => {
-    console.log('edit complete', event)
+    editForm
+        .transform((data) => {
+            return event.newData;
+        })
+        .put(route('movies-watch-list.update', {'watchList': event.newData.id}), {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.add({severity: 'success', summary: 'Movie updated', detail: 'Success', life: 3000});
+        },
+        onError: (error) => {
+            toast.add({severity: 'warn', summary: 'Invalid values', detail: Object.values(error)[0], life: 3000});
+        }
+    })
 };
 
 const resetFilters = () => {
@@ -137,8 +156,10 @@ const resetFilters = () => {
     }
 }
 const sendFiltersRequest = (
-    onSuccess = () => {},
-    onError = () => {},
+    onSuccess = () => {
+    },
+    onError = () => {
+    },
 ) => {
     filtersForm
         .transform((formFilters) => {
@@ -311,7 +332,7 @@ const showCreateMoviePage = () => {
         <!--Data Table-->
         <DataTable
             :value="watchList?.data"
-            :loading="filtersForm.processing"
+            :loading="filtersForm.processing || editForm.processing"
             responsive-layout="scroll"
             striped-rows
             data-key="id"
@@ -337,7 +358,7 @@ const showCreateMoviePage = () => {
                 </div>
             </template>
 
-            <template #empty><h2 class="text-center">No records found !</h2> </template>
+            <template #empty><h2 class="text-center">No records found !</h2></template>
 
             <Column
                 field="imdb_id"
@@ -369,6 +390,11 @@ const showCreateMoviePage = () => {
                        </span>
                     </div>
                 </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <InputText v-model="data[field]"/>
+                    </div>
+                </template>
             </Column>
             <Column
                 field="name"
@@ -382,6 +408,11 @@ const showCreateMoviePage = () => {
                        <span>
                            {{ slotProps.data.name }}
                        </span>
+                    </div>
+                </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <InputText v-model="data[field]"/>
                     </div>
                 </template>
             </Column>
@@ -430,6 +461,11 @@ const showCreateMoviePage = () => {
                         <Calendar v-model="filtersForm.filter.released_date.to"/>
                     </div>
                 </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <Calender v-model="data[field]"/>
+                    </div>
+                </template>
             </Column>
             <Column
                 field="downloaded_status"
@@ -441,6 +477,11 @@ const showCreateMoviePage = () => {
                 <template #body="slotProps">
                     <div>
                         <span>{{ slotProps.data.downloaded_status }}</span>
+                    </div>
+                </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <Calender v-model="data[field]"/>
                     </div>
                 </template>
             </Column>
@@ -456,10 +497,17 @@ const showCreateMoviePage = () => {
                         <span>{{ slotProps.data.watched_status }}</span>
                     </div>
                 </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <Calender v-model="data[field]"/>
+                    </div>
+                </template>
             </Column>
             <Column header="Edit">
                 <template #body="slotProps">
-                    <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})" class="text-green-500"> Edit </NavLink>
+                    <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})"
+                             class="text-green-500"> Edit
+                    </NavLink>
                 </template>
             </Column>
             <Column
