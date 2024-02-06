@@ -19,6 +19,7 @@ import moment from "moment";
 import NavLink from "@/Components/NavLink.vue";
 import {useToast} from "primevue/usetoast";
 import Calender from "primevue/calendar";
+import AnchorLink from "@/Components/AnchorLink.vue";
 
 const props = defineProps({
     watchList: {
@@ -38,6 +39,7 @@ const initialColumns = [
     {header: 'Released Date', field: 'released_date'},
     {header: 'Downloaded status', field: 'downloaded_status'},
     {header: 'Watched Status', field: 'watched_status'},
+    {header: 'Actions', field: 'actions'},
     {header: 'Created at', field: 'created_at'},
     {header: 'Updated at', field: 'updated_at'},
 ];
@@ -76,6 +78,7 @@ const showColumns = reactive({
     released_date: true,
     downloaded_status: true,
     watched_status: true,
+    actions: true,
     created_at: true,
     updated_at: true,
 });
@@ -144,6 +147,9 @@ const onCellEditComplete = (event) => {
     })
 };
 
+const onRowClick = (event) => {
+    console.log('row-click', event)
+}
 const resetFilters = () => {
     for (const [key, value] of Object.entries(filtersForm.filter)) {
         if (value && typeof value === 'object') {
@@ -342,6 +348,7 @@ const showCreateMoviePage = () => {
             removableSort
             editMode="cell"
             @cell-edit-complete="onCellEditComplete"
+            @row-click="onRowClick"
             class="text-nowrap"
         >
             <template #header>
@@ -503,11 +510,24 @@ const showCreateMoviePage = () => {
                     </div>
                 </template>
             </Column>
-            <Column header="Edit">
+            <Column
+                header="Actions"
+                field="actions"
+                :hidden="!showColumns['actions']"
+            >
                 <template #body="slotProps">
-                    <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})"
-                             class="text-green-500"> Edit
-                    </NavLink>
+                    <div class="flex justify-end">
+                        <AnchorLink v-if="slotProps.data.imdb_id" :href="route('movies.show', {id: slotProps.data.imdb_id})"
+                                target="_blank" class="text-green-500">
+                            <i class="pi pi-eye text-xs"/>
+                            <span>View</span>
+                        </AnchorLink>
+                        <div class="w-[2px] bg-green-500"></div>
+                        <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})"
+                                 class="text-green-500">
+                            <i class="pi pi-file-edit text-xs"/> <span>Edit</span>
+                        </NavLink>
+                    </div>
                 </template>
             </Column>
             <Column
