@@ -45,7 +45,7 @@ class WatchListStoreRequest extends FormRequest
         return new WatchListPayload(
             name: $this->validated('name'),
             imdb_id: $this->validated('imdb_id'),
-            yts_id: $this->validated('yts_id'),
+            yts_id: (int) $this->validated('yts_id'),
             image: $this->validated('image'),
             genres: $this->validated('genres'),
             released_date: $this->validated('released_date'),
