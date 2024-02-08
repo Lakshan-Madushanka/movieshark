@@ -25,7 +25,7 @@ class WatchListFactory extends Factory
             'imdb_id' => $this->faker->word(),
             'yts_id' => $this->faker->randomDigit(),
             'image' => $this->faker->imageUrl(),
-            'name' => $this->faker->word(),
+            'name' => $this->faker->unique()->word(),
             'genres' => $this->faker->randomElements($genres, random_int(1, $genresCount)),
             'my_rating' => $this->faker->numberBetween(0, 100),
             'released_date' => $this->faker->randomElement([null, $this->faker->date()]),
