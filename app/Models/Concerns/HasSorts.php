@@ -20,16 +20,18 @@ trait HasSorts
 
     public function checkSortColumnValidity($column): bool
     {
-        if (property_exists($this, 'allowedSortColumns') || is_array($this->allowedSortColumns)) {
+        if (!property_exists($this, 'allowedSortColumns') || !is_array(!$this->allowedSortColumns)) {
             return false;
         }
 
-        return in_array($column, $this->allowedSortColumns);
+        $value = $this->allowedSortColumns[$column]['columnName'] ?? false;
+
+        return (bool) $value;
     }
 
     private function applyRequestSorts(Request $request): Builder
     {
-        if ( ! $request->filled('sort')) {
+        if (!$request->filled('sort')) {
             return $this->applyDefaultSort();
         }
 
@@ -42,7 +44,7 @@ trait HasSorts
         $sorts = collect(Arr::wrap($sorts));
 
         $sorts->each(function ($value): void {
-            if ($this->checkSortColumnValidity($value)) {
+            if (!$this->checkSortColumnValidity($value)) {
                 return;
             }
 
