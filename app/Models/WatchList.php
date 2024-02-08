@@ -25,6 +25,7 @@ class WatchList extends Model
     private $allowedFilters = [
         'imdb_id' => ['columnName' => 'imdb_id', 'filterType' => 'partial'],
         'yts_id' => ['columnName' => 'yts_id', 'filterType' => 'partial'],
+        'name' => ['columnName' => 'name', 'filterType' => 'partial'],
         'genre' => ['columnName' => 'genres', 'columnType' => 'json'],
         'my_rating' => ['columnName' => 'my_rating', 'filterType' => 'between'],
         'preference' => ['columnName' => 'my_rating', 'filterType' => 'between'],

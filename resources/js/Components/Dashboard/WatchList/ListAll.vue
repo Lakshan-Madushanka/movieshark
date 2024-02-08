@@ -270,6 +270,31 @@ const showCreateMoviePage = () => {
                             </span>
                         </div>
                         <div>
+                            <label for="filter-name">Name</label>
+                            <span class="p-input-icon-right w-full">
+                              <i class="pi pi-search"/>
+                              <InputText
+                                  v-model="filtersForm.filter['name']"
+                                  id="filter-name"
+                                  class="w-full"
+                                  type="text"
+                                  placeholder="Search"
+                              />
+                            </span>
+                        </div>
+                        <div>
+                            <label for="filter-genre">Genre</label>
+                            <div class="w-full">
+                                <Dropdown
+                                    v-model="filtersForm.filter.genre"
+                                    :options="MovieFiltersData.genre"
+                                    id="filter-genre"
+                                    class="w-full"
+                                    placeholder="All"
+                                />
+                            </div>
+                        </div>
+                        <div>
                             <div class="flex justify-between items-center w-full mb-4">
                                 <span>My Rating</span>
                                 <div>
@@ -321,18 +346,6 @@ const showCreateMoviePage = () => {
                                     }"
                                     class="w-full"
                                     id="filter-preference"
-                                    placeholder="All"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-span-2">
-                            <label for="filter-genre">Genre</label>
-                            <div class="w-full">
-                                <Dropdown
-                                    v-model="filtersForm.filter.genre"
-                                    :options="MovieFiltersData.genre"
-                                    id="filter-genre"
-                                    class="w-1/2"
                                     placeholder="All"
                                 />
                             </div>
