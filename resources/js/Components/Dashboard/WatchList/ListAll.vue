@@ -14,6 +14,7 @@ import Dialog from 'primevue/dialog';
 import PrimeButton from "primevue/button";
 import SelectButton from "primevue/selectbutton";
 import MultiSelect from "primevue/multiselect";
+import Slider from "primevue/slider";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import moment from "moment";
 import NavLink from "@/Components/NavLink.vue";
@@ -54,6 +55,10 @@ const filtersForm = useForm({
     perPage: 10,
     sort: null,
     filter: {
+        preference: {
+            from: '',
+            to: '',
+        },
         released_date: {
             from: '',
             to: ''
@@ -66,7 +71,16 @@ const filtersForm = useForm({
             from: '',
             to: ''
         },
+        my_rating: {
+            from: null,
+            to: null
+        }
     },
+});
+
+const tempFilters = reactive({
+    my_rating: [0, 0],
+    preference: 'All',
 });
 
 const editForm = useForm({});
@@ -140,30 +154,21 @@ const onCellEditComplete = (event) => {
             return event.newData;
         })
         .put(route('movies-watch-list.update', {'watchList': event.newData.id}), {
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            toast.add({severity: 'success', summary: 'Movie updated', detail: 'Success', life: 3000});
-        },
-        onError: (error) => {
-            toast.add({severity: 'warn', summary: 'Invalid values', detail: Object.values(error)[0], life: 3000});
-        }
-    })
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                toast.add({severity: 'success', summary: 'Movie updated', detail: 'Success', life: 3000});
+            },
+            onError: (error) => {
+                toast.add({severity: 'warn', summary: 'Invalid values', detail: Object.values(error)[0], life: 3000});
+            }
+        })
 };
 
-const onRowClick = (event) => {
-    console.log('row-click', event)
-}
 const resetFilters = () => {
-    for (const [key, value] of Object.entries(filtersForm.filter)) {
-        if (value && typeof value === 'object') {
-            for (const [key2, value2] of Object.entries(value)) {
-                filtersForm.filter[key][key2] = '';
-            }
-            continue;
-        }
-        filtersForm.filter[key] = '';
-    }
+    filtersForm.reset('filter');
+    tempFilters.my_rating = [0, 0];
+    tempFilters.preference = 'All';
 }
 const sendFiltersRequest = (
     onSuccess = () => {
@@ -264,14 +269,83 @@ const showCreateMoviePage = () => {
                               />
                             </span>
                         </div>
-                        <div class="col-span-2">
+                        <div>
+                            <label for="filter-name">Name</label>
+                            <span class="p-input-icon-right w-full">
+                              <i class="pi pi-search"/>
+                              <InputText
+                                  v-model="filtersForm.filter['name']"
+                                  id="filter-name"
+                                  class="w-full"
+                                  type="text"
+                                  placeholder="Search"
+                              />
+                            </span>
+                        </div>
+                        <div>
                             <label for="filter-genre">Genre</label>
                             <div class="w-full">
                                 <Dropdown
                                     v-model="filtersForm.filter.genre"
                                     :options="MovieFiltersData.genre"
                                     id="filter-genre"
-                                    class="w-1/2"
+                                    class="w-full"
+                                    placeholder="All"
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center w-full mb-4">
+                                <span>My Rating</span>
+                                <div>
+                                    <InputText
+                                        v-model="tempFilters.my_rating[0]"
+                                        @update:modelValue="(value) => {
+                                            filtersForm['filter']['my_rating']['from'] = value;
+                                        }"
+                                        class="max-w-8 px-1 py-1 mx-2 text-xs"
+                                    />
+                                    <InputText
+                                        v-model="tempFilters.my_rating[1]"
+                                        @update:modelValue="(value) => {
+                                            filtersForm['filter']['my_rating']['to'] = value;
+                                        }"
+                                        class="max-w-8 px-1 py-1 text-xs"
+                                    />
+                                </div>
+                            </div>
+                            <div class="w-full flex flex-col">
+                                <Slider
+                                    v-model="tempFilters['my_rating']"
+                                    @update:modelValue="(value) => {
+                                       filtersForm['filter']['my_rating']['from'] = value[0];
+                                       filtersForm['filter']['my_rating']['to'] = value[1];
+                                    }"
+                                    range
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label for="filter-preference">Preference</label>
+                            <div class="w-full">
+                                <Dropdown
+                                    v-model="tempFilters.preference"
+                                    :options="['All', 'High', 'Medium', 'Low']"
+                                    @update:modelValue="(value) => {
+                                        if(value === 'Low') {
+                                            filtersForm['filter']['preference']['from'] = '0';
+                                            filtersForm['filter']['preference']['to'] = 33;
+                                        }
+                                        else if(value === 'Medium') {
+                                            filtersForm['filter']['preference']['from'] = 34;
+                                            filtersForm['filter']['preference']['to'] = 66;
+                                        } else {
+                                            filtersForm['filter']['preference']['from'] = 67;
+                                            filtersForm['filter']['preference']['to'] = 100;
+                                      }
+                                    }"
+                                    class="w-full"
+                                    id="filter-preference"
                                     placeholder="All"
                                 />
                             </div>
@@ -352,7 +426,6 @@ const showCreateMoviePage = () => {
             removableSort
             editMode="cell"
             @cell-edit-complete="onCellEditComplete"
-            @row-click="onRowClick"
             class="text-nowrap"
         >
             <template #header>
@@ -464,7 +537,8 @@ const showCreateMoviePage = () => {
                         <Tag v-if="slotProps.data.my_rating < 34" severity="danger">
                             <span>Low</span>
                         </Tag>
-                        <Tag v-else-if="slotProps.data.my_rating > 33 && slotProps.data.my_rating < 67" severity="warning">
+                        <Tag v-else-if="slotProps.data.my_rating > 33 && slotProps.data.my_rating < 67"
+                             severity="warning">
                             <span>Medium</span>
                         </Tag>
                         <Tag v-else severity="success">
@@ -482,7 +556,7 @@ const showCreateMoviePage = () => {
                 <template #body="slotProps">
                     <div>
                         <Tag severity="info">
-                            {{ slotProps.data.my_rating}}
+                            {{ slotProps.data.my_rating }}
                         </Tag>
                     </div>
                 </template>
@@ -554,8 +628,9 @@ const showCreateMoviePage = () => {
             >
                 <template #body="slotProps">
                     <div class="flex justify-end">
-                        <AnchorLink v-if="slotProps.data.imdb_id" :href="route('movies.show', {id: slotProps.data.imdb_id})"
-                                target="_blank" class="text-green-500">
+                        <AnchorLink v-if="slotProps.data.imdb_id"
+                                    :href="route('movies.show', {id: slotProps.data.imdb_id})"
+                                    target="_blank" class="text-green-500">
                             <i class="pi pi-eye text-xs"/>
                             <span>View</span>
                         </AnchorLink>

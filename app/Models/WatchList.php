@@ -25,8 +25,10 @@ class WatchList extends Model
     private $allowedFilters = [
         'imdb_id' => ['columnName' => 'imdb_id', 'filterType' => 'partial'],
         'yts_id' => ['columnName' => 'yts_id', 'filterType' => 'partial'],
+        'name' => ['columnName' => 'name', 'filterType' => 'partial'],
         'genre' => ['columnName' => 'genres', 'columnType' => 'json'],
         'my_rating' => ['columnName' => 'my_rating', 'filterType' => 'between'],
+        'preference' => ['columnName' => 'my_rating', 'filterType' => 'between'],
         'released_date' => ['columnName' => 'released_date', 'filterType' => 'dateBetween'],
         'watched_date' => ['columnName' => 'watched_status', 'filterType' => 'dateBetween'],
         'watched_status' => ['columnName' => 'watched_status', 'filterType' => 'exists'],
@@ -37,6 +39,7 @@ class WatchList extends Model
     private $allowedSortColumns = [
         'created_at' => [],
         'downloaded_status' => [],
+        'my_rating' => [],
     ];
 
     protected $table = 'watch_list';
