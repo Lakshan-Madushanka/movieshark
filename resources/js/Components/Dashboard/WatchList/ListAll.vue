@@ -36,6 +36,8 @@ const initialColumns = [
     {header: 'Name', field: 'name'},
     {header: 'Image', field: 'image'},
     {header: 'Genres', field: 'genres'},
+    {header: 'My Rating', field: 'my_rating'},
+    {header: 'Preference', field: 'preference'},
     {header: 'Released Date', field: 'released_date'},
     {header: 'Downloaded status', field: 'downloaded_status'},
     {header: 'Watched Status', field: 'watched_status'},
@@ -75,6 +77,8 @@ const showColumns = reactive({
     name: true,
     image: true,
     genres: true,
+    my_rating: true,
+    preference: true,
     released_date: true,
     downloaded_status: true,
     watched_status: true,
@@ -441,11 +445,44 @@ const showCreateMoviePage = () => {
             >
                 <template #body="slotProps">
                     <div>
-                        <Tag v-if="slotProps.data.genres?.length > 1">
+                        <Tag v-if="slotProps.data.genres?.length > 1" severity="info">
                             {{ slotProps.data.genres[0] }}/...
                         </Tag>
-                        <Tag v-else>
+                        <Tag v-else severity="info">
                             {{ slotProps.data.genres?.[0] }}
+                        </Tag>
+                    </div>
+                </template>
+            </Column>
+            <Column
+                field="preference"
+                header="Preference"
+                :hidden="!showColumns['preference']"
+            >
+                <template #body="slotProps">
+                    <div>
+                        <Tag v-if="slotProps.data.my_rating < 34" severity="danger">
+                            <span>Low</span>
+                        </Tag>
+                        <Tag v-else-if="slotProps.data.my_rating > 33 && slotProps.data.my_rating < 67" severity="warning">
+                            <span>Medium</span>
+                        </Tag>
+                        <Tag v-else severity="success">
+                            <span>High</span>
+                        </Tag>
+                    </div>
+                </template>
+            </Column>
+            <Column
+                field="my_rating"
+                header="My Rating (%)"
+                :hidden="!showColumns['my_rating']"
+                :sortable="true"
+            >
+                <template #body="slotProps">
+                    <div>
+                        <Tag severity="info">
+                            {{ slotProps.data.my_rating}}
                         </Tag>
                     </div>
                 </template>
@@ -454,7 +491,7 @@ const showCreateMoviePage = () => {
                 field="released_date"
                 header="Released Date"
                 :sortable="true"
-                sortField="true"
+                sortField="released_date"
                 :hidden="!showColumns['released_date']"
             >
                 <template #body="slotProps">

@@ -26,6 +26,7 @@ class WatchList extends Model
         'imdb_id' => ['columnName' => 'imdb_id', 'filterType' => 'partial'],
         'yts_id' => ['columnName' => 'yts_id', 'filterType' => 'partial'],
         'genre' => ['columnName' => 'genres', 'columnType' => 'json'],
+        'my_rating' => ['columnName' => 'my_rating', 'filterType' => 'between'],
         'released_date' => ['columnName' => 'released_date', 'filterType' => 'dateBetween'],
         'watched_date' => ['columnName' => 'watched_status', 'filterType' => 'dateBetween'],
         'watched_status' => ['columnName' => 'watched_status', 'filterType' => 'exists'],

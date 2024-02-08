@@ -85,7 +85,12 @@ trait HasFilters
                     Arr::get($value, 'to', now()),
                 ]);
                 break;
-
+            case 'between':
+                $this->filterQuery->whereBetween($columnName, [
+                    Arr::get($value, 'from'),
+                    Arr::get($value, 'to'),
+                ]);
+                break;
             case 'notNull':
                 $this->filterQuery->whereNotNull($columnName);
                 break;
