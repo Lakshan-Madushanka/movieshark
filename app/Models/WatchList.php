@@ -48,6 +48,7 @@ class WatchList extends Model
         'image',
         'name',
         'genres',
+        'my_rating',
         'released_date',
         'downloaded_status',
         'watched_status',
