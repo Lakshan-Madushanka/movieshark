@@ -49,7 +49,7 @@ class WatchListStoreRequest extends FormRequest
             yts_id: (int) $this->validated('yts_id'),
             image: $this->validated('image'),
             genres: $this->validated('genres'),
-            my_rating: (int)$this->validated('my_rating'),
+            my_rating: (int) $this->validated('my_rating'),
             released_date: $this->validated('released_date'),
             downloaded_status: $this->validated('downloaded_status'),
             watched_status: $this->validated('watched_status'),
