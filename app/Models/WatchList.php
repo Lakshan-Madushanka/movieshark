@@ -39,8 +39,6 @@ class WatchList extends Model
         'downloaded_status' => [],
     ];
 
-
-
     protected $table = 'watch_list';
 
     protected $fillable = [
