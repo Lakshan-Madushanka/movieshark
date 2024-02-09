@@ -10,6 +10,7 @@ import Textarea from 'primevue/textarea';
 import Image from 'primevue/image';
 import {useToast} from "primevue/usetoast";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
+import {capitalizeFirstLetter} from "@/Helpers.js";
 
 const props = defineProps({
     watchList: {
@@ -24,11 +25,16 @@ const form = useForm({
     yts_id: props.watchList.yts_id,
     name: props.watchList.name,
     image: props.watchList.image,
-    genres: props.watchList.genres,
+    genres: [],
+    my_rating: props.watchList.my_rating,
     released_date: props.watchList.released_date,
     downloaded_date: props.watchList.downloaded_date,
     watched_date: props.watchList.watched_date,
     description: props.watchList.description,
+})
+
+onMounted(() => {
+    form.genres = props.watchList.genres?.map((genre) => capitalizeFirstLetter(genre));
 })
 
 const columns = ref([])
