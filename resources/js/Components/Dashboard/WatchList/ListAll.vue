@@ -15,12 +15,13 @@ import PrimeButton from "primevue/button";
 import SelectButton from "primevue/selectbutton";
 import MultiSelect from "primevue/multiselect";
 import Slider from "primevue/slider";
-import MovieFiltersData from "@/Data/MovieFiltersData.js";
-import moment from "moment";
-import NavLink from "@/Components/NavLink.vue";
 import {useToast} from "primevue/usetoast";
 import Calender from "primevue/calendar";
+import InputNumber from "primevue/inputnumber";
+import NavLink from "@/Components/NavLink.vue";
 import AnchorLink from "@/Components/AnchorLink.vue";
+import MovieFiltersData from "@/Data/MovieFiltersData.js";
+import moment from "moment";
 
 const props = defineProps({
     watchList: {
@@ -149,6 +150,10 @@ const onSortApplied = (event) => {
 }
 
 const onCellEditComplete = (event) => {
+    if (event.newValue === event.value) {
+        return;
+    }
+
     editForm
         .transform((data) => {
             return event.newData;
@@ -507,7 +512,7 @@ const showCreateMoviePage = () => {
             >
                 <template #body="slotProps">
                     <div>
-                        <Image :src="slotProps.data.image" imageClass="!w-12" preview/>
+                        <Image :src="slotProps.data.image" imageClass="!w-10 !h-10" preview/>
                     </div>
                 </template>
             </Column>
@@ -558,6 +563,11 @@ const showCreateMoviePage = () => {
                         <Tag severity="info">
                             {{ slotProps.data.my_rating }}
                         </Tag>
+                    </div>
+                </template>
+                <template #editor="{ data, field }">
+                    <div>
+                        <InputNumber v-model="data[field]"/>
                     </div>
                 </template>
             </Column>
