@@ -11,6 +11,7 @@ import Image from 'primevue/image';
 import {useToast} from "primevue/usetoast";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import {capitalizeFirstLetter} from "@/Helpers.js";
+import InputNumber from "primevue/inputnumber";
 
 const props = defineProps({
     watchList: {
@@ -138,6 +139,11 @@ const editMovie = () => {
                         inputId="input-genres"
                     />
                     <span v-if="form.errors.genres" class="text-sm text-red-500">{{ form.errors.genres }}</span>
+                </div>
+                <div class="flex flex-col">
+                    <label for="input-my_rating">My Rating</label>
+                    <InputNumber v-model="form.my_rating" inputId="input-my_rating" :min="0" :max="100"/>
+                    <span v-if="form.errors.my_rating" class="text-sm text-red-500">{{form.errors.my_rating}}</span>
                 </div>
                 <div class="flex flex-col">
                     <label for="input-released_date">Released Date</label>

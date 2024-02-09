@@ -6,9 +6,10 @@ import Card from 'primevue/card';
 import MultiSelect from "primevue/multiselect";
 import PrimeButton from "primevue/button";
 import Calender from "primevue/calendar";
-import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import Textarea from 'primevue/textarea';
+import InputNumber from 'primevue/inputnumber';
 import {useToast} from "primevue/usetoast";
+import MovieFiltersData from "@/Data/MovieFiltersData.js";
 
 const toast = useToast();
 
@@ -18,6 +19,7 @@ const form = useForm({
     name: '',
     image: '',
     genres: [],
+    my_rating: null,
     released_date: '',
     downloaded_date: '',
     watched_date: '',
@@ -130,6 +132,11 @@ const createMovie = () => {
                         inputId="input-genres"
                     />
                     <span v-if="form.errors.genres" class="text-sm text-red-500">{{form.errors.genres}}</span>
+                </div>
+                <div class="flex flex-col">
+                    <label for="input-my_rating">My Rating</label>
+                    <InputNumber v-model="form.my_rating" inputId="input-my_rating" :min="0" :max="100"/>
+                    <span v-if="form.errors.my_rating" class="text-sm text-red-500">{{form.errors.my_rating}}</span>
                 </div>
                 <div class="flex flex-col">
                     <label for="input-released_date">Released Date</label>
