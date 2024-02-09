@@ -181,6 +181,8 @@ const sendRequest = function (
                                         <Dropdown
                                             v-model="queryStringData.minimum_rating"
                                             :options="filters.minimum_rating"
+                                            optionLabel="label"
+                                            optionValue="value"
                                             placeholder="All"
                                         />
                                     </div>
@@ -228,11 +230,11 @@ const sendRequest = function (
                     class="hover:cursor-pointer transition"
                 >
                     <Link :href="route('movies.show', {id: movie['id']})">
-                      <MovieTile
-                          :movie="movie"
-                          :watchListIds="watchListIds"
-                          :showWatchListButton="authenticated"
-                      />
+                        <MovieTile
+                            :movie="movie"
+                            :watchListIds="watchListIds"
+                            :showWatchListButton="authenticated"
+                        />
                     </Link>
                 </div>
             </section>
