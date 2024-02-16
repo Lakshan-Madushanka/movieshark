@@ -4,19 +4,43 @@ import ListAll from "@/Components/Dashboard/WatchList/ListAll.vue";
 import CreateMovie from "@/Components/Dashboard/WatchList/CreateMovie.vue";
 import EditMovie from "@/Components/Dashboard/WatchList/EditMovie.vue";
 import Index from "@/Components/Dashboard/Index.vue";
+import {ref, watch} from "vue";
 
-defineProps({
+const props = defineProps({
     watchList: {},
     meta: Object,
     moviesHistory: Object,
 })
+
+const header = ref('header');
+
+const setHeader = (name) => {
+    header.value = name;
+}
+
+watch(() => route().current(), (currentRoute) => {
+    switch (currentRoute) {
+        case 'dashboard':
+            setHeader('Dashboard');
+            break;
+        case 'movies-watch-list.index':
+        case 'movies-watch-list.create':
+        case   'movies-watch-list.edit':
+            setHeader('Watch List');
+            break;
+        default:
+            setHeader('Dashboard');
+            break;
+    }
+
+}, {immediate: true})
 </script>
 
 <template>
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                {{ header }}
             </h2>
         </template>
 
