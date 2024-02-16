@@ -7,7 +7,8 @@ defineProps({
 <template>
     <a
         class="hover:underline"
-        :href="href">
-        Magnet Link
+        :href="href"
+    >
+        <slot/>
     </a>
 </template>
