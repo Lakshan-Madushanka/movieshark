@@ -354,7 +354,6 @@ const test = () => {
                     </template>
                 </Column>
             </DataTable>
-
         </div>
     </div>
 </template>
