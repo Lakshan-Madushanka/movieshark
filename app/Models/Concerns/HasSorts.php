@@ -20,13 +20,13 @@ trait HasSorts
 
     public function checkSortColumnValidity($column): bool
     {
-        if ( ! property_exists($this, 'allowedSortColumns') || ! is_array($this->allowedSortColumns)) {
+        if ( ! property_exists($this, 'allowedSortColumns') || ! is_array(self::$allowedSortColumns)) {
             return false;
         }
 
-        $validity = array_key_exists($column, $this->allowedSortColumns) && empty($this->allowedSortColumns[$column]);
+        $validity = array_key_exists($column, self::$allowedSortColumns) && empty(self::$allowedSortColumns[$column]);
 
-        if ( ! empty($this->allowedSortColumns[$column]) && array_key_exists('columnName', $this->allowedSortColumns[$column])) {
+        if ( ! empty(self::$allowedSortColumns[$column]) && array_key_exists('columnName', self::$allowedSortColumns[$column])) {
             $validity = true;
         }
 
@@ -52,7 +52,7 @@ trait HasSorts
                 return;
             }
 
-            $columnName = $this->allowedSortColumns[$value]['columnName'] ?? $value;
+            $columnName = self::$allowedSortColumns[$value]['columnName'] ?? $value;
 
             if (str($value)->startsWith('-')) {
                 $columnName = str($columnName)->replaceFirst('-', '')->toString();

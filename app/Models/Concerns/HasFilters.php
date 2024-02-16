@@ -26,15 +26,28 @@ trait HasFilters
         return $this->filterQuery;
     }
 
+    public function getFilterType(string $name): string
+    {
+        return self::$allowedFilters[$name]['filterType'] ?? 'exact';
+    }
+
+    private function getColumnName(string $name): ?string
+    {
+        return self::$allowedFilters[$name]['columnName'] ?? null;
+    }
+
+    public function getColumnType(string $name): ?string
+    {
+        return self::$allowedFilters[$name]['columnType'] ?? null;
+    }
+
     private function checkFilterValidity(string $filterName): bool
     {
-        if ( ! property_exists($this, 'allowedFilters') || ! is_array($this->allowedFilters)) {
+        if ( ! property_exists($this, 'allowedFilters') || ! is_array(self::$allowedFilters)) {
             return false;
         }
 
-        $value = $this->allowedFilters[$filterName]['columnName'] ?? false;
-
-        return (bool) $value;
+        return (bool) $this->getColumnName($filterName);
     }
 
     public function applyRequestFilters(Request $request): Builder
@@ -48,9 +61,9 @@ trait HasFilters
                 return;
             }
 
-            $filterType = $this->allowedFilters[$name]['filterType'] ?? 'exact';
-            $columnName = $this->allowedFilters[$name]['columnName'];
-            $columnType = $this->allowedFilters[$name]['columnType'] ?? null;
+            $filterType = $this->getFilterType($name);
+            $columnName = $this->getColumnName($name);
+            $columnType = $this->getColumnType($name);
 
             if ($columnType === 'json') {
                 $this->applyJsonFilters($columnName, $value);
