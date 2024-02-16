@@ -656,15 +656,15 @@ const showCreateMoviePage = () => {
                 </template>
             </Column>
             <Column
-                field="updated_status"
+                field="updated_at"
                 header="Updated at"
                 :sortable="true"
                 sortField="updated_at"
                 :hidden="!showColumns['updated_at']"
             >
                 <template #body="slotProps">
-                    <div v-if="slotProps.data.updated_status">
-                        <span>{{ moment(slotProps.data.updated_status) }}</span>
+                    <div v-if="slotProps.data.updated_at">
+                        <span>{{ moment(slotProps.data.updated_at).format('YYYY-MM-DD/hh:mm')  }}</span>
                     </div>
                 </template>
             </Column>

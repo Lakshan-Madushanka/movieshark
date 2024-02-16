@@ -3,9 +3,12 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import ListAll from "@/Components/Dashboard/WatchList/ListAll.vue";
 import CreateMovie from "@/Components/Dashboard/WatchList/CreateMovie.vue";
 import EditMovie from "@/Components/Dashboard/WatchList/EditMovie.vue";
+import Index from "@/Components/Dashboard/Index.vue";
 
 defineProps({
     watchList: {},
+    meta: Object,
+    moviesHistory: Object,
 })
 </script>
 
@@ -20,6 +23,7 @@ defineProps({
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="text-black pb-4 bg-[#424b57] overflow-hidden shadow-xl sm:rounded-lg">
+                    <Index v-if="route().current('dashboard')" :meta :moviesHistory :watchList/>
                     <ListAll v-if="route().current('movies-watch-list.index')" :watchList/>
                     <CreateMovie v-if="route().current('movies-watch-list.create')"/>
                     <EditMovie v-if="route().current('movies-watch-list.edit')" :watchList/>

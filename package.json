@@ -20,9 +20,11 @@
     },
     "dependencies": {
         "@tailwindcss/container-queries": "^0.1.1",
+        "chart.js": "^3.9.1",
         "lodash": "^4.17.21",
         "moment": "^2.30.1",
         "primeicons": "^6.0.1",
-        "primevue": "^3.46.0"
+        "primevue": "^3.46.0",
+        "vue-chart-3": "^3.1.8"
     }
 }

@@ -22,7 +22,7 @@ class WatchList extends Model
     use HasFilters;
     use HasSorts;
 
-    private $allowedFilters = [
+    public static $allowedFilters = [
         'imdb_id' => ['columnName' => 'imdb_id', 'filterType' => 'partial'],
         'yts_id' => ['columnName' => 'yts_id', 'filterType' => 'partial'],
         'name' => ['columnName' => 'name', 'filterType' => 'partial'],
@@ -36,7 +36,7 @@ class WatchList extends Model
         'downloaded_status' => ['columnName' => 'downloaded_status', 'filterType' => 'exists'],
     ];
 
-    private $allowedSortColumns = [
+    public static $allowedSortColumns = [
         'created_at' => [],
         'downloaded_status' => [],
         'my_rating' => [],

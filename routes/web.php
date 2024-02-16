@@ -22,9 +22,12 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function (): void {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
+])
+    ->name('dashboard')
+    ->group(function (): void {
+        Route::get('/dashboard', [DashboardController::class, 'index']);
+        Route::get('/dashboard/watch-list', [DashboardController::class, 'watchList'])->name('.watchList');
+    });
 
 Route::name('home.')->group(function (): void {
     Route::get('/', [HomeController::class, 'index'])->name('index');
