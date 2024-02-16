@@ -44,10 +44,10 @@ const authName = page.props.auth?.user?.name;
                     </div>
                     <div v-else>
                         <div v-if="authName?.length < 10">
-                            {{authName}}
+                            <NavLink :href="route('dashboard')">{{authName}}</NavLink>
                         </div>
                         <div v-else>
-                            <NavLink :href="route('dashboard')" v-html="truncate(authName)"></NavLink>
+                            <NavLink :href="route('dashboard')">{{truncate(authName)}}</NavLink>
                         </div>
                     </div>
                 </div>
