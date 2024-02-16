@@ -69,10 +69,13 @@ const buildMagnetLink = function (quality, type) {
 
     return link;
 }
+
+const downloadTorrent = (hash) => {
+    window.open(`https://yts.mx/torrent/download/${hash}`, '_blank')
+}
 </script>
 
 <template>
-
     <GuestLayout :title="movie['name']">
         <div class="grid grid-cols-1 auto-rows-auto gap-y-8 items-start py-8 px-4 lg:px-24">
             <!--Intro-->
@@ -105,13 +108,17 @@ const buildMagnetLink = function (quality, type) {
                                 <li>{{ torrent['type'].toUpperCase() }}</li>
                                 <li>{{ torrent['size'] }}</li>
                                 <li>
-                                    <Anchor :href="buildMagnetLink(torrent['quality'], torrent['type'])"/>
+                                    <Anchor :href="buildMagnetLink(torrent['quality'], torrent['type'])">
+                                        <span class="font-bold">U</span> <span class="text-green-600">Magnet Link</span>
+                                    </Anchor>
                                 </li>
                                 <li>
                                     <PrimeButton
+                                        @click="downloadTorrent(torrent['hash'])"
                                         class="py-1"
                                         label="Download"
                                         size="small"
+                                        icon="pi pi-cloud-download"
                                         :title="'Download torrent for movie ' + movie['name']"
                                     />
                                 </li>
