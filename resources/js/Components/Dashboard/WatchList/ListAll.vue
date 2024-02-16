@@ -1,6 +1,6 @@
 <script setup>
 import {reactive, ref, watch} from "vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, router} from "@inertiajs/vue3";
 import DataTable from "primevue/datatable";
 import Column from 'primevue/column';
 import Image from 'primevue/image';
@@ -222,11 +222,7 @@ const sendFiltersRequest = (
 };
 
 const showCreateMoviePage = () => {
-    useForm([])
-        .get(route('movies-watch-list.create'), {
-            preserveScroll: true,
-            preserveState: true,
-        });
+    router.visit(route('movies-watch-list.create'))
 }
 </script>
 
