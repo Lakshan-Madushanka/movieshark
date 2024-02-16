@@ -1,6 +1,6 @@
 <script setup>
 import {reactive, ref, watch} from "vue";
-import {useForm, usePage} from "@inertiajs/vue3";
+import {useForm} from "@inertiajs/vue3";
 import DataTable from "primevue/datatable";
 import Column from 'primevue/column';
 import Image from 'primevue/image';
