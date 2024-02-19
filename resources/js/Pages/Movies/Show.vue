@@ -73,6 +73,10 @@ const buildMagnetLink = function (quality, type) {
 const downloadTorrent = (hash) => {
     window.open(`https://yts.mx/torrent/download/${hash}`, '_blank')
 }
+
+const showImdbPage = (imdbCode) => {
+    window.open(`https://www.imdb.com/title/${imdbCode}`, '_blank')
+}
 </script>
 
 <template>
@@ -156,7 +160,7 @@ const downloadTorrent = (hash) => {
                             <span>{{ movie['like_count'] }}</span>
                         </li>
                         <li>
-                            <span class="py-1 px-2 text-sm font-bold bg-yellow-300 text-black">IMDB</span>
+                            <span @click="showImdbPage(movie['imdb_code'])" class="py-1 px-2 text-sm font-bold bg-yellow-300 text-black cursor-pointer">IMDB</span>
                             <span>{{ movie['rating'] }}</span>
                         </li>
                     </ul>
