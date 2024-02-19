@@ -33,16 +33,16 @@ class WatchListController extends Controller
         );
     }
 
-    public function toggle(WatchListStoreRequest $request): RedirectResponse
+    public function toggle(Request $request): RedirectResponse
     {
-        $payload = $request->payload();
+        $ytsId = $request->input('yts_id');
 
         /** @var WatchList $record */
-        if ($record = WatchList::query()->where('yts_id', $payload->yts_id)->first()) {
+        if ($record = WatchList::query()->where('yts_id', $ytsId)->first()) {
             return $this->destroy($record);
         }
 
-        return $this->store($request);
+        return $this->store(app(WatchListStoreRequest::class));
     }
 
     public function store(WatchListStoreRequest $request): Redirector|RedirectResponse|Application
