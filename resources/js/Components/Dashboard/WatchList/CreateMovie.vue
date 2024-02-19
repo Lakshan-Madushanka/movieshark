@@ -10,6 +10,7 @@ import Textarea from 'primevue/textarea';
 import InputNumber from 'primevue/inputnumber';
 import {useToast} from "primevue/usetoast";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
+import Image from "primevue/image";
 
 const toast = useToast();
 
@@ -109,6 +110,8 @@ const createMovie = () => {
                     />
                     <span v-if="form.errors.name" class="text-sm text-red-500">{{form.errors.name}}</span>
                 </div>
+                <!-- Placeholder-->
+                <div></div>
                 <div>
                     <label for="input-url">Image URL</label>
                     <InputText
@@ -119,6 +122,14 @@ const createMovie = () => {
                         placeholder="Image URL"
                     />
                     <span v-if="form.errors.image" class="text-sm text-red-500">{{form.errors.image}}</span>
+                </div>
+                <div class="mt-6">
+                    <Image
+                        :src="form.image"
+                        class="w-full"
+                        preview
+                    />
+                    <span v-if="form.errors.image" class="text-sm text-red-500">{{ form.errors.image }}</span>
                 </div>
                 <div>
                     <label for="input-genres">Genres</label>
