@@ -39,13 +39,12 @@ watch(() => route().current(), (currentRoute) => {
 <template>
     <AppLayout title="Dashboard">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
                 {{ header }}
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12 pt-0 sm:pt-12">
                 <div class="text-black pb-4 bg-[#424b57] overflow-hidden shadow-xl sm:rounded-lg">
                     <Index v-if="route().current('dashboard')" :meta :moviesHistory :watchList/>
                     <ListAll v-if="route().current('movies-watch-list.index')" :watchList/>
@@ -53,6 +52,5 @@ watch(() => route().current(), (currentRoute) => {
                     <EditMovie v-if="route().current('movies-watch-list.edit')" :watchList/>
                 </div>
             </div>
-        </div>
     </AppLayout>
 </template>

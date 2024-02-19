@@ -75,7 +75,7 @@ const createMovie = () => {
     <Card>
         <template #title><h1>Create Movie</h1></template>
         <template #content>
-            <form @submit.prevent="createMovie" @keydown.enter="createMovie" class="grid grid-cols-2 gap-8">
+            <form @submit.prevent="createMovie" @keydown.enter="createMovie" class="grid [&>div]:col-span-2 [&>div]:md:col-span-1 grid-cols-2 gap-8">
                 <div>
                     <label for="input-imdbId">IMDB Id</label>
                     <InputText
@@ -88,10 +88,10 @@ const createMovie = () => {
                     <span v-if="form.errors.imdb_id" class="text-sm text-red-500">{{form.errors.imdb_id}}</span>
                 </div>
                 <div>
-                    <label for="input-imdbId">YTS Id</label>
+                    <label for="input-ytsId">YTS Id</label>
                     <InputText
                         v-model="form.yts_id"
-                        id="input-imdbId"
+                        id="input-ytsId"
                         class="w-full"
                         type="text"
                         placeholder="IMDB Id"
@@ -155,7 +155,7 @@ const createMovie = () => {
                 </div>
                 <div class="flex flex-col">
                     <label for="input-description">Description</label>
-                    <Textarea v-model="form.description" inputId="input-description"/>
+                    <Textarea v-model="form.description" id="input-description"/>
                     <span v-if="form.errors.description" class="text-sm text-red-500">{{form.errors.description}}</span>
                 </div>
                 <hr class="col-span-2"/>

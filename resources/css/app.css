@@ -10,6 +10,10 @@
     h2 {
         @apply text-2xl font-bold mb-4
     }
+
+    h1 {
+        @apply text-3xl font-extrabold mb-6
+    }
 }
 
 @layer tailwind-base, primevue, tailwind-utilities;

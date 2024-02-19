@@ -15,7 +15,6 @@ const form = useForm({
 })
 
 const inputRef = ref();
-const componentRef = ref();
 const menu = ref();
 const results = ref([
     {
@@ -81,9 +80,8 @@ const loading = ref(false);
 </script>
 
 <template>
-    <div ref="componentRef">
         <div class="flex justify-content-center">
-            <span :class="[{'p-input-icon-left': !form.processing, 'p-input-icon-right': form.processing}]">
+            <span :class="[{'p-input-icon-left': !form.processing, 'p-input-icon-right': form.processing}, 'w-full md:w-auto']">
             <i :class="{'pi pi-search': !form.processing, 'pi pi-spin pi-spinner': form.processing}"/>
             <InputText
                 ref="inputRef"
@@ -104,6 +102,4 @@ const loading = ref(false);
                 class="max-w-32 max-h-64 overflow-y-auto"
             />
         </div>
-
-    </div>
 </template>

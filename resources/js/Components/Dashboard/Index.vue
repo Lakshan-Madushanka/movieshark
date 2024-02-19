@@ -93,63 +93,68 @@ const test = () => {
 
 <template>
     <div class="text-white p-4 space-y-8" @click="test">
-        <h2>Movies ({{ meta.all }}) Info</h2>
-        <div class="flex justify-between flex-wrap">
-            <Card class="!min-w-64 m-2">
-                <template #title><h2>Watched Status</h2></template>
-                <template #content>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span>Watched Movies</span>
-                            <Tag severity="info">{{ props.meta.watched }}</Tag>
+        <div>
+            <div class="flex justify-between">
+                <h1>Movies Info</h1>
+                <span>({{ meta.all }})</span>
+            </div>
+            <div class="flex sm:justify-between md:flex-row flex-col">
+                <Card class="!min-w-64 m-2">
+                    <template #title><h2>Watched Status</h2></template>
+                    <template #content>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span>Watched Movies</span>
+                                <Tag severity="info">{{ props.meta.watched }}</Tag>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Un-Watched Movies</span>
+                                <Tag severity="info">{{ props.meta.unWatched }}</Tag>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span>Un-Watched Movies</span>
-                            <Tag severity="info">{{ props.meta.unWatched }}</Tag>
+                    </template>
+                </Card>
+                <Card class="!min-w-64 m-2">
+                    <template #title><h2>Downloaded Status</h2></template>
+                    <template #content>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span>Downloaded Movies</span>
+                                <Tag severity="info">{{ props.meta.downloaded }}</Tag>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Not-Downloaded Movies</span>
+                                <Tag severity="info">{{ props.meta.notDownloaded }}</Tag>
+                            </div>
                         </div>
-                    </div>
-                </template>
-            </Card>
-            <Card class="!min-w-64 m-2">
-                <template #title><h2>Downloaded Status</h2></template>
-                <template #content>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span>Downloaded Movies</span>
-                            <Tag severity="info">{{ props.meta.downloaded }}</Tag>
+                    </template>
+                </Card>
+                <Card class="!min-w-64 m-2">
+                    <template #title><h2>Preferred Status</h2></template>
+                    <template #content>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span>High</span>
+                                <Tag severity="info">{{ props.meta.highPreferred }}</Tag>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Medium</span>
+                                <Tag severity="info">{{ props.meta.mediumPreferred }}</Tag>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Low</span>
+                                <Tag severity="info">{{ props.meta.lowPreferred }}</Tag>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span>Not-Downloaded Movies</span>
-                            <Tag severity="info">{{ props.meta.notDownloaded }}</Tag>
-                        </div>
-                    </div>
-                </template>
-            </Card>
-            <Card class="!min-w-64 m-2">
-                <template #title><h2>Preferred Status</h2></template>
-                <template #content>
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span>High</span>
-                            <Tag severity="info">{{ props.meta.highPreferred }}</Tag>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span>Medium</span>
-                            <Tag severity="info">{{ props.meta.mediumPreferred }}</Tag>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span>Low</span>
-                            <Tag severity="info">{{ props.meta.lowPreferred }}</Tag>
-                        </div>
-                    </div>
-                </template>
-            </Card>
+                    </template>
+                </Card>
+            </div>
         </div>
 
         <div>
             <h2>Watch History</h2>
             <div class="!bg-gray-300 rounded-lg overflow-hidden">
-                <div class="mb-4 flex justify-between">
+                <div class="mb-4 p-1 flex flex-col md:flex-row md:justify-between bg-black">
                     <Calendar v-model="chartForm.year" view="year" dateFormat="yy"
                               @update:modelValue="submitChartForm"/>
                     <Dropdown v-model="chartForm.filter" :options="chartDataOptions" optionLabel="name"

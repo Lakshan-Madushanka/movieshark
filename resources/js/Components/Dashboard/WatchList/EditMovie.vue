@@ -106,10 +106,10 @@ const editMovie = () => {
                     <span v-if="form.errors.imdb_id" class="text-sm text-red-500">{{ form.errors.imdb_id }}</span>
                 </div>
                 <div>
-                    <label for="input-imdbId">YTS Id</label>
+                    <label for="input-ytsId">YTS Id</label>
                     <InputText
                         v-model="form.yts_id"
-                        id="input-imdbId"
+                        id="input-ytsId"
                         class="w-full"
                         type="text"
                         placeholder="IMDB Id"
@@ -184,9 +184,8 @@ const editMovie = () => {
                 </div>
                 <div class="flex flex-col">
                     <label for="input-description">Description</label>
-                    <Textarea v-model="form.description" inputId="input-description"/>
-                    <span v-if="form.errors.description"
-                          class="text-sm text-red-500">{{ form.errors.description }}</span>
+                    <Textarea v-model="form.description" id="input-description"/>
+                    <span v-if="form.errors.description" class="text-sm text-red-500">{{ form.errors.description }}</span>
                 </div>
                 <hr class="col-span-2"/>
                 <PrimeButton type="submit" icon="pi pi-save" label="Edit" :loading="form.processing"/>
