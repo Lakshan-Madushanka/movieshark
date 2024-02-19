@@ -1,5 +1,5 @@
 <script setup>
-import {Head, Link, useForm} from '@inertiajs/vue3';
+import {Head, Link, router, useForm} from '@inertiajs/vue3';
 import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -8,6 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import GuestLayout from "@/Layouts/GuestLayout.vue";
+import NavLink from "@/Components/NavLink.vue";
 
 defineProps({
     canResetPassword: Boolean,
@@ -76,7 +77,8 @@ const submit = () => {
                     </label>
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
+                <div class="flex items-center justify-between mt-4">
+                    <NavLink :href="route('register')"><span class="text-black">Register</span></NavLink>
                     <Link v-if="canResetPassword" :href="route('password.request')"
                           class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Forgot your password?
