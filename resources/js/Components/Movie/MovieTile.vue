@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useToggleMovieFromWatchList} from "@/Composables/useToggleMovieFromWatchList.js";
+import Button from 'primevue/button';
 import {useToast} from "primevue/usetoast";
 
 const props = defineProps({
@@ -58,21 +59,27 @@ const watchListButtonClicked = () => {
     <div
         @mouseenter="setMovieInfoId(movie['id'])"
         @mouseleave="setMovieInfoId(-100000)"
-        :class="'@container relative w-[12.5rem] h-[18rem] border-4 hover:border-green-500 overflow-hidden ' + widthClass + ' ' + heightClass"
+        :class="'@container relative group w-[12.5rem] h-[18rem] border-4 hover:border-green-500 overflow-hidden ' + widthClass + ' ' + heightClass"
     >
+        <div class="absolute opacity-0 z-10 bottom-[-2rem] left-[50%] translate-x-[-50%] group-hover:!bottom-[10%] duration-300 group-hover:!opacity-100 transition-all]">
+            <Button class="bg-green-500 border-green-500 p-1 px-2 text-white" label="More Info" severity="info" size="small" raised/>
+        </div>
+
         <img
             :src="getImageUrl()"
             :alt="'cover image of movie ' + movie['name']"
-            :class="['w-[12.5rem] h-[18rem] ' + widthClass + ' ' + heightClass, {'scale-125 transition ': showMovieInfoForId === movie['id']}]"
+            :class="['w-[12.5rem] h-[18rem] group-hover:scale-125 duration-300 transition-all' + widthClass + ' ' + heightClass]"
         >
         <div
             :class="['text-xs @[6rem]:text-sm absolute w-full flex justify-between items-start right-0 top-0 z-20 text-black font-extrabold', {'!justify-end': !showWatchListButton}]">
-            <span class="p-1 bg-white">{{ (movie['rating']).toFixed(1) }}</span>
-            <i
+            <span class="p-1 h-[1.6rem] flex justify-center items-center w-8 bg-white border border-gray-300">{{ (movie['rating']).toFixed(1) }}</span>
+            <div
                 v-if="showWatchListButton"
                 @click.prevent="watchListButtonClicked"
-                :class="['pi p-1 @[6rem]:p-2 bg-white', {'pi-heart': !watchListHas, 'pi-heart-fill': watchListHas}]"
-            />
+                class="flex justify-center items-center h-[1.6rem] w-8 bg-white border border-gray-300"
+            >
+                <i :class="['pi p-1 @[6rem]:p-1', {'pi-heart': !watchListHas, 'pi-heart-fill': watchListHas}]"/>
+            </div>
         </div>
         <div
             v-if="showMovieInfoForId === movie['id']"
