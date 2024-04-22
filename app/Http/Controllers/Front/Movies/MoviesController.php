@@ -10,6 +10,7 @@ use App\Http\Integrations\YTS\Requests\BrowseMoviesRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieDetailsRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieSuggestionsRequest;
 use App\Http\Integrations\YTS\YTSConnector;
+use App\Models\WatchList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Inertia\Inertia;
@@ -28,11 +29,14 @@ class MoviesController extends Controller
         /** @var Collection<int, MovieData> $ytsMovieSuggestionsResponseData */
         $ytsMovieSuggestionsResponseData = $ytsConnector->send($ytsMovieSuggestionsRequest)->dtoOrFail();
 
+        $watchListHas = WatchList::query()->where('yts_id', $id)->exists();
+
         return Inertia::render(
             component: 'Movies/Show',
             props: [
                 'movie' => $ytsMovieDetailsResponseData,
                 'suggestions' => $ytsMovieSuggestionsResponseData,
+                'watchListHas' => $watchListHas,
             ]
         );
     }

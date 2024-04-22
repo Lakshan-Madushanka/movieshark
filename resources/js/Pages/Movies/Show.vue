@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {Link} from '@inertiajs/vue3';
 import Image from 'primevue/image';
 import PrimeButton from 'primevue/button';
@@ -11,15 +11,24 @@ import SplitterPanel from 'primevue/splitterpanel';
 import Tag from 'primevue/tag';
 import Dialog from 'primevue/dialog';
 import Panel from 'primevue/panel';
+import {useToast} from "primevue/usetoast";
 import MovieTile from "@/Components/Movie/MovieTile.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Anchor from "@/Components/Anchor.vue";
 import moment from 'moment';
+import {useToggleMovieFromWatchList} from "@/Composables/useToggleMovieFromWatchList.js";
 
 const props = defineProps({
     'movie': {},
     'suggestions': {},
+    'watchListHas': Boolean,
 });
+
+const toast = useToast();
+
+const watchListToggleProcessing = ref(false);
+
+const {toggleFromWatchList: toggleMovieFromWatchList} = useToggleMovieFromWatchList(props.watchListHas ? [props.movie.id] : []);
 
 const showDownloadBox = ref(false);
 const showTrailer = ref(false);
@@ -77,6 +86,24 @@ const downloadTorrent = (hash) => {
 const showImdbPage = (imdbCode) => {
     window.open(`https://www.imdb.com/title/${imdbCode}`, '_blank')
 }
+
+const toggleFromWatchList = () => {
+    if (watchListToggleProcessing.value) {
+        return;
+    }
+
+    watchListToggleProcessing.value = true;
+
+    let status = toggleMovieFromWatchList(props.movie);
+
+    watch(status, (status) => {
+        if (status.success) {
+            toast.add({severity: 'success', summary: status.summary, detail: status.details, life: 3000});
+        }
+
+        watchListToggleProcessing.value = false;
+    })
+}
 </script>
 
 <template>
@@ -87,8 +114,12 @@ const showImdbPage = (imdbCode) => {
                 class="grid sm:grid-cols-[30%_70%] sm:grid-rows-[minmax(0, auto)] lg:grid-cols-4 lg:grid-rows-1 gap-x-4 gap-y-6 lg:gap-x-8">
                 <!--Poster-->
                 <div class="justify-start items-center hidden sm:grid">
-                    <figure class="flex flex-col space-y-1">
+                    <figure class="flex flex-col space-y-1 relative">
                         <Image class="border-4" :src="movie['cover_image']" width="200" preview/>
+                        <div @click="toggleFromWatchList" class="absolute right-2 top-1 p-1 bg-white flex justify-center items-center">
+                            <i v-if="watchListToggleProcessing" class="pi pi-spin pi-spinner text-black text-xl" />
+                            <i v-else v-tooltip="'Toggle from watch list'" :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>
+                        </div>
                         <PrimeButton
                             @click="showDownloadBox = !showDownloadBox"
                             label="Download"
