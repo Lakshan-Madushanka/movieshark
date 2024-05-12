@@ -94,9 +94,9 @@ const test = () => {
 <template>
     <div class="text-white p-4 space-y-8" @click="test">
         <div>
-            <div class="flex justify-between">
+            <div class="flex justify-between items-start">
                 <h1>Movies Info</h1>
-                <span>({{ meta.all }})</span>
+                <Tag severity="primary">{{ meta.all }}</Tag>
             </div>
             <div class="flex sm:justify-between md:flex-row flex-col">
                 <Card class="!min-w-64 m-2">
