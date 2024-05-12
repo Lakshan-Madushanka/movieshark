@@ -37,8 +37,8 @@ class MoviesController extends Controller
                 'movie' => $ytsMovieDetailsResponseData,
                 'suggestions' => $ytsMovieSuggestionsResponseData,
                 'watchListHas' => $watchListHas,
-                'allowTorrent' => config('app.allow_torrenting')
-            ]
+                'allowTorrent' => config('app.allow_torrenting'),
+            ],
         );
     }
 

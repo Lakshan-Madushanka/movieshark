@@ -39,7 +39,7 @@ class BrowseMoviesRequest extends Request
         if (count($movies) > 0) {
 
             $movies = collect($movies)->filter(
-                fn($value) => str($value['title_english'])->lower()->contains(strtolower($this->httpRequest->query('query_term')))
+                fn($value) => str($value['title_english'])->lower()->contains(strtolower($this->httpRequest->query('query_term'))),
             );
         }
 
@@ -56,7 +56,7 @@ class BrowseMoviesRequest extends Request
                     language: $movie['language'],
                     genres: $movie['genres'] ?? [],
                     cover_image: $movie['medium_cover_image'],
-                )
+                ),
             );
         }
 

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            WatchListSeeder::class
+            WatchListSeeder::class,
         ]);
     }
 }

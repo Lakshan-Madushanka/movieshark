@@ -47,7 +47,7 @@ class GetMoviesRequest extends Request
                     language: $movie['language'],
                     genres: $movie['genres'] ?? [],
                     cover_image: $movie['medium_cover_image'],
-                )
+                ),
             );
         }
 
@@ -55,7 +55,7 @@ class GetMoviesRequest extends Request
             $metaData = new MovieMetaData(
                 movie_count: $data['movie_count'],
                 limit: $data['limit'],
-                page: $data['page_number']
+                page: $data['page_number'],
             );
         }
 

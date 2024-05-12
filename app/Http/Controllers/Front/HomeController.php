@@ -38,21 +38,21 @@ class HomeController extends Controller
                 'movies' => $ytsResponseData->get('movies'),
                 'meta' => $ytsResponseData->get('meta'),
                 'watchListIds' => $watchListIds,
-            ]
+            ],
         );
     }
 
     public function about(): Response
     {
         return Inertia::render(
-          component: 'About'
+            component: 'About',
         );
     }
 
     public function terms(): Response
     {
         return Inertia::render(
-            component: 'TermsOfService'
+            component: 'TermsOfService',
         );
     }
 }

@@ -46,7 +46,7 @@ class DashboardController extends Controller
 
         return Inertia::render(
             component: 'Dashboard',
-            props: compact('meta', 'moviesHistory', 'watchList')
+            props: compact('meta', 'moviesHistory', 'watchList'),
         );
     }
 

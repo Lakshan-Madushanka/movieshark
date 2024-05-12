@@ -29,7 +29,7 @@ class WatchListController extends Controller
 
         return Inertia::render(
             component: 'Dashboard',
-            props: ['watchList' => $watchList]
+            props: ['watchList' => $watchList],
         );
     }
 
@@ -59,7 +59,7 @@ class WatchListController extends Controller
 
         return Inertia::render(
             component: 'Dashboard',
-            props: ['watchList' => $watchList]
+            props: ['watchList' => $watchList],
         );
     }
 
