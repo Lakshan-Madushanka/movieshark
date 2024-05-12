@@ -116,7 +116,13 @@ const toggleFromWatchList = () => {
                 <!--Poster-->
                 <div class="justify-start items-center hidden sm:grid">
                     <figure class="flex flex-col space-y-1 relative">
-                        <Image class="border-4" :src="movie['cover_image']" width="200" preview/>
+                        <Image
+                            class="border-4"
+                            :src="movie['cover_image']"
+                            width="200"
+                            preview
+                            onerror="this.onerror=null;this.src='/images/no_image.png'"
+                        />
                         <div @click="toggleFromWatchList" class="absolute right-2 top-1 p-1 bg-white flex justify-center items-center">
                             <i v-if="watchListToggleProcessing" class="pi pi-spin pi-spinner text-black text-xl" />
                             <i v-else v-tooltip="'Toggle from watch list'" :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>

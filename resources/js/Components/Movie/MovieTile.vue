@@ -69,6 +69,7 @@ const watchListButtonClicked = () => {
             :src="getImageUrl()"
             :alt="'cover image of movie ' + movie['name']"
             :class="['w-[12.5rem] h-[18rem] group-hover:scale-125 duration-300 transition-all' + widthClass + ' ' + heightClass]"
+            onerror="this.onerror=null;this.src='/images/no_image.png'"
         >
         <div
             :class="['text-xs @[6rem]:text-sm absolute w-full flex justify-between items-start right-0 top-0 z-20 text-black font-extrabold', {'!justify-end': !showWatchListButton}]">
