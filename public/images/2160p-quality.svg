@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="130.999px"
+   height="81px"
+   viewBox="0 0 130.999 81"
+   enable-background="new 0 0 130.999 81"
+   xml:space="preserve"
+   sodipodi:docname="2160p-quality.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"><metadata
+   id="metadata62"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
+   id="defs60" /><sodipodi:namedview
+   inkscape:document-rotation="0"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1582"
+   inkscape:window-height="1142"
+   id="namedview58"
+   showgrid="false"
+   inkscape:zoom="8.20617"
+   inkscape:cx="60.840162"
+   inkscape:cy="42.407569"
+   inkscape:window-x="138"
+   inkscape:window-y="32"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="g55" />
+<g
+   id="g43">
+	<path
+   fill="#DBDBDB"
+   d="M131.101,72c0,0.324-0.684,1-1,1h-129c-0.316,0-1-0.676-1-1V1c0-0.324,0.684-1,1-1h128.798   c0.316,0,1.201,0.887,1.201,1.212V72z M127.101,4h-123v65h123V4z M65.602,70.73h-1.203v1.212h1.203V70.73z M65.278,0.499   c-0.07,0-0.127,0.058-0.127,0.131c0,0.071,0.057,0.13,0.127,0.13s0.127-0.059,0.127-0.13C65.405,0.557,65.348,0.499,65.278,0.499z    M65.948,0.563c-0.035,0-0.064,0.029-0.064,0.066c0,0.036,0.029,0.065,0.064,0.065s0.064-0.029,0.064-0.065   C66.012,0.593,65.983,0.563,65.948,0.563z"
+   id="path37" />
+	<path
+   fill="#DBDBDB"
+   d="M68.103,77h-6.001v-4h6.001V77z"
+   id="path39" />
+	<path
+   fill="#DBDBDB"
+   d="M79.101,81h-29v-4h29V81z"
+   id="path41" />
+</g>
+<g
+   id="g55">
+	
+	
+	
+	
+	
+<text
+   xml:space="preserve"
+   style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#cccccc;fill-opacity:1;stroke:none"
+   x="27.296534"
+   y="57.159634"
+   id="text70"><tspan
+     id="tspan13"
+     sodipodi:role="line"
+     x="27.296534"
+     y="57.159634"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:'Franklin Gothic Medium';-inkscape-font-specification:'Franklin Gothic Medium, ';fill:#aade87">2160p</tspan><tspan
+     id="tspan17"
+     sodipodi:role="line"
+     x="27.296534"
+     y="107.15964"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:'Franklin Gothic Medium';-inkscape-font-specification:'Franklin Gothic Medium, ';fill:#aade87" /></text><text
+   id="text21"
+   y="30.371906"
+   x="50.47121"
+   style="font-style:normal;font-weight:normal;font-size:26.6667px;line-height:1.25;font-family:sans-serif;fill:#5aa02c;fill-opacity:1;stroke:none"
+   xml:space="preserve"><tspan
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;font-family:'Franklin Gothic Medium';-inkscape-font-specification:'Franklin Gothic Medium, ';fill:#5aa02c;fill-opacity:1"
+     y="30.371906"
+     x="50.47121"
+     id="tspan19"
+     sodipodi:role="line">4K</tspan></text></g>
+</svg>
