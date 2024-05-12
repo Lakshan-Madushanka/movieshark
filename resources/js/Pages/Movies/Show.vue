@@ -22,6 +22,7 @@ const props = defineProps({
     'movie': {},
     'suggestions': {},
     'watchListHas': Boolean,
+    'allowTorrent': Boolean,
 });
 
 const toast = useToast();
@@ -121,8 +122,10 @@ const toggleFromWatchList = () => {
                             <i v-else v-tooltip="'Toggle from watch list'" :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>
                         </div>
                         <PrimeButton
+                            v-if="allowTorrent"
                             @click="showDownloadBox = !showDownloadBox"
                             label="Download"
+                            icon="pi pi-download"
                             size="small"
                             class="p-2"
                             title="Show move download options"
@@ -130,21 +133,27 @@ const toggleFromWatchList = () => {
                     </figure>
                     <Dialog
                         v-model:visible="showDownloadBox"
-                        modal header="Download Movie"
+                        modal
+                        dismissableMask
+                        header="Download Movie"
                         position="top"
                         class="!mt-4"
                         :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
                     >
-                        <div
-                            class="flex flex-wrap justify-center items-center gat-y-4 [&>ul:not(:last-child)]:!border-r-2">
-                            <ul v-for="torrent in movie['torrents']" :key="torrent['url']"
-                                class="[&>li]:mb-8 flex flex-col justify-center items-center p-8">
+                        <div class="flex flex-wrap justify-center items-center [&>ul:not(:last-child)]:!border-r-2">
+                            <ul
+                                v-for="torrent in movie['torrents']"
+                                :key="torrent['url']"
+                                class="gap-y-6 flex flex-col justify-center items-center p-8"
+                            >
+                                <li><img :src="'/images/' + torrent['quality'] + '-quality.svg'" alt="image quality"></li>
                                 <li>{{ torrent['quality'] }}</li>
                                 <li>{{ torrent['type'].toUpperCase() }}</li>
                                 <li>{{ torrent['size'] }}</li>
                                 <li>
-                                    <Anchor :href="buildMagnetLink(torrent['quality'], torrent['type'])">
-                                        <span class="font-bold">U</span> <span class="text-green-600">Magnet Link</span>
+                                    <Anchor :href="buildMagnetLink(torrent['quality'], torrent['type'])" class="flex items-center space-x-1 italic text-sm font-bold">
+                                        <img class="w-4" src="/images/magnet.png" alt="magnet">
+                                        <span class="text-green-600">Magnet Link</span>
                                     </Anchor>
                                 </li>
                                 <li>
@@ -199,8 +208,11 @@ const toggleFromWatchList = () => {
                         <PrimeButton
                             @click="downloadSubtitles(movie['imdb_code'])"
                             label="Download Subtitles"
-                            icon="pi pi-download" size="small"
-                            text raised class="py-2 bg-[#424b57]"
+                            icon="pi pi-download"
+                            size="small"
+                            text
+                            raised
+                            class="py-2 bg-[#424b57]"
                             :title="'Download subtitle for the movie ' + movie['name']"
                         />
                         <PrimeButton

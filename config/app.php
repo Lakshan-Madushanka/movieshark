@@ -189,4 +189,5 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'allow_torrenting' => env('ALLOW_TORRENTING', false),
 ];
