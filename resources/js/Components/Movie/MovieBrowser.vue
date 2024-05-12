@@ -27,10 +27,11 @@ watch(() => page.props.browsedMovieData, function (movies) {
     let tempItems = [];
 
     if (Array.isArray(movies) && movies.length > 0) {
-
         movies.forEach(function (movie) {
             tempItems.push({
                 'label': movie['name'],
+                'image': movie['cover_image'],
+                'year': movie['year'],
                 command: () => {
                     router.get(route('movies.show', {'id': movie['id']}));
                 }
@@ -100,6 +101,21 @@ const loading = ref(false);
                 :popup="true"
                 id="overlay_menu"
                 class="max-w-32 max-h-64 overflow-y-auto"
-            />
+                :pt="{
+                    menuitem: {
+                        class: ['border-gray-600 border-b last:border-b-0']
+                    }
+                }"
+            >
+                <template #item="{item}">
+                    <div class="flex space-x-4 start p-2 cursor-pointer">
+                        <img class="w-12" :src="item.image" alt="movie cover image">
+                        <div class="flex flex-col space-y-1 text-sm font-bold">
+                            <span>{{item['label']}}</span>
+                            <span class="text-xs !text-slate-400">{{item['year']}}</span>
+                        </div>
+                    </div>
+                </template>
+            </Menu>
         </div>
 </template>
