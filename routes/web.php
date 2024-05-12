@@ -31,6 +31,8 @@ Route::middleware([
 
 Route::name('home.')->group(function (): void {
     Route::get('/', [HomeController::class, 'index'])->name('index');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/terms-and-conditions', [HomeController::class, 'terms'])->name('terms');
 });
 
 Route::name('movies.')->prefix('/movies')->group(function (): void {

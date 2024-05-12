@@ -52,7 +52,17 @@ const authName = page.props.auth?.user?.name;
                         </Link>
                     </div>
                     <MovieBrowser inputClass="py-1"/>
-                    <div class="space-x-4">
+                    <div class="flex items-center space-x-4">
+                        <div>
+                            <Link class="flex items-center" :class="{'bg-gray-800 px-2 rounded': route().current() === 'home.about'}" :href="route('home.about')">
+                                <span>About</span>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link class="flex items-center" :class="{'bg-gray-800 px-2 rounded': route().current() === 'home.terms'}" :href="route('home.terms')">
+                                <span>Terms</span>
+                            </Link>
+                        </div>
                         <div v-if="!authenticated">
                             <NavLink :href="route('login')">Login</NavLink>
                             <NavLink :href="route('register')">Register</NavLink>
