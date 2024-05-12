@@ -111,7 +111,6 @@ const createMovie = () => {
                     <span v-if="form.errors.name" class="text-sm text-red-500">{{form.errors.name}}</span>
                 </div>
                 <!-- Placeholder-->
-                <div></div>
                 <div>
                     <label for="input-url">Image URL</label>
                     <InputText
@@ -123,7 +122,7 @@ const createMovie = () => {
                     />
                     <span v-if="form.errors.image" class="text-sm text-red-500">{{form.errors.image}}</span>
                 </div>
-                <div class="mt-6">
+                <div v-if="form.image" class="mt-6">
                     <Image
                         :src="form.image"
                         class="w-full"

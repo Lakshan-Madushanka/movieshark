@@ -93,7 +93,7 @@ const editMovie = () => {
     <Card>
         <template #title><h1>Edit Movie</h1></template>
         <template #content>
-            <form @submit.prevent="editMovie" @keydown.enter="editMovie" class="grid grid-cols-2 gap-8">
+            <form @submit.prevent="editMovie" @keydown.enter="editMovie" class="grid [&>div]:col-span-2 [&>div]:md:col-span-1 grid-cols-2 gap-8">
                 <div>
                     <label for="input-imdbId">IMDB Id</label>
                     <InputText
