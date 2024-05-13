@@ -37,11 +37,10 @@ const authName = page.props.auth?.user?.name;
                     <ApplicationMark class="w-8 mr-1"/>
                     <div>
                         <i
-                            v-if="authenticated"
                             @click="showNavDropdown = !showNavDropdown"
-                            :class="[{'pi-bars': !showNavDropdown, 'pi-times': showNavDropdown}, 'pi rounded-full p-1 border-2']"
+                            :class="[{'pi-bars': !showNavDropdown, 'pi-times': showNavDropdown}, 'pi rounded-full p-1 border-2 cursor-pointer']"
                         />
-                        <NavLink v-else :href="route('login')">Login</NavLink>
+<!--                        <NavLink v-else :href="route('login')">Login</NavLink>-->
                     </div>
                 </div>
                 <div class="hidden md:flex px-2 space-x-4 justify-between items-center">
@@ -64,7 +63,7 @@ const authName = page.props.auth?.user?.name;
                             </Link>
                         </div>
                         <div v-if="!authenticated">
-                            <NavLink :href="route('login')">Login</NavLink>
+                            <NavLink :href="route('login')" :active="true">Login</NavLink>
                             <NavLink :href="route('register')">Register</NavLink>
                         </div>
                         <div v-else>
@@ -80,20 +79,35 @@ const authName = page.props.auth?.user?.name;
 
                 <div
                     v-if="showNavDropdown"
-                    class="flex flex-col md:hidden py-2 transition-all">
-                    <MovieBrowser class="w-full border-l-4 border-green-500" inputClass="py-1 w-full"/>
+                    class="flex flex-col md:hidden py-2 bg-gray-500 transition-all"
+                >
+                    <div class="mb-2">
+                        <MovieBrowser class="w-full" inputClass="py-1 w-full"/>
+                    </div>
                     <div>
-                        <div v-if="!authenticated">
+                        <div v-if="!authenticated" :class="[{'border-l-4 border-green-500': route().current() === 'login'}]">
                             <NavLink :href="route('login')">Login</NavLink>
+                        </div>
+                        <div v-if="!authenticated" :class="[{'border-l-4 border-green-500': route().current() === 'register'}]">
                             <NavLink :href="route('register')">Register</NavLink>
                         </div>
-                        <div v-else class="px-2 p-1 bg-[#111827] border-l-4 border-green-500">
+                        <div v-else :class="{'border-l-4 border-green-500': route().current() === 'dashboard'}">
                             <div v-if="authName?.length < 10">
                                 <NavLink :href="route('dashboard')" class="w-full">{{ authName }}</NavLink>
                             </div>
                             <div v-else>
                                 <NavLink :href="route('dashboard')">{{ truncate(authName) }}</NavLink>
                             </div>
+                        </div>
+                        <div :class="{'border-l-4 border-green-500': route().current() === 'home.about'}">
+                            <NavLink :href="route('home.about')">
+                                <span>About</span>
+                            </NavLink>
+                        </div>
+                        <div :class="{'border-l-4 border-green-500': route().current() === 'home.terms'}">
+                            <NavLink :href="route('home.terms')">
+                                <span>Terms</span>
+                            </NavLink>
                         </div>
                     </div>
                 </div>

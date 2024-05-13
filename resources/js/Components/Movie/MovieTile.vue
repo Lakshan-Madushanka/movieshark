@@ -59,16 +59,16 @@ const watchListButtonClicked = () => {
     <div
         @mouseenter="setMovieInfoId(movie['id'])"
         @mouseleave="setMovieInfoId(-100000)"
-        :class="'@container relative group w-[12.5rem] h-[18rem] border-4 hover:border-green-500 overflow-hidden ' + widthClass + ' ' + heightClass"
+        :class="'@container relative group w-[16rem] h-[21.5rem] md:w-[20rem] md:h-[25.5rem] lg:w-[12.5rem] lg:h-[18rem] border-4 hover:border-green-500 overflow-hidden ' + widthClass + ' ' + heightClass"
     >
         <div class="absolute opacity-0 z-10 bottom-[-2rem] left-[50%] translate-x-[-50%] group-hover:!bottom-[10%] duration-300 group-hover:!opacity-100 transition-all]">
-            <Button class="bg-green-500 border-green-500 p-1 px-2 text-white" label="More Info" severity="info" size="small" raised/>
+            <Button class="text-xs bg-green-500 border-green-500 p-1 px-2 text-white" label="More Info" severity="info" size="small" raised/>
         </div>
 
         <img
             :src="getImageUrl()"
             :alt="'cover image of movie ' + movie['name']"
-            :class="['w-[12.5rem] h-[18rem] group-hover:scale-125 duration-300 transition-all' + widthClass + ' ' + heightClass]"
+            :class="['w-full h-full group-hover:scale-125 duration-300 transition-all' + widthClass + ' ' + heightClass]"
             onerror="this.onerror=null;this.src='/images/no_image.png'"
         >
         <div
@@ -93,7 +93,7 @@ const watchListButtonClicked = () => {
         </div>
     </div>
     <div class="@container">
-        <div :class="'flex justify-between text-xs @[10rem]:text-lg items-center mt-1 w-[12.5rem] ' + widthClass">
+        <div :class="'flex justify-between text-xs @[10rem]:text-lg items-center mt-1 w-full ' + widthClass">
             <p class="text-nowrap overflow-hidden text-ellipsis">{{ movie['name'] }}</p>
             <span>[{{ movie['language'] }}]</span>
         </div>

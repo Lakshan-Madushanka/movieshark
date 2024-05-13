@@ -400,10 +400,10 @@ const showCreateMoviePage = () => {
 
                         <hr class="col-span-2 mt-4 mb-2"/>
                         <div>
-                            <PrimeButton icon="pi pi-filter" label="Apply Filters" @click="sendFiltersRequest"/>
+                            <PrimeButton icon="pi pi-filter" label="Apply Filters" size="small" @click="sendFiltersRequest"/>
                         </div>
                         <div class="justify-self-end">
-                            <PrimeButton icon="pi pi-filter-slash" label="Clear Filters" @click="resetFilters"/>
+                            <PrimeButton icon="pi pi-filter-slash" label="Clear Filters" size="small" @click="resetFilters"/>
                         </div>
                     </div>
                 </Dialog>

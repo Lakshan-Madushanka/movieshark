@@ -50,6 +50,10 @@ const setPage = function (event) {
     sendRequest();
 }
 
+watch(queryStringData, () => {
+    console.log('changed')
+})
+
 const search = function () {
     queryStringData.page = 1;
     queryStringData.limit = 20;
@@ -224,7 +228,7 @@ const sendRequest = function (
             </div>
 
             <!--Content-->
-            <section class="flex justify-center flex-wrap gap-x-16 gap-y-4 mx-auto px-12">
+            <section class="flex justify-center md:justify-between lg:justify-center flex-wrap 16 lg:gap-x-16 gap-y-4 mx-auto px-12 pb-8">
                 <div
                     v-for="movie in movies" :key="movie['id']"
                     class="hover:cursor-pointer transition"

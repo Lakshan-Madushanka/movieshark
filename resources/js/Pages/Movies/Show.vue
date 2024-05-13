@@ -146,7 +146,7 @@ const toggleFromWatchList = () => {
                         class="!mt-4"
                         :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
                     >
-                        <div class="flex flex-wrap justify-center items-center [&>ul:not(:last-child)]:!border-r-2">
+                        <div class="flex flex-wrap justify-center md:justify-between lg:justify-center items-center [&>ul:not(:last-child)]:lg:border-r-2">
                             <ul
                                 v-for="torrent in movie['torrents']"
                                 :key="torrent['url']"
@@ -305,9 +305,9 @@ const toggleFromWatchList = () => {
                 <h2>Tech Details</h2>
                 <TabView>
                     <TabPanel v-for="torrent in movie['torrents']" :key="torrent['url']" :header="torrent['quality']">
-                        <Splitter class="flex w-full justify-around">
-                            <SplitterPanel class="flex justify-center items-center"><i
-                                class="pi pi-folder text-center mr-2"/><span>{{ torrent['size'] }}</span>
+                        <Splitter class="flex flex-col md:flex-row  w-full justify-around">
+                            <SplitterPanel class="flex justify-center items-center">
+                                <i class="hidden pi pi-folder text-center mr-2"/><span>{{ torrent['size'] }}</span>
                             </SplitterPanel>
                             <SplitterPanel class="flex justify-center items-center"><i
                                 class="pi pi-video text-center mr-2"/><span>{{ torrent['video_codec'] }}</span>
