@@ -327,7 +327,7 @@ const test = () => {
                                 <span>View</span>
                             </AnchorLink>
                             <div class="w-[2px] bg-green-500"></div>
-                            <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})"
+                            <NavLink :href="route('watch-list-movies.edit', {movie: slotProps.data.id})"
                                      class="text-green-500">
                                 <i class="pi pi-file-edit text-xs"/> <span>Edit</span>
                             </NavLink>

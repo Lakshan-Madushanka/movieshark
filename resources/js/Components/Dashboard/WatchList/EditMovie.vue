@@ -14,7 +14,7 @@ import {capitalizeFirstLetter} from "@/Helpers.js";
 import InputNumber from "primevue/inputnumber";
 
 const props = defineProps({
-    watchList: {
+    movie: {
         type: Object,
     }
 })
@@ -22,20 +22,20 @@ const props = defineProps({
 const toast = useToast();
 
 const form = useForm({
-    imdb_id: props.watchList.imdb_id,
-    yts_id: props.watchList.yts_id,
-    name: props.watchList.name,
-    image: props.watchList.image,
+    imdb_id: props.movie.imdb_id,
+    yts_id: props.movie.yts_id,
+    name: props.movie.name,
+    image: props.movie.image,
     genres: [],
-    my_rating: props.watchList.my_rating,
-    released_date: props.watchList.released_date,
-    downloaded_date: props.watchList.downloaded_date,
-    watched_date: props.watchList.watched_date,
-    description: props.watchList.description,
+    my_rating: props.movie.my_rating,
+    released_date: props.movie.released_date,
+    downloaded_date: props.movie.downloaded_date,
+    watched_date: props.movie.watched_date,
+    description: props.movie.description,
 })
 
 onMounted(() => {
-    form.genres = props.watchList.genres?.map((genre) => capitalizeFirstLetter(genre));
+    form.genres = props.movie.genres?.map((genre) => capitalizeFirstLetter(genre));
 })
 
 const columns = ref([])
@@ -76,7 +76,7 @@ const editMovie = () => {
             }
             return {...data, genres: tempGenres}
         })
-        .put(route('movies-watch-list.update', {'watchList': props.watchList.id}), {
+        .put(route('watch-list-movies.update', {'movieId': props.movie.id}), {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {

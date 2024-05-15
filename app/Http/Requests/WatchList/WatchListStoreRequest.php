@@ -31,7 +31,7 @@ class WatchListStoreRequest extends FormRequest
             'imdb_id' => ['string', 'nullable'],
             'yts_id' => ['integer', 'nullable'],
             'image' => ['string', 'nullable'],
-            'name' => ['string', 'required', Rule::unique('watch_list')->ignore($this->watchList?->getKey())],
+            'name' => ['string', 'required', Rule::unique('movies')->ignore($this->movieId)],
             'genres' => ['array', 'nullable'],
             'my_rating' => ['integer', 'nullable', 'between:0,100'],
             'released_date' => ['string', 'nullable'],

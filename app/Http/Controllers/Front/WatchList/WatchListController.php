@@ -6,11 +6,14 @@ namespace App\Http\Controllers\Front\WatchList;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WatchList\WatchListStoreRequest;
+use App\Models\Movie;
 use App\Models\WatchList;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,7 +26,9 @@ class WatchListController extends Controller
 
     public function index(Request $request): Response
     {
-        $watchList = WatchList::Filter()
+        $watchList = Auth::user()
+            ->movies()
+            ->filter()
             ->Sort()
             ->paginate(10);
 
@@ -37,9 +42,10 @@ class WatchListController extends Controller
     {
         $ytsId = $request->input('yts_id');
 
-        /** @var WatchList $record */
-        if ($record = WatchList::query()->where('yts_id', $ytsId)->first()) {
-            return $this->destroy($record);
+        /** @var Movie $record */
+        if ($record = Auth::user()->movies()->where('yts_id', $ytsId)->first()) {
+            $record->delete();
+            return redirect()->back();
         }
 
         return $this->store(app(WatchListStoreRequest::class));
@@ -49,30 +55,34 @@ class WatchListController extends Controller
     {
         $payload = $request->payload();
 
-        WatchList::query()->create($payload->toArray());
+        Auth::user()->watchList->movies()->create($payload->toArray());
 
         return back();
     }
 
-    public function edit(WatchList $watchList): Response
+    public function edit(Movie $movie): Response
     {
+//        dd(Carbon::create(2023)->toString());
 
+//        dd($movie);
         return Inertia::render(
             component: 'Dashboard',
-            props: ['watchList' => $watchList]
+            props: ['movie' => $movie]
         );
     }
 
-    public function update(WatchList $watchList, WatchListStoreRequest $request): RedirectResponse
+    public function update(string $movieId, WatchListStoreRequest $request): RedirectResponse
     {
-        $watchList->update($request->payload()->toArray());
+        $movie = Auth::user()->movies()->where('movies.id', $movieId)->firstOrFail();
+
+        $movie->update($request->payload()->toArray());
 
         return back();
     }
 
-    public function destroy(WatchList $watchList): RedirectResponse
+    public function destroy(string $movieId): RedirectResponse
     {
-        $watchList->delete();
+        Auth::user()->movies()->where('movies.id', $movieId)->delete();
 
         return back();
     }

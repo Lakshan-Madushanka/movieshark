@@ -34,13 +34,15 @@ const authName = page.props.auth?.user?.name;
         <div class="min-h-screen text-white">
             <nav class="bg-[#424b57]">
                 <div class="flex md:hidden justify-between items-center p-1">
-                    <ApplicationMark class="w-8 mr-1"/>
+                    <Link class="flex items-center" :href="route('home.index')">
+                        <ApplicationMark class="w-8 mr-1"/>
+                        <span class="hidden">Home</span>
+                    </Link>
                     <div>
                         <i
                             @click="showNavDropdown = !showNavDropdown"
                             :class="[{'pi-bars': !showNavDropdown, 'pi-times': showNavDropdown}, 'pi rounded-full p-1 border-2 cursor-pointer']"
                         />
-<!--                        <NavLink v-else :href="route('login')">Login</NavLink>-->
                     </div>
                 </div>
                 <div class="hidden md:flex px-2 space-x-4 justify-between items-center">
@@ -53,25 +55,25 @@ const authName = page.props.auth?.user?.name;
                     <MovieBrowser inputClass="py-1"/>
                     <div class="flex items-center space-x-4">
                         <div>
-                            <Link class="flex items-center" :class="{'bg-gray-800 px-2 rounded': route().current() === 'home.about'}" :href="route('home.about')">
+                            <NavLink class="flex items-center" :active="route().current() === 'home.about'" :href="route('home.about')">
                                 <span>About</span>
-                            </Link>
+                            </NavLink>
                         </div>
                         <div>
-                            <Link class="flex items-center" :class="{'bg-gray-800 px-2 rounded': route().current() === 'home.terms'}" :href="route('home.terms')">
+                            <NavLink class="flex items-center" :active="route().current() === 'home.terms'" :href="route('home.terms')">
                                 <span>Terms</span>
-                            </Link>
+                            </NavLink>
                         </div>
-                        <div v-if="!authenticated">
-                            <NavLink :href="route('login')" :active="true">Login</NavLink>
-                            <NavLink :href="route('register')">Register</NavLink>
+                        <div v-if="!authenticated" class="space-x-4">
+                            <NavLink :href="route('login')" :active="route().current() === 'login'">Login</NavLink>
+                            <NavLink :href="route('register')" :active="route().current() === 'register'">Register</NavLink>
                         </div>
                         <div v-else>
                             <div v-if="authName?.length < 10">
-                                <NavLink :href="route('dashboard')">{{ authName }}</NavLink>
+                                <NavLink :href="route('dashboard')" :active="route().current() === 'register'">{{ authName }}</NavLink>
                             </div>
                             <div v-else>
-                                <NavLink :href="route('dashboard')">{{ truncate(authName) }}</NavLink>
+                                <NavLink :href="route('dashboard')" :active="route().current() === 'register'"><span v-html="truncate(authName)"></span></NavLink>
                             </div>
                         </div>
                     </div>
@@ -85,27 +87,27 @@ const authName = page.props.auth?.user?.name;
                         <MovieBrowser class="w-full" inputClass="py-1 w-full"/>
                     </div>
                     <div>
-                        <div v-if="!authenticated" :class="[{'border-l-4 border-green-500': route().current() === 'login'}]">
-                            <NavLink :href="route('login')">Login</NavLink>
+                        <div v-if="!authenticated">
+                            <NavLink :href="route('login')" :active="route().current() === 'login'">Login</NavLink>
                         </div>
-                        <div v-if="!authenticated" :class="[{'border-l-4 border-green-500': route().current() === 'register'}]">
-                            <NavLink :href="route('register')">Register</NavLink>
+                        <div v-if="!authenticated">
+                            <NavLink :href="route('register')" :active="route().current() === 'register'">Register</NavLink>
                         </div>
-                        <div v-else :class="{'border-l-4 border-green-500': route().current() === 'dashboard'}">
+                        <div v-else>
                             <div v-if="authName?.length < 10">
-                                <NavLink :href="route('dashboard')" class="w-full">{{ authName }}</NavLink>
+                                <NavLink :href="route('dashboard')" :active="route().current() === 'dashboard'">{{ authName }}</NavLink>
                             </div>
                             <div v-else>
-                                <NavLink :href="route('dashboard')">{{ truncate(authName) }}</NavLink>
+                                <NavLink :href="route('dashboard')" :active="route().current() === 'dashboard'"><span v-html="truncate(authName)"></span></NavLink>
                             </div>
                         </div>
-                        <div :class="{'border-l-4 border-green-500': route().current() === 'home.about'}">
-                            <NavLink :href="route('home.about')">
+                        <div>
+                            <NavLink :href="route('home.about')" :active="route().current() === 'home.about'">
                                 <span>About</span>
                             </NavLink>
                         </div>
-                        <div :class="{'border-l-4 border-green-500': route().current() === 'home.terms'}">
-                            <NavLink :href="route('home.terms')">
+                        <div>
+                            <NavLink :href="route('home.terms')" :active="route().current() === 'home.terms'">
                                 <span>Terms</span>
                             </NavLink>
                         </div>

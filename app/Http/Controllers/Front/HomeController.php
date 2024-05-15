@@ -12,6 +12,7 @@ use App\Http\Integrations\YTS\YTSConnector;
 use App\Models\WatchList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,7 +31,7 @@ class HomeController extends Controller
         /** @var Collection<string, Collection<int, MovieData>|Collection<int, MovieMetaData>> $ytsResponseData */
         $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
 
-        $watchListIds = WatchList::query()->pluck('yts_id');
+        $watchListIds = Auth::user()?->movies()->pluck('yts_id');
 
         return Inertia::render(
             component: 'Home',

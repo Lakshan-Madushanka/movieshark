@@ -11,6 +11,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -18,7 +19,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $meta = WatchList::toBase()
+        $meta = Auth::user()->movies()->toBase()
             ->selectRaw("count(case when watched_status is not null then 1 end) as watched")
             ->selectRaw("count(case when watched_status is null then 1 end) as unWatched")
             ->selectRaw("count(case when downloaded_status is not null then 1 end) as downloaded")
@@ -32,9 +33,9 @@ class DashboardController extends Controller
         $startDate = Carbon::create($request->query('year', now()->year))->startOfYear();
         $endDate = Carbon::create($request->query('year', now()->year))->endOfYear();
 
-        $moviesHistory = WatchList::Filter()->toBase()
-            ->select(DB::raw("strftime('%m', created_at) as month, COUNT(*) as total"))
-            ->whereBetween('created_at', [
+        $moviesHistory = Auth::user()->movies()->filter()->toBase()
+            ->select(DB::raw("strftime('%m', movies.created_at) as month, COUNT(*) as total"))
+            ->whereBetween('movies.created_at', [
                 $startDate,
                 $endDate,
             ])
@@ -42,7 +43,7 @@ class DashboardController extends Controller
             ->orderBy('month')
             ->get();
 
-        $watchList = WatchList::query()->limit(10)->latest()->get();
+        $watchList = Auth::user()->movies()->limit(10)->latest()->get();
 
         return Inertia::render(
             component: 'Dashboard',
@@ -52,6 +53,6 @@ class DashboardController extends Controller
 
     public function watchList(Request $httpRequest): Application|RedirectResponse|Redirector
     {
-        return redirect(route('movies-watch-list.index'));
+        return redirect(route('watch-list-movies.index'));
     }
 }

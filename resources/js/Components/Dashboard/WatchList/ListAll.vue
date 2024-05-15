@@ -158,7 +158,7 @@ const onCellEditComplete = (event) => {
         .transform((data) => {
             return event.newData;
         })
-        .put(route('movies-watch-list.update', {'watchList': event.newData.id}), {
+        .put(route('watch-list-movies.update', {'movieId': event.newData.id}), {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
@@ -215,14 +215,14 @@ const sendFiltersRequest = (
 
             return {...tempFormFilters, filter: tempFilters}
         })
-        .get(route('movies-watch-list.index'), {
+        .get(route('watch-list-movies.index'), {
             preserveState: true,
             preserveScroll: true,
         })
 };
 
 const showCreateMoviePage = () => {
-    router.visit(route('movies-watch-list.create'))
+    router.visit(route('watch-list-movies.create'))
 }
 </script>
 
@@ -400,10 +400,12 @@ const showCreateMoviePage = () => {
 
                         <hr class="col-span-2 mt-4 mb-2"/>
                         <div>
-                            <PrimeButton icon="pi pi-filter" label="Apply Filters" size="small" @click="sendFiltersRequest"/>
+                            <PrimeButton icon="pi pi-filter" label="Apply Filters" size="small"
+                                         @click="sendFiltersRequest"/>
                         </div>
                         <div class="justify-self-end">
-                            <PrimeButton icon="pi pi-filter-slash" label="Clear Filters" size="small" @click="resetFilters"/>
+                            <PrimeButton icon="pi pi-filter-slash" label="Clear Filters" size="small"
+                                         @click="resetFilters"/>
                         </div>
                     </div>
                 </Dialog>
@@ -634,16 +636,18 @@ const showCreateMoviePage = () => {
             >
                 <template #body="slotProps">
                     <div class="flex justify-end">
-                        <AnchorLink v-if="slotProps.data.imdb_id"
-                                    :href="route('movies.show', {id: slotProps.data.imdb_id})"
-                                    target="_blank" class="text-green-500">
-                            <i class="pi pi-eye text-xs"/>
+                        <AnchorLink
+                            v-if="slotProps.data.yts_id"
+                            :href="route('movies.show', {id: slotProps.data.yts_id})"
+                            target="_blank" class="text-green-500"
+                        >
+                            <i class="pi pi-eye text-xs mr-1"/>
                             <span>View</span>
                         </AnchorLink>
                         <div class="w-[2px] bg-green-500"></div>
-                        <NavLink :href="route('movies-watch-list.edit', {watchList: slotProps.data.id})"
+                        <NavLink :href="route('watch-list-movies.edit', {movie: slotProps.data.id})"
                                  class="text-green-500">
-                            <i class="pi pi-file-edit text-xs"/> <span>Edit</span>
+                            <i class="pi pi-file-edit text-xs mr-1"/> <span>Edit</span>
                         </NavLink>
                     </div>
                 </template>
@@ -670,7 +674,7 @@ const showCreateMoviePage = () => {
             >
                 <template #body="slotProps">
                     <div v-if="slotProps.data.updated_at">
-                        <span>{{ moment(slotProps.data.updated_at).format('YYYY-MM-DD/hh:mm')  }}</span>
+                        <span>{{ moment(slotProps.data.updated_at).format('YYYY-MM-DD/hh:mm') }}</span>
                     </div>
                 </template>
             </Column>

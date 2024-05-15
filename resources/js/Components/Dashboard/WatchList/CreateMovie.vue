@@ -58,7 +58,7 @@ const createMovie = () => {
             }
             return {...data, genres: tempGenres}
         })
-        .post(route('movies-watch-list.store'), {
+        .post(route('watch-list-movies.store'), {
             preserveState: true,
             preserveScroll: true,
             onSuccess: () => {

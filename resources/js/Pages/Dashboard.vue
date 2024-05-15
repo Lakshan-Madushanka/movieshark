@@ -7,6 +7,7 @@ import Index from "@/Components/Dashboard/Index.vue";
 import {ref, watch} from "vue";
 
 const props = defineProps({
+    movie: Object,
     watchList: {},
     meta: Object,
     moviesHistory: Object,
@@ -23,9 +24,9 @@ watch(() => route().current(), (currentRoute) => {
         case 'dashboard':
             setHeader('Dashboard');
             break;
-        case 'movies-watch-list.index':
-        case 'movies-watch-list.create':
-        case   'movies-watch-list.edit':
+        case 'watch-list-movies.index':
+        case 'watch-list-movies.create':
+        case   'watch-list-movies.edit':
             setHeader('Watch List');
             break;
         default:
@@ -47,9 +48,9 @@ watch(() => route().current(), (currentRoute) => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12 pt-0 sm:pt-12">
                 <div class="text-black pb-4 bg-[#424b57] overflow-hidden shadow-xl sm:rounded-lg">
                     <Index v-if="route().current('dashboard')" :meta :moviesHistory :watchList/>
-                    <ListAll v-if="route().current('movies-watch-list.index')" :watchList/>
-                    <CreateMovie v-if="route().current('movies-watch-list.create')"/>
-                    <EditMovie v-if="route().current('movies-watch-list.edit')" :watchList/>
+                    <ListAll v-if="route().current('watch-list-movies.index')" :watchList/>
+                    <CreateMovie v-if="route().current('watch-list-movies.create')"/>
+                    <EditMovie v-if="route().current('watch-list-movies.edit')" :movie/>
                 </div>
             </div>
     </AppLayout>
