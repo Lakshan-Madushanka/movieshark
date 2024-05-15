@@ -12,11 +12,14 @@ class MovieData implements Arrayable, WithResponse
 {
     use HasResponse;
 
+    public readonly string|int $year;
+    public readonly float|string $rating;
+
     public function __construct(
         public readonly int $id,
         public readonly string $name,
-        public readonly int $year,
-        public readonly float $rating,
+        int $year,
+        float $rating,
         public readonly string $language,
         /** @var array<int, string> $genres */
         public readonly array $genres,
@@ -32,7 +35,10 @@ class MovieData implements Arrayable, WithResponse
         public readonly ?string $image3 = null,
         /** @var array<int, TorrentData>|null $torrents */
         public readonly ?array $torrents = null,
-    ) {}
+    ) {
+        $this->year = $year === 0 ? 'N/A' : $year;
+        $this->rating =  number_format($rating, 1);
+    }
 
     public function toArray(): array
     {
