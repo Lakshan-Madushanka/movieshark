@@ -20,6 +20,8 @@ const props = defineProps({
 const toast = useToast();
 
 const watchListHas = ref();
+const processing = ref(false);
+
 let toggleFromWatchList;
 let checkWatchListHas;
 
@@ -45,8 +47,10 @@ const getImageUrl = function () {
 
 const watchListButtonClicked = () => {
     let status = toggleFromWatchList(props.movie);
+    processing.value = true;
 
     watch(status, (status) => {
+        processing.value = false;
         if (status.success) {
             watchListHas.value = !watchListHas.value
             toast.add({severity: 'success', summary: status.summary, detail: status.details, life: 3000});
@@ -73,13 +77,14 @@ const watchListButtonClicked = () => {
         >
         <div
             :class="['text-xs @[6rem]:text-sm absolute w-full flex justify-between items-start right-0 top-0 z-20 text-black font-extrabold', {'!justify-end': !showWatchListButton}]">
-            <span class="p-1 h-[1.6rem] flex justify-center items-center w-8 bg-white border border-gray-300">{{ (movie['rating']).toFixed(1) }}</span>
+            <span class="p-1 h-[1.6rem] flex justify-center items-center w-8 bg-white border border-gray-300">{{ (movie['rating']) }}</span>
             <div
                 v-if="showWatchListButton"
                 @click.prevent="watchListButtonClicked"
                 class="flex justify-center items-center h-[1.6rem] w-8 bg-white border border-gray-300"
             >
-                <i :class="['pi p-1 @[6rem]:p-1', {'pi-heart': !watchListHas, 'pi-heart-fill': watchListHas}]"/>
+                <i v-if="processing" class="pi pi-spin pi-spinner text-black" />
+                <i v-else :class="['pi p-1 @[6rem]:p-1', {'pi-star': !watchListHas, 'pi-star-fill': watchListHas}]"/>
             </div>
         </div>
         <div
