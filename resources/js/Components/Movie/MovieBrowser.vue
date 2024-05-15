@@ -2,6 +2,7 @@
 import {nextTick, ref, watch} from "vue";
 import InputText from 'primevue/inputtext';
 import Menu from 'primevue/menu';
+import ProgressSpinner from 'primevue/progressspinner';
 import {useForm, usePage, router} from "@inertiajs/vue3";
 import {debounce} from 'lodash';
 
@@ -18,7 +19,6 @@ const inputRef = ref();
 const menu = ref();
 const results = ref([
     {
-        label: 'Results',
         items: [],
     }
 ]);
@@ -74,14 +74,14 @@ const sendRequest = debounce(() => {
         return;
     }
     form.get(route('movies.browse'), {preserveState: true})
-}, 1000);
+}, 500);
 
 const loading = ref(false);
 
 </script>
 
 <template>
-        <div class="flex justify-content-center">
+        <div class="flex justify-center">
             <span :class="[{'p-input-icon-left': !form.processing, 'p-input-icon-right': form.processing}, 'w-full md:w-auto']">
             <i :class="{'pi pi-search': !form.processing, 'pi pi-spin pi-spinner': form.processing}"/>
             <InputText
@@ -107,6 +107,15 @@ const loading = ref(false);
                     }
                 }"
             >
+                <template #start>
+                    <div v-if="page.props.browsedMovieData?.length > 0" class="px-4 pt-4 font-bold">
+                        <span>Results ({{page.props.browsedMovieData?.length}})</span>
+                    </div>
+                    <div v-if="form.processing" class="flex justify-center items-center">
+                        <ProgressSpinner class="w-8 h-8"/>
+                    </div>
+                </template>
+
                 <template #item="{item}">
                     <div class="flex space-x-4 start p-2 cursor-pointer">
                         <img class="w-12" :src="item.image" alt="movie cover image">
@@ -114,6 +123,12 @@ const loading = ref(false);
                             <span>{{item['label']}}</span>
                             <span class="text-xs !text-slate-400">{{item['year']}}</span>
                         </div>
+                    </div>
+                </template>
+
+                <template #end>
+                    <div v-if="page.props.browsedMovieData?.length === 0 && !form.processing" class="text-center mb-2">
+                        <span>Nothing found !</span>
                     </div>
                 </template>
             </Menu>
