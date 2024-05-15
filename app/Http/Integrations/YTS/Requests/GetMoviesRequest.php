@@ -59,6 +59,6 @@ class GetMoviesRequest extends Request
             );
         }
 
-        return collect(['movies' => $moviesData, 'meta' => $metaData]);
+        return collect(['movies' => $moviesData->unique('id'), 'meta' => $metaData]);
     }
 }
