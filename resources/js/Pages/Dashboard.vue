@@ -25,9 +25,13 @@ watch(() => route().current(), (currentRoute) => {
             setHeader('Dashboard');
             break;
         case 'watch-list-movies.index':
-        case 'watch-list-movies.create':
-        case   'watch-list-movies.edit':
             setHeader('Watch List');
+            break;
+        case 'watch-list-movies.create':
+            setHeader('Watch List: Create Movie');
+            break;
+        case   'watch-list-movies.edit':
+            setHeader('Watch List: Edit Movie');
             break;
         default:
             setHeader('Dashboard');
@@ -38,7 +42,7 @@ watch(() => route().current(), (currentRoute) => {
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout :title="header">
         <template #header>
             <h2 class="font-semibold text-xl mb-0 text-gray-800 leading-tight">
                 {{ header }}

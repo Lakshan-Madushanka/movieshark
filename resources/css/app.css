@@ -27,3 +27,6 @@
     @tailwind utilities;
 }
 
+button {
+    line-height: normal;
+}
