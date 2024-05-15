@@ -19,11 +19,14 @@ import moment from 'moment';
 import {useToggleMovieFromWatchList} from "@/Composables/useToggleMovieFromWatchList.js";
 
 const props = defineProps({
+    'auth': Object,
     'movie': {},
     'suggestions': {},
     'watchListHas': Boolean,
     'allowTorrent': Boolean,
 });
+
+const authenticated = props.auth.user !== null;
 
 const toast = useToast();
 
@@ -109,23 +112,24 @@ const toggleFromWatchList = () => {
 
 <template>
     <GuestLayout :title="movie['name']">
-        <div class="grid grid-cols-1 auto-rows-auto gap-y-8 items-start py-8 px-4 lg:px-24">
+        <div class="grid grid-cols-1 auto-rows-auto gap-y-12 items-start p-8 lg:px-24">
             <!--Intro-->
             <section
-                class="grid sm:grid-cols-[30%_70%] sm:grid-rows-[minmax(0, auto)] lg:grid-cols-4 lg:grid-rows-1 gap-x-4 gap-y-6 lg:gap-x-8">
+                class="grid sm:grid-cols-[30%_70%] sm:grid-rows-[minmax(0, auto)] lg:grid-cols-4 lg:grid-rows-1 gap-x-4 gap-y-12 lg:gap-x-8">
                 <!--Poster-->
-                <div class="justify-start items-center hidden sm:grid">
-                    <figure class="flex flex-col space-y-1 relative">
-                        <Image
-                            class="border-4"
-                            :src="movie['cover_image']"
-                            width="200"
-                            preview
-                            onerror="this.onerror=null;this.src='/images/no_image.png'"
-                        />
-                        <div @click="toggleFromWatchList" class="absolute right-2 top-1 p-1 bg-white flex justify-center items-center">
-                            <i v-if="watchListToggleProcessing" class="pi pi-spin pi-spinner text-black text-xl" />
-                            <i v-else v-tooltip="'Toggle from watch list'" :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>
+                <div class="col-span-2 md:col-span-1 justify-self-start sm:grid">
+                    <figure class="flex flex-col items-center space-y-1">
+                        <div class="relative">
+                            <Image
+                                class="border-4 w-[200px]"
+                                :src="movie['cover_image']"
+                                preview
+                                onerror="this.onerror=null;this.src='/images/no_image.png'"
+                            />
+                            <div v-if="authenticated" @click="toggleFromWatchList" class="absolute right-1 top-1 p-1 bg-white flex justify-center items-center">
+                                <i v-if="watchListToggleProcessing" class="pi pi-spin pi-spinner text-black text-xl" />
+                                <i v-else v-tooltip="'Toggle from watch list'" :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>
+                            </div>
                         </div>
                         <PrimeButton
                             v-if="allowTorrent"
@@ -133,7 +137,7 @@ const toggleFromWatchList = () => {
                             label="Download"
                             icon="pi pi-download"
                             size="small"
-                            class="p-2"
+                            class="p-2 w-[200px]"
                             title="Show move download options"
                         />
                     </figure>
@@ -178,8 +182,8 @@ const toggleFromWatchList = () => {
                 </div>
                 <!--End of Poster-->
                 <!-- Movie info -->
-                <div class="lg:col-span-2 break-words space-y-4">
-                    <h2>{{ movie['name'] }}</h2>
+                <div class="col-span-2 md:col-span-1 break-words space-y-4">
+                    <h1 class="mb-4">{{ movie['name'] }}</h1>
                     <div class="flex space-x-1">
                         <Tag class="font-bold">{{ movie['year'] }}</Tag>
                         <Tag class="font-bold">
@@ -202,7 +206,7 @@ const toggleFromWatchList = () => {
                     </div>
                     <ul class="text-xl [&>li]:max-w-32 [&>li]:flex [&>li]:justify-between space-y-1">
                         <li>
-                            <span><i class="pi pi-heart text-xl text-purple-600"/></span>
+                            <span><i class="pi pi-heart-fill text-xl text-purple-600"/></span>
                             <span>{{ movie['like_count'] }}</span>
                         </li>
                         <li>
@@ -231,9 +235,9 @@ const toggleFromWatchList = () => {
                 </div>
                 <!--End of Movie info -->
                 <!-- Suggestions -->
-                <div class="col-span-2 lg:col-span-1 justify-self-start lg:justify-self-end">
+                <div class="col-span-2 justify-self-start lg:justify-self-end">
                     <h2 class="lg:hidden">Suggestions</h2>
-                    <div class="flex flex-wrap gap-x-4 gap-y-1 lg:grid grid-cols-2 items-center md:justify-center">
+                    <div class="flex flex-wrap gap-6 lg:grid grid-cols-2 items-center md:justify-center">
                         <div v-for="suggestion in suggestions" class="justify-self-end hover:cursor-pointer">
                             <Link :href="route('movies.show', {id: suggestion['id']})">
                                 <MovieTile
@@ -254,7 +258,7 @@ const toggleFromWatchList = () => {
             <!--Trailer-->
             <section>
                 <h2 class="lg:hidden">Trailer</h2>
-                <div class="flex flex-wrap m-auto">
+                <div class="flex flex-wrap gap-4 m-auto">
                     <figure @click="showTrailer = !showTrailer" class="relative hover:cursor-pointer">
                         <Image :src="movie['image1']" width="350" imageClass="h-[150px]" preview/>
                         <figcaption class="absolute top-0 left-0 w-full h-full flex-col gap-y-2 flex justify-center items-center">
