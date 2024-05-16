@@ -67,6 +67,7 @@ const createMovie = () => {
                 toast.add({severity: 'success', summary: 'Movie added to watch list', detail: 'Success', life: 3000});
             },
             onError: (error) => {
+                toast.add({severity: 'error', summary: Object.values(error)[0], detail: 'Error', life: 3000});
             }
         })
 };
@@ -110,26 +111,6 @@ const createMovie = () => {
                     />
                     <span v-if="form.errors.name" class="text-sm text-red-500">{{form.errors.name}}</span>
                 </div>
-                <!-- Placeholder-->
-                <div>
-                    <label for="input-url">Image URL</label>
-                    <InputText
-                        v-model="form.image"
-                        id="input-url"
-                        class="w-full"
-                        type="url"
-                        placeholder="Image URL"
-                    />
-                    <span v-if="form.errors.image" class="text-sm text-red-500">{{form.errors.image}}</span>
-                </div>
-                <div v-if="form.image" class="mt-6">
-                    <Image
-                        :src="form.image"
-                        class="w-full"
-                        preview
-                    />
-                    <span v-if="form.errors.image" class="text-sm text-red-500">{{ form.errors.image }}</span>
-                </div>
                 <div>
                     <label for="input-genres">Genres</label>
                     <MultiSelect
@@ -158,10 +139,29 @@ const createMovie = () => {
                     <Calender v-model="form.downloaded_date" inputId="input-downloaded_date"/>
                     <span v-if="form.errors.downloaded_date" class="text-sm text-red-500">{{form.errors.downloaded_date}}</span>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col col-span-2">
                     <label for="input-watched_date">Watched Date</label>
                     <Calender v-model="form.watched_date" inputId="input-watched_date"/>
                     <span v-if="form.errors.watched_date" class="text-sm text-red-500">{{form.errors.watched_date}}</span>
+                </div>
+                <div>
+                    <label for="input-url">Image URL</label>
+                    <InputText
+                        v-model="form.image"
+                        id="input-url"
+                        class="w-full"
+                        type="url"
+                        placeholder="Image URL"
+                    />
+                    <span v-if="form.errors.image" class="text-sm text-red-500">{{form.errors.image}}</span>
+                </div>
+                <div v-if="form.image" class="mt-6">
+                    <Image
+                        :src="form.image"
+                        class="w-64"
+                        preview
+                    />
+                    <span v-if="form.errors.image" class="text-sm text-red-500">{{ form.errors.image }}</span>
                 </div>
                 <div class="flex flex-col">
                     <label for="input-description">Description</label>

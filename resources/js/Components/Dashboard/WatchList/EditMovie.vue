@@ -84,6 +84,7 @@ const editMovie = () => {
                 toast.add({severity: 'success', summary: 'Movie updated', detail: 'Success', life: 3000});
             },
             onError: (error) => {
+                toast.add({severity: 'error', summary: Object.values(error)[0], detail: 'Error', life: 3000});
             }
         })
 };
@@ -157,7 +158,7 @@ const editMovie = () => {
                     <span v-if="form.errors.downloaded_date"
                           class="text-sm text-red-500">{{ form.errors.downloaded_date }}</span>
                 </div>
-                <div class="flex flex-col col-span-2 w-1/2">
+                <div class="flex flex-col col-span-2">
                     <label for="input-watched_date">Watched Date</label>
                     <Calender v-model="form.watched_date" inputId="input-watched_date"/>
                     <span v-if="form.errors.watched_date"
@@ -177,7 +178,7 @@ const editMovie = () => {
                 <div class="mt-6">
                     <Image
                         :src="form.image"
-                        class="w-full"
+                        class="w-64"
                         preview
                     />
                     <span v-if="form.errors.image" class="text-sm text-red-500">{{ form.errors.image }}</span>
