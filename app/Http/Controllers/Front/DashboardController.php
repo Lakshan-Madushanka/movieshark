@@ -14,10 +14,11 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $meta = Auth::user()->movies()->toBase()
             ->selectRaw("count(case when watched_status is not null then 1 end) as watched")

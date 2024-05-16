@@ -152,7 +152,7 @@ const test = () => {
         </div>
 
         <div>
-            <h2>Watch History</h2>
+            <h2>Watch List History</h2>
             <div class="!bg-gray-300 rounded-lg overflow-hidden">
                 <div class="mb-4 p-1 flex flex-col md:flex-row md:justify-between bg-black">
                     <Calendar v-model="chartForm.year" view="year" dateFormat="yy"

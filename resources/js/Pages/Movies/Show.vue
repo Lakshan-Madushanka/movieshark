@@ -126,9 +126,11 @@ const toggleFromWatchList = () => {
                                 preview
                                 onerror="this.onerror=null;this.src='/images/no_image.png'"
                             />
-                            <div v-if="authenticated" @click="toggleFromWatchList" class="absolute right-1 top-1 p-1 bg-white flex justify-center items-center">
-                                <i v-if="watchListToggleProcessing" class="pi pi-spin pi-spinner text-black text-xl" />
-                                <i v-else v-tooltip="'Toggle from watch list'" :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>
+                            <div v-if="authenticated" @click="toggleFromWatchList"
+                                 class="absolute right-1 top-1 p-1 bg-white flex justify-center items-center">
+                                <i v-if="watchListToggleProcessing" class="pi pi-spin pi-spinner text-black text-xl"/>
+                                <i v-else v-tooltip="'Toggle from watch list'"
+                                   :class="['pi text-black text-xl cursor-pointer', {'pi-star': !props.watchListHas, 'pi-star-fill': props.watchListHas}]"/>
                             </div>
                         </div>
                         <PrimeButton
@@ -150,18 +152,21 @@ const toggleFromWatchList = () => {
                         class="!mt-4"
                         :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }"
                     >
-                        <div class="flex flex-wrap justify-center md:justify-between lg:justify-center items-center [&>ul:not(:last-child)]:lg:border-r-2">
+                        <div
+                            class="flex flex-wrap justify-center md:justify-between lg:justify-center items-center [&>ul:not(:last-child)]:lg:border-r-2">
                             <ul
                                 v-for="torrent in movie['torrents']"
                                 :key="torrent['url']"
                                 class="gap-y-6 flex flex-col justify-center items-center p-8"
                             >
-                                <li><img :src="'/images/' + torrent['quality'] + '-quality.svg'" alt="image quality"></li>
+                                <li><img :src="'/images/' + torrent['quality'] + '-quality.svg'" alt="image quality">
+                                </li>
                                 <li>{{ torrent['quality'] }}</li>
                                 <li>{{ torrent['type'].toUpperCase() }}</li>
                                 <li>{{ torrent['size'] }}</li>
                                 <li>
-                                    <Anchor :href="buildMagnetLink(torrent['quality'], torrent['type'])" class="flex items-center space-x-1 italic text-sm font-bold">
+                                    <Anchor :href="buildMagnetLink(torrent['quality'], torrent['type'])"
+                                            class="flex items-center space-x-1 italic text-sm font-bold">
                                         <img class="w-4" src="/images/magnet.png" alt="magnet">
                                         <span class="text-green-600">Magnet Link</span>
                                     </Anchor>
@@ -182,16 +187,18 @@ const toggleFromWatchList = () => {
                 </div>
                 <!--End of Poster-->
                 <!-- Movie info -->
-                <div class="col-span-2 md:col-span-1 break-words space-y-4">
+                <div class="col-span-2 md:col-span-1 lg:col-span-2 break-words space-y-4">
                     <h1 class="mb-4">{{ movie['name'] }}</h1>
                     <div class="flex space-x-1">
                         <Tag class="font-bold">{{ movie['year'] }}</Tag>
                         <Tag class="font-bold">
                             {{
-                                moment.utc(moment.duration(movie['runtime'], 'minutes').asMilliseconds()).format('h[h] m[m]')
+                                movie['runtime'] === 0 ?
+                                    'N/A' :
+                                    moment.utc(moment.duration(movie['runtime'], 'minutes').asMilliseconds()).format('h[h] m[m]') ?? 'N/A'
                             }}
                         </Tag>
-                        <Tag class="font-bold">{{ movie['language'] }}</Tag>
+                        <Tag class="font-bold">{{ movie['language'] === '' ? 'N/A' : movie['language'] }}</Tag>
                         <Tag v-if="movie['mpa_rating']" class="font-bold">{{ movie['mpa_rating'] }}</Tag>
                     </div>
                     <p class="text-lg font-bold">{{ movie.genres.join(' / ') }}</p>
@@ -210,7 +217,8 @@ const toggleFromWatchList = () => {
                             <span>{{ movie['like_count'] }}</span>
                         </li>
                         <li>
-                            <span @click="showImdbPage(movie['imdb_code'])" class="py-1 px-2 text-sm font-bold bg-yellow-300 text-black cursor-pointer">IMDB</span>
+                            <span @click="showImdbPage(movie['imdb_code'])"
+                                  class="py-1 px-2 text-sm font-bold bg-yellow-300 text-black cursor-pointer">IMDB</span>
                             <span>{{ movie['rating'] }}</span>
                         </li>
                     </ul>
@@ -235,7 +243,7 @@ const toggleFromWatchList = () => {
                 </div>
                 <!--End of Movie info -->
                 <!-- Suggestions -->
-                <div class="col-span-2 justify-self-start lg:justify-self-end">
+                <div class="col-span-1 justify-self-start lg:justify-self-end">
                     <h2 class="lg:hidden">Suggestions</h2>
                     <div class="flex flex-wrap gap-6 lg:grid grid-cols-2 items-center md:justify-center">
                         <div v-for="suggestion in suggestions" class="justify-self-end hover:cursor-pointer">
@@ -261,9 +269,10 @@ const toggleFromWatchList = () => {
                 <div class="flex flex-wrap gap-4 m-auto">
                     <figure @click="showTrailer = !showTrailer" class="relative hover:cursor-pointer">
                         <Image :src="movie['image1']" width="350" imageClass="h-[150px]" preview/>
-                        <figcaption class="absolute top-0 left-0 w-full h-full flex-col gap-y-2 flex justify-center items-center">
-                                <i class="pi pi-youtube bg-red-600 text-4xl border-4 rounded-full p-4"/>
-                                <span class="font-bold">Trailer</span>
+                        <figcaption
+                            class="absolute top-0 left-0 w-full h-full flex-col gap-y-2 flex justify-center items-center">
+                            <i class="pi pi-youtube bg-red-600 text-4xl border-4 rounded-full p-4"/>
+                            <span class="font-bold">Trailer</span>
                         </figcaption>
                         <Dialog
                             v-model:visible="showTrailer"
