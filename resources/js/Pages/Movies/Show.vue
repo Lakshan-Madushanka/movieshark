@@ -262,7 +262,7 @@ const toggleFromWatchList = () => {
                     <figure @click="showTrailer = !showTrailer" class="relative hover:cursor-pointer">
                         <Image :src="movie['image1']" width="350" imageClass="h-[150px]" preview/>
                         <figcaption class="absolute top-0 left-0 w-full h-full flex-col gap-y-2 flex justify-center items-center">
-                                <i class="pi pi-youtube text-4xl border-4 rounded-full p-4"/>
+                                <i class="pi pi-youtube bg-red-600 text-4xl border-4 rounded-full p-4"/>
                                 <span class="font-bold">Trailer</span>
                         </figcaption>
                         <Dialog
