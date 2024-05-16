@@ -304,7 +304,7 @@ const toggleFromWatchList = () => {
             <section>
                 <Panel toggleable>
                     <template #header>
-                        <h2 class="mb-0">Ploat Summary</h2>
+                        <h2 class="mb-0">Plot Summary</h2>
                     </template>
                     <p class="m-0">
                         {{ movie['description_full'] }}
