@@ -13,6 +13,7 @@ use App\Http\Integrations\YTS\YTSConnector;
 use App\Models\WatchList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,7 +30,7 @@ class MoviesController extends Controller
         /** @var Collection<int, MovieData> $ytsMovieSuggestionsResponseData */
         $ytsMovieSuggestionsResponseData = $ytsConnector->send($ytsMovieSuggestionsRequest)->dtoOrFail();
 
-        $watchListHas = WatchList::query()->where('yts_id', $id)->exists();
+        $watchListHas = Auth::user()?->movies()->where('yts_id', $id)->exists();
 
         return Inertia::render(
             component: 'Movies/Show',
