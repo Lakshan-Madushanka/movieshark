@@ -34,7 +34,7 @@ class DashboardController extends Controller
         $endDate = Carbon::create($request->query('year', now()->year))->endOfYear();
 
         $moviesHistory = Auth::user()->movies()->filter()->toBase()
-            ->select(DB::raw("strftime('%m', movies.created_at) as month, COUNT(*) as total"))
+            ->select(DB::raw("date_format(movies.created_at, '%m') as month, COUNT(*) as total"))
             ->whereBetween('movies.created_at', [
                 $startDate,
                 $endDate,
