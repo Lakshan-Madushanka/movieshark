@@ -15,7 +15,7 @@ return new class () extends Migration {
     {
         Schema::create('movies', function (Blueprint $table): void {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(WatchList::class)->constrained()->nullOnDelete();
+            $table->foreignIdFor(WatchList::class)->constrained()->onDeleteCascade();
 
             $table->string('imdb_id')->nullable();
             $table->bigInteger('yts_id')->nullable();
@@ -36,6 +36,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('watch_list');
+        Schema::dropIfExists('movies');
     }
 };
