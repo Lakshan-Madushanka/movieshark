@@ -20,7 +20,7 @@ return new class () extends Migration {
             $table->string('imdb_id')->nullable();
             $table->bigInteger('yts_id')->nullable();
             $table->string('image')->nullable();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->json('genres')->nullable();
             $table->integer('my_rating')->nullable();
             $table->year('released_date')->nullable()->index();

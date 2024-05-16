@@ -46,7 +46,8 @@ const toggleFromWatchList = (movie) => {
             status.success = true;
             status.summary = summary;
             status.details = details;
-        }
+        },
+        onError: (error) => {console.log(error)}
     });
 
     return status;

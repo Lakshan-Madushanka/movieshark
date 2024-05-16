@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Front\WatchList;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\WatchList\WatchListStoreRequest;
+use App\Http\Requests\Movie\MovieListStoreRequest;
 use App\Models\Movie;
 use App\Models\WatchList;
 use Carbon\Carbon;
@@ -48,10 +48,10 @@ class WatchListController extends Controller
             return redirect()->back();
         }
 
-        return $this->store(app(WatchListStoreRequest::class));
+        return $this->store(app(MovieListStoreRequest::class));
     }
 
-    public function store(WatchListStoreRequest $request): Redirector|RedirectResponse|Application
+    public function store(MovieListStoreRequest $request): Redirector|RedirectResponse|Application
     {
         $payload = $request->payload();
 
@@ -62,16 +62,13 @@ class WatchListController extends Controller
 
     public function edit(Movie $movie): Response
     {
-//        dd(Carbon::create(2023)->toString());
-
-//        dd($movie);
         return Inertia::render(
             component: 'Dashboard',
             props: ['movie' => $movie]
         );
     }
 
-    public function update(string $movieId, WatchListStoreRequest $request): RedirectResponse
+    public function update(string $movieId, MovieListStoreRequest $request): RedirectResponse
     {
         $movie = Auth::user()->movies()->where('movies.id', $movieId)->firstOrFail();
 
