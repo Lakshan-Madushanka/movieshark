@@ -1,6 +1,6 @@
 <script setup>
 
-import {Head, Link, usePage} from '@inertiajs/vue3';
+import {Head, Link, router, usePage} from '@inertiajs/vue3';
 import {ref} from "vue";
 import Banner from '@/Components/Banner.vue';
 import MovieBrowser from "@/Components/Movie/MovieBrowser.vue";
@@ -8,6 +8,7 @@ import NavLink from "@/Components/NavLink.vue";
 import {truncate} from "@/Helpers.js";
 import Toast from "primevue/toast";
 import ApplicationMark from "@/Components/ApplicationMark.vue";
+import Button from "@/Components/Button.vue"
 
 defineProps({
     title: String,
@@ -19,6 +20,10 @@ const showNavDropdown = ref(false);
 
 const authenticated = page.props.auth?.user?.id;
 const authName = page.props.auth?.user?.name;
+
+const logout = () => {
+    router.post(route('logout'), {}, {preserveState: false});
+};
 
 </script>
 
@@ -68,7 +73,12 @@ const authName = page.props.auth?.user?.name;
                             <NavLink :href="route('login')" :active="route().current() === 'login'">Login</NavLink>
                             <NavLink :href="route('register')" :active="route().current() === 'register'">Register</NavLink>
                         </div>
-                        <div v-else>
+                        <div v-else class="flex items-center space-x-4">
+                            <form method="POST" @submit.prevent="logout">
+                                <Button>
+                                    Log Out
+                                </Button>
+                            </form>
                             <div v-if="authName?.length < 10">
                                 <NavLink :href="route('dashboard')" :active="route().current() === 'register'">{{ authName }}</NavLink>
                             </div>
