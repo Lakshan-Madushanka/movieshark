@@ -8,6 +8,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import Toast from 'primevue/toast';
+import ConfirmDialog from 'primevue/confirmdialog';
 
 defineProps({
     title: String,
@@ -31,6 +32,8 @@ const logout = () => {
 <template>
     <div>
         <Toast />
+
+        <ConfirmDialog></ConfirmDialog>
 
         <Head :title="title" />
 

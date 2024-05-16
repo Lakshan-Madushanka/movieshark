@@ -18,10 +18,13 @@ import Slider from "primevue/slider";
 import {useToast} from "primevue/usetoast";
 import Calender from "primevue/calendar";
 import InputNumber from "primevue/inputnumber";
+import { useConfirm } from "primevue/useconfirm";
 import NavLink from "@/Components/NavLink.vue";
 import AnchorLink from "@/Components/AnchorLink.vue";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import moment from "moment";
+
+const confirm = useConfirm();
 
 const props = defineProps({
     watchList: {
@@ -170,11 +173,34 @@ const onCellEditComplete = (event) => {
         })
 };
 
+const deleteMovie = (movieId) => {
+    confirm.require({
+        message: 'Do you want to delete this record?',
+        header: 'Danger Zone',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        acceptLabel: 'Delete',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            router.delete(route('watch-list-movies.destroy', {movieId}),
+                {
+                    preserveState: true,
+                    preserveScroll: true,
+                    onSuccess: () => {
+                        toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                    }
+                })
+        },
+    });
+}
+
 const resetFilters = () => {
     filtersForm.reset('filter');
     tempFilters.my_rating = [0, 0];
     tempFilters.preference = 'All';
 }
+
 const sendFiltersRequest = (
     onSuccess = () => {
     },
@@ -635,20 +661,31 @@ const showCreateMoviePage = () => {
                 :hidden="!showColumns['actions']"
             >
                 <template #body="slotProps">
-                    <div class="flex justify-end">
+                    <div class="flex justify-end items-center">
                         <AnchorLink
                             v-if="slotProps.data.yts_id"
                             :href="route('movies.show', {id: slotProps.data.yts_id})"
-                            target="_blank" class="text-green-500"
+                            target="_blank"
+                            class="text-green-500"
                         >
-                            <i class="pi pi-eye text-xs mr-1"/>
+                            <i class="pi pi-eye text-blue-600 text-xs mr-1"/>
                             <span>View</span>
+                            <span class="w-[2px] h-[1rem] bg-green-500 mx-1"></span>
                         </AnchorLink>
-                        <div class="w-[2px] bg-green-500"></div>
-                        <NavLink :href="route('watch-list-movies.edit', {movie: slotProps.data.id})"
-                                 class="text-green-500">
-                            <i class="pi pi-file-edit text-xs mr-1"/> <span>Edit</span>
+                        <NavLink
+                            :href="route('watch-list-movies.edit', {movie: slotProps.data.id})"
+                            class="text-green-500"
+                        >
+                            <i class="pi pi-file-edit text-yellow-600 text-xs mr-1"/> <span>Edit</span>
+                            <span class="w-[2px] h-[1rem] mx-1 bg-green-500"></span>
                         </NavLink>
+                        <span
+                            @click.prevent="deleteMovie(slotProps.data.id)"
+                            type="button"
+                            class="text-green-500 text-sm cursor-pointer hover:text-white hover:border-b"
+                        >
+                            <i class="pi pi-trash text-red-600 text-xs mr-1"/> <span>Delete</span>
+                        </span>
                     </div>
                 </template>
             </Column>

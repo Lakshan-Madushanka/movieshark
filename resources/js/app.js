@@ -13,6 +13,7 @@ import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import BadgeDirective from 'primevue/badgedirective';
 import Tooltip from 'primevue/tooltip';
+import ConfirmationService from 'primevue/confirmationservice';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -25,6 +26,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(ToastService)
+            .use(ConfirmationService)
             .directive('tooltip', Tooltip)
             .directive('badge', BadgeDirective)
             .mount(el);
