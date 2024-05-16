@@ -23,7 +23,7 @@ return new class () extends Migration {
             $table->string('name')->unique();
             $table->json('genres')->nullable();
             $table->integer('my_rating')->nullable();
-            $table->date('released_date')->nullable()->index();
+            $table->year('released_date')->nullable()->index();
             $table->date('downloaded_status')->nullable()->index();
             $table->date('watched_status')->nullable()->index();
             $table->string('description')->nullable();
