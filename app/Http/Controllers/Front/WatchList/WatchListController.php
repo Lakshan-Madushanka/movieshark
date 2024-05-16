@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Front\WatchList;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WatchList\WatchListStoreRequest;
 use App\Models\Movie;
-use App\Models\WatchList;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -34,7 +33,7 @@ class WatchListController extends Controller
 
         return Inertia::render(
             component: 'Dashboard',
-            props: ['watchList' => $watchList]
+            props: ['watchList' => $watchList],
         );
     }
 
@@ -62,12 +61,12 @@ class WatchListController extends Controller
 
     public function edit(Movie $movie): Response
     {
-//        dd(Carbon::create(2023)->toString());
+        //        dd(Carbon::create(2023)->toString());
 
-//        dd($movie);
+        //        dd($movie);
         return Inertia::render(
             component: 'Dashboard',
-            props: ['movie' => $movie]
+            props: ['movie' => $movie],
         );
     }
 

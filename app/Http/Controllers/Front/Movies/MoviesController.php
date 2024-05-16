@@ -10,7 +10,6 @@ use App\Http\Integrations\YTS\Requests\BrowseMoviesRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieDetailsRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieSuggestionsRequest;
 use App\Http\Integrations\YTS\YTSConnector;
-use App\Models\WatchList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;

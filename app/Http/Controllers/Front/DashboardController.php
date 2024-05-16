@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\WatchList;
 use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
