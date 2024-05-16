@@ -317,7 +317,7 @@ const toggleFromWatchList = () => {
             <section>
                 <h2>Tech Details</h2>
                 <TabView>
-                    <TabPanel v-for="torrent in movie['torrents']" :key="torrent['url']" :header="torrent['quality']">
+                    <TabPanel v-for="torrent in movie['torrents']" :key="torrent['url']" :header="torrent['quality'] + '.' + torrent['type']">
                         <Splitter class="flex flex-col md:flex-row  w-full justify-around">
                             <SplitterPanel class="flex justify-center items-center">
                                 <i class="hidden pi pi-folder text-center mr-2"/><span>{{ torrent['size'] }}</span>
