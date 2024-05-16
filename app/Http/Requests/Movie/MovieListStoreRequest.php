@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests\WatchList;
+namespace App\Http\Requests\Movie;
 
 use App\Http\Payloads\WatchListPayload;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class WatchListStoreRequest extends FormRequest
+class MovieListStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,7 @@ class WatchListStoreRequest extends FormRequest
             'imdb_id' => ['string', 'nullable'],
             'yts_id' => ['integer', 'nullable'],
             'image' => ['string', 'nullable'],
-            'name' => ['string', 'required', Rule::unique('movies')->ignore($this->movieId)],
+            'name' => ['string', 'required'],
             'genres' => ['array', 'nullable'],
             'my_rating' => ['integer', 'nullable', 'between:0,100'],
             'released_date' => ['string', 'nullable'],
