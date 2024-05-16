@@ -1,4 +1,4 @@
-FROM devilbox/php-fpm-8.1:latest
+FROM devilbox/php-fpm-8.2:latest
 
 ARG user
 ARG uid
@@ -22,13 +22,17 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # install and enable xdebug
-RUN pecl install xdebug-3.1.3 \
+RUN pecl install xdebug-3.2.1 \
     && pecl install redis-5.3.7 \
 	&& docker-php-ext-enable xdebug redis
 
 RUN docker-php-ext-configure gd --enable-gd --with-jpeg
 
 RUN docker-php-ext-install gd
+
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install npm@latest -g
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
