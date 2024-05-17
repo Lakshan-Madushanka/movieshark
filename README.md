@@ -1,45 +1,62 @@
-# MovieShark
+<p align="center">
+    <img src="https://github.com/Lakshan-Madushanka/movieshark/assets/47297673/80bc9013-7748-4ff1-af99-4b96410175bd" width="100" height="100"/>
+</p>
+<p align="center">
+    <img src="https://github.com/Lakshan-Madushanka/movieshark/assets/47297673/b3e78673-78b3-4904-a8ff-d905f75ca950" width="800" height="400"/>
+</p>
 
-## Intro
-My personnel web site to find my favorites' movies.
+## Contents
+- [About Movieshark](#about-movieshark)
+- [Features](#features)
+- [Demo](#demo)
+- [Disclaimer](#disclaimer)
+
+## About Movieshark
+MovieShark is your ultimate destination for discovering and managing movies. Our user-friendly
+interface allows you to effortlessly browse through a vast collection of films, filter, search,
+or sort using our advanced filters section, and organize them with ease using our elegant admin
+panel. Whether you're a casual movie enthusiast or a dedicated cinephile, MovieShark provides a
+seamless experience tailored to your needs. Explore new releases, keep track of your movie
+records using the dashboard, and effortlessly manage your favorite films. Join MovieShark today
+and elevate your movie-watching experience.
 
 ## Features
 
-- Settings
-    - User can set genre, language, IMDB ratings, YTS likes, year (range), quality. By default movies are filtered using these filters.
-- Home Page
-    - By defaults movies are shown accordingly  saved options in settings.
-    - A tile which contains image of the movie will be displayed with some useful information like ratings, name , year , genre.
-    - Search bar
-    - Filters - quality, genre, ratings year, language
-    - Order by - year, IMDB ratings, yts likes, year
-- Movie details page
-    - Attributes
-        - Name
-        - Year
-        - Description
-        - IMDB ratings, likes
-        - YTS likes
-        - Rotten tomato critics, audience
-        - Some IMDB reviews
-        - Language
-        - Subtitle details
-        - Download details
-        - Trailer
-        - Image
-        - Comments
-- Wish list
-    - Movies can be added to wish list.
-    - Attributes
-        - Name
-        - Link to details page
-        - Downloaded status
-        - Watch Status
-        - Added date
-        - Edit, Delete options
--  Favorite movies list
-    - Name
-    - Description
-    - Link to details
-    - Edit delete options
+- Responsive Design
+- Clean & beautiful UI.
+- Browse Movies
+    - Search
+    - Filters
+- Movie Details
+- Trailer & subtitle downloader
+- Torrents (Disabled by defaults)
+- Dashboard
+- WatchList
+- Lot more...
+
+## Demo
+
+## Installation
+### Local
+- Clone the repository.
+- copy .env.example to .env
+- Open a terminal and run following commands
+    - `composer install`
+    - `npm run build or npm run dev`
+
+### Docker
+- `docker-compose up`
+- URL - http://localhost:821/
+
+### Sail
+Consult the [documentation](https://laravel.com/docs/11.x/sail)
+
+## Disclaimer
+None of the content of the website belongs to me,this website will never be hosted online. 
+It was made just for educational purpose and personal usage, Copyrighted content was never downloaded or shared either.
+
+This Project does not intend to promote piracy in any form. If you found anything disturbing or some content that belongs to you, contact me and project will be taken down ASAP.
+
+
+
 
