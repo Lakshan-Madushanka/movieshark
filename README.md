@@ -10,6 +10,7 @@
 - [Features](#features)
 - [Demo](#demo)
 - [Disclaimer](#disclaimer)
+- [Disclaimer](#disclaimer)
 
 ## About Movieshark
 MovieShark is your ultimate destination for discovering and managing movies. Our user-friendly
@@ -35,6 +36,7 @@ and elevate your movie-watching experience.
 - Lot more...
 
 ## Demo
+Click [here](https://youtu.be/rsK9ZolvQOo) for the demo video
 
 ## Installation
 ### Local
@@ -50,6 +52,17 @@ and elevate your movie-watching experience.
 
 ### Sail
 Consult the [documentation](https://laravel.com/docs/11.x/sail)
+
+## Torrenting
+Torrenting is considered an offensive crime in many countries, and we do not encourage its use. 
+However, for educational purposes, we have provided this feature, which is disabled by default. 
+You can enable it by setting the ALLOW_TORRENTING variable to true in the .env file as shown below.
+```php
+ // .env file
+ALLOW_TORRENTING=true;
+```
+> [!WARNING]
+> Please use this feature responsibly and always respect the rights of the owners of their digital products.
 
 ## Disclaimer
 None of the content of the website belongs to me,this website will never be hosted online. 
