@@ -9,6 +9,7 @@
 - [About Movieshark](#about-movieshark)
 - [Features](#features)
 - [Demo](#demo)
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Torrenting](#torrenting)
 - [Disclaimer](#disclaimer)
@@ -40,6 +41,9 @@ and elevate your movie-watching experience.
 ## Demo
 [![Click here for demo video](https://github.com/Lakshan-Madushanka/movieshark/assets/47297673/9e04f947-91b1-47c4-82ed-3b443abf5109)](https://youtu.be/rsK9ZolvQOo "Demo")
 
+## Requirements
+- PHP >= 8.2
+- composer
 
 ## Installation
 ### Local
