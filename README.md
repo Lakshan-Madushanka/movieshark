@@ -9,6 +9,8 @@
 - [About Movieshark](#about-movieshark)
 - [Features](#features)
 - [Demo](#demo)
+- [Installation](#installation)
+- [Torrenting](#torrenting)
 - [Disclaimer](#disclaimer)
 - [Disclaimer](#disclaimer)
 
@@ -30,7 +32,7 @@ and elevate your movie-watching experience.
     - Filters
 - Movie Details
 - Trailer & subtitle downloader
-- Torrents (Disabled by defaults)
+- Torrents ([Disabled by defaults](#torrenting))
 - Dashboard
 - WatchList
 - Lot more...
