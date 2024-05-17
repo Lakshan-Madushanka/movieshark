@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Models\Concerns\HasFilters;
@@ -55,4 +57,3 @@ class Movie extends Model
         'genres' => 'array',
     ];
 }
-
