@@ -38,7 +38,8 @@ and elevate your movie-watching experience.
 - Lot more...
 
 ## Demo
-Click [here](https://youtu.be/rsK9ZolvQOo) for the demo video
+[![Click here for demo video](https://github.com/Lakshan-Madushanka/movieshark/assets/47297673/9e04f947-91b1-47c4-82ed-3b443abf5109)](https://youtu.be/rsK9ZolvQOo "Demo")
+
 
 ## Installation
 ### Local
