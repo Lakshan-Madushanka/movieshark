@@ -39,7 +39,7 @@ and elevate your movie-watching experience.
 - Lot more...
 
 ## Demo
-[![Click here for demo video](https://github.com/Lakshan-Madushanka/movieshark/assets/47297673/9e04f947-91b1-47c4-82ed-3b443abf5109)](https://youtu.be/rsK9ZolvQOo "Demo")
+[![Click here for demo video](https://github.com/Lakshan-Madushanka/movieshark/assets/47297673/9e04f947-91b1-47c4-82ed-3b443abf5109)](https://vimeo.com/949909446?share=copy "Demo")
 
 ## Requirements
 - PHP >= 8.2
