@@ -14,7 +14,7 @@ import GuestLayout from "@/Layouts/GuestLayout.vue";
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import Paginator from 'primevue/paginator'
-import {debounce} from "lodash";
+import {debounce, isEqual} from "lodash";
 import {truncate} from "@/Helpers.js"
 
 const props = defineProps({
@@ -81,6 +81,18 @@ watch(queryStringData, (newQuery, oldQuery) => {
     noOfAppliedFilters.value = getActiveQueriesCount();
 })
 
+const hasQueryStringDataChanged = () => {
+    let pf = {...preferredFilters}
+    delete pf['auto_apply'];
+
+    let filters = {...queryStringData}
+    delete filters['limit'];
+    delete filters['page'];
+
+    console.log(filters, pf)
+    return !isEqual(pf, filters);
+}
+
 const setPage = function (event) {
     pagination.page = event.page + 1;
     pagination.limit = event.rows;
@@ -89,8 +101,10 @@ const setPage = function (event) {
 }
 
 const search = function () {
-    pagination.page = 1;
-    pagination.limit = 20;
+    if (hasQueryStringDataChanged()) {
+        pagination.page = 1;
+        pagination.limit = 20;
+    }
 
     sendRequest(
         () => {
@@ -116,7 +130,14 @@ const applyPreferredFilters = () => {
         tmpQueryString[key] = preferredFilters[key];
     }
 
-    Object.assign(queryStringData, {...queryStringData, ...tmpQueryString});
+    const urlParams = Object.fromEntries(new URLSearchParams(router.page.url.split('/').pop()))
+
+    if (urlParams['page'] && urlParams['limit']) {
+        pagination.page = parseInt(urlParams['page']);
+        pagination.limit = parseInt(urlParams['limit']);
+    }
+
+    Object.assign(queryStringData, {...tmpQueryString, ...getActiveQueries()});
 
     preferredFiltersApplied.value = true;
 };
@@ -135,7 +156,7 @@ const setupPreferredFilters = () => {
 
     if (pf) {
         for (const key in preferredFilters) {
-            preferredFilters[key] = pf[key];
+            preferredFilters[key] = pf[key].toString();
         }
     }
 
