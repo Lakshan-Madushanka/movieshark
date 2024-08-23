@@ -23,7 +23,7 @@ jobs:
 
       - name: Wait 1 minute until docker finish its setup
         run: |
-          sleep 1m
+          sleep 2m
           docker ps
 
       - name: Install dependencies
