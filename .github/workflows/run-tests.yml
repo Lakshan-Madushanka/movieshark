@@ -21,6 +21,11 @@ jobs:
       - name: Start up docker compose
         run: docker compose up -d
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'   
+
       - name: Wait 1 minute until docker finish its setup
         run: |
           sleep 1m
