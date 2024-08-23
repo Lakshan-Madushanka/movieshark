@@ -45,7 +45,7 @@ jobs:
           cp .env.testing.docker .env.testing
 
       - name: Run tests
-        run: docker exec -it laravel-php "php artisan test"
+        run: docker exec -t laravel-php "php artisan test"
 
 
 
