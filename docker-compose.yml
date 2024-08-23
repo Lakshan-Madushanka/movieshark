@@ -7,7 +7,7 @@ services:
         uid: 1175358
       context: ./docker/images/php
       dockerfile: Dockerfile
-    image: lakm/php-fpm:7.4
+    image: lakm/php-fpm:8.2
     container_name: laravel-php
     extra_hosts:
       - "host.docker.internal:host-gateway"

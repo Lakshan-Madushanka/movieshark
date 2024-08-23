@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Start up docker compose
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait 1 minute until docker finish its setup
         run: |
