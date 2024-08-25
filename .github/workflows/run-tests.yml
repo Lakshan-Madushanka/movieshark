@@ -15,7 +15,6 @@ jobs:
     env:
       DB_DATABASE: testing
       DB_USERNAME: root
-      DB_PASSWORD: password
 
     services:
       mysql:
