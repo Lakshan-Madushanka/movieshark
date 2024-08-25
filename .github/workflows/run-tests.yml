@@ -12,15 +12,19 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: testing
+      DB_USERNAME: root
+      DB_PASSWORD: password
+
     services:
       mysql:
         image: mysql:latest
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_ROOT_PASSWORD: ""
           MYSQL_DATABASE: testing
         ports:
-          - 3306/tcp
+          - 3306/3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
