@@ -12,10 +12,6 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
-    env:
-      DB_DATABASE: testing
-      DB_USERNAME: root
-
     services:
       mysql:
         image: mysql:latest
