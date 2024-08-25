@@ -17,5 +17,6 @@ jobs:
 
       - name: Prepare Laravel Application
         run: php artisan key:generate
+
       - name: Run tests
         run: php artisan test
