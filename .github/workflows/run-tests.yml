@@ -25,8 +25,5 @@ jobs:
       - name: Run composer install
         run: composer install -n --prefer-dist
 
-      - name: Prepare Laravel Application
-        run: php artisan key:generate
-
       - name: Run tests
         run: php artisan test
