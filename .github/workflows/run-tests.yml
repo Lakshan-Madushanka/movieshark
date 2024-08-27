@@ -46,6 +46,11 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
 
+      - name: Prepare the application
+        run: |
+          php -r "file_exists('.env') || copy('.env.testing', '.env') || copy('.env.example', '.env');"
+          php artisan key:generate
+
       - name: Clear Config
         run: php artisan config:clear
 
@@ -53,6 +58,9 @@ jobs:
         run: php artisan migrate -v
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          APP_ENV: testing
 
       - name: Run tests
         run: php artisan test
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
