@@ -51,6 +51,7 @@ and elevate your movie-watching experience.
 - copy .env.example to .env
 - Open a terminal and run following commands
     - `composer install`
+    - `php artisan key:generate`
     - `npm run build or npm run dev`
 
 ### Docker
