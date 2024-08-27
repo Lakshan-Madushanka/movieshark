@@ -12,8 +12,8 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
-       parent::setUp();
+        parent::setUp();
 
-       $this->withoutVite();
+        $this->withoutVite();
     }
 }
