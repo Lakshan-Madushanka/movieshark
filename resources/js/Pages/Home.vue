@@ -225,6 +225,7 @@ const sendRequest = function (
 
     router.get(route('home.index'), query, {
         preserveState: true,
+        preserveScroll: true,
         onSuccess,
         onError,
     })
