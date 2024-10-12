@@ -89,7 +89,6 @@ const hasQueryStringDataChanged = () => {
     delete filters['limit'];
     delete filters['page'];
 
-    console.log(filters, pf)
     return !isEqual(pf, filters);
 }
 
@@ -156,7 +155,7 @@ const setupPreferredFilters = () => {
 
     if (pf) {
         for (const key in preferredFilters) {
-            preferredFilters[key] = pf[key].toString();
+            preferredFilters[key] = pf[key];
         }
     }
 
@@ -193,7 +192,13 @@ const resetPreferredFilters = () => {
     toast.add({ severity: 'success', summary: 'Success', detail: 'Preferred filters cleared successfully.', life: 3000 });
 }
 
-const onPreferredFilterCheckboxChanged = (event) => {
+const onPreferredFilterCheckboxChanged = () => {
+    let items = JSON.parse(localStorage.getItem('preferredFilters'));
+
+    items.auto_apply = preferredFiltersApplied.value;
+
+    localStorage.setItem('preferredFilters', JSON.stringify(items));
+
     if (preferredFiltersApplied.value) {
         applyPreferredFilters();
 
