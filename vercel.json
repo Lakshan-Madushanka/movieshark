@@ -6,7 +6,7 @@
     },
     "routes": [
         {
-            "src": "/build/assets/(.*)",
+            "src": "/build/(.*)",
             "dest": "/public/build/assets/"
         },
         {
