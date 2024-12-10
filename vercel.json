@@ -26,7 +26,6 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "LOG_CHANNEL": "stderr",
         "CACHE_DRIVER": "database",
-        "SESSION_DRIVER": "database",
-        "DB_CONNECTION": "psql"
+        "SESSION_DRIVER": "database"
     }
 }
