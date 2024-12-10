@@ -37,7 +37,6 @@ class BrowseMoviesRequest extends Request
         $movies = $data['movies'] ?? [];
 
         if (count($movies) > 0) {
-
             $movies = collect($movies)->filter(
                 fn($value) => str($value['title_english'])->lower()->contains(strtolower($this->httpRequest->query('query_term'))),
             );

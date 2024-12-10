@@ -54,8 +54,6 @@ class MoviesController extends Controller
 
         $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
 
-
         return redirect()->back()->with('browsedMovieData', $ytsResponseData->get('movies'));
-
     }
 }
