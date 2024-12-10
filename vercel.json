@@ -13,8 +13,6 @@
     "buildCommand": "vite build",
     "outputDirectory": "public",
     "env": {
-        "APP_ENV": "production",
-        "APP_DEBUG": "true",
         "APP_URL": "https://movieshark.vercel.app",
         "ASSET_URL": "https://movieshark.vercel.app",
         "APP_KEY": "base64:TGaVaXwhWgjn9akhE4SCSIjGG/cQqvICUQ+PgLA3Bs0=",
