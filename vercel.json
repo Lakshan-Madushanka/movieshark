@@ -24,13 +24,9 @@
         "APP_ROUTES_CACHE": "/tmp/routes.php",
         "APP_SERVICES_CACHE": "/tmp/services.php",
         "VIEW_COMPILED_PATH": "/tmp",
-        "CACHE_DRIVER": "redis",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "redis",
-        "DB_CONNECTION": "mysql",
-        "DB_HOST": "4gg.h.filess.io",
-        "DB_PORT": "3306",
-        "DB_DATABASE": "db2024_stormtorn",
-        "DB_USERNAME": "db2024_stormtorn"
+        "CACHE_DRIVER": "database",
+        "SESSION_DRIVER": "database",
+        "DB_CONNECTION": "mysql"
     }
 }
