@@ -27,6 +27,6 @@
         "LOG_CHANNEL": "stderr",
         "CACHE_DRIVER": "database",
         "SESSION_DRIVER": "database",
-        "DB_CONNECTION": "mysql"
+        "DB_CONNECTION": "psql"
     }
 }
