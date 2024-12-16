@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Front\Movies;
 
 use App\Http\Controllers\Controller;
+use App\Http\Integrations\OMDb\GetMovieDetailsRequest as GetOMDbMovieDetailsRequest;
+use App\Http\Integrations\OMDb\MovieData as OMDbMovieData;
+use App\Http\Integrations\OMDb\OMDbConnector;
 use App\Http\Integrations\YTS\MovieData;
 use App\Http\Integrations\YTS\Requests\BrowseMoviesRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieDetailsRequest;
@@ -38,6 +41,7 @@ class MoviesController extends Controller
                 'suggestions' => $ytsMovieSuggestionsResponseData,
                 'watchListHas' => $watchListHas,
                 'allowTorrent' => config('app.allow_torrenting'),
+                'additionalData' => Inertia::lazy(fn() => $this->loadPlot(\request()->query('imdbId')))
             ],
         );
     }
@@ -55,5 +59,21 @@ class MoviesController extends Controller
         $ytsResponseData = $yts->send($ytsRequest)->dtoOrFail();
 
         return redirect()->back()->with('browsedMovieData', $ytsResponseData->get('movies'));
+    }
+
+    public function loadPlot(string $imdbId): array|OMDbMovieData
+    {
+        $omdbConnector = new OMDbConnector();
+        $omdbMovieDetailsRequest = new GetOMDbMovieDetailsRequest($imdbId);
+
+        $omdbMovieDetailsResponse = $omdbConnector->send($omdbMovieDetailsRequest);
+
+        $omdbMovieDetailsResponseData = [];
+
+        if ($omdbMovieDetailsResponse->successful()) {
+            $omdbMovieDetailsResponseData = $omdbMovieDetailsResponse->dto();
+        }
+
+        return $omdbMovieDetailsResponseData;
     }
 }

@@ -1,6 +1,6 @@
 <script setup>
-import {ref, watch} from "vue";
-import {Link} from '@inertiajs/vue3';
+import {onMounted, ref, watch} from "vue";
+import {Link, router} from '@inertiajs/vue3';
 import Image from 'primevue/image';
 import PrimeButton from 'primevue/button';
 import Chip from 'primevue/chip';
@@ -11,6 +11,7 @@ import SplitterPanel from 'primevue/splitterpanel';
 import Tag from 'primevue/tag';
 import Dialog from 'primevue/dialog';
 import Panel from 'primevue/panel';
+import ProgressSpinner from 'primevue/progressspinner';
 import {useToast} from "primevue/usetoast";
 import MovieTile from "@/Components/Movie/MovieTile.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
@@ -30,12 +31,36 @@ const authenticated = props.auth.user !== null;
 
 const toast = useToast();
 
+const plot = ref('');
+
+const plotLoading = ref(false)
+
 const watchListToggleProcessing = ref(false);
 
 const {toggleFromWatchList: toggleMovieFromWatchList} = useToggleMovieFromWatchList(props.watchListHas ? [props.movie.id] : []);
 
 const showDownloadBox = ref(false);
 const showTrailer = ref(false);
+
+onMounted(() => {
+    if (!props.movie['description_full'] && !plot.value) {
+        router.reload({
+            'only': ['additionalData'],
+            data: {imdbId: props.movie.imdb_code},
+            onSuccess: (page) => {
+                plot.value = page.props.additionalData.plot;
+
+            },
+            onStart: () => {
+                plotLoading.value = true
+            },
+            onFinish: () => {
+                plotLoading.value = false
+            },
+        })
+
+    }
+})
 
 const downloadSubtitles = function (imdbId) {
     let url = `https://yifysubtitles.ch/movie-imdb/${imdbId}`;
@@ -306,9 +331,13 @@ const toggleFromWatchList = () => {
                     <template #header>
                         <h2 class="mb-0">Plot Summary</h2>
                     </template>
-                    <p class="m-0">
+                    <p v-if="movie['description_full']" class="m-0">
                         {{ movie['description_full'] }}
                     </p>
+                    <p v-else class="m-0">
+                        {{ plot }}
+                    </p>
+                    <ProgressSpinner v-if="plotLoading"/>
                 </Panel>
             </section>
             <!--End of Description-->
@@ -317,7 +346,8 @@ const toggleFromWatchList = () => {
             <section>
                 <h2>Tech Details</h2>
                 <TabView>
-                    <TabPanel v-for="torrent in movie['torrents']" :key="torrent['url']" :header="torrent['quality'] + '.' + torrent['type']">
+                    <TabPanel v-for="torrent in movie['torrents']" :key="torrent['url']"
+                              :header="torrent['quality'] + '.' + torrent['type']">
                         <Splitter class="flex flex-col md:flex-row  w-full justify-around">
                             <SplitterPanel class="flex justify-center items-center">
                                 <i class="hidden pi pi-folder text-center mr-2"/><span>{{ torrent['size'] }}</span>
