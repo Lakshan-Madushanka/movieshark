@@ -35,6 +35,6 @@ return [
 
     'omdb' => [
         'token' => env('OMDB_TOKEN'),
-    ]
+    ],
 
 ];
