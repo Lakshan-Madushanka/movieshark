@@ -17,7 +17,7 @@ class GetMovieDetailsRequest extends Request
 
     public function resolveEndpoint(): string
     {
-        return 'demo.aspx/';
+        return '/';
     }
 
     protected function defaultQuery(): array
@@ -25,7 +25,7 @@ class GetMovieDetailsRequest extends Request
         return [
             'i' => $this->imdbId,
             'plot' => 'full',
-            'token' => config('services.omdb.token'),
+            'apikey' => config('services.omdb.token'),
         ];
     }
 

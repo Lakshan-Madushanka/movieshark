@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use function request;
+
 class MoviesController extends Controller
 {
     public function show(int $id): Response
@@ -41,7 +43,7 @@ class MoviesController extends Controller
                 'suggestions' => $ytsMovieSuggestionsResponseData,
                 'watchListHas' => $watchListHas,
                 'allowTorrent' => config('app.allow_torrenting'),
-                'additionalData' => Inertia::lazy(fn() => $this->loadPlot(\request()->query('imdbId')))
+                'additionalData' => Inertia::lazy(fn() => $this->loadPlot(request()->query('imdbId'))),
             ],
         );
     }
