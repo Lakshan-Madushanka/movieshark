@@ -13,6 +13,10 @@ class YTSConnector extends Connector
 
     protected ?string $response = MovieResponse::class;
 
+    public ?int $tries = 3;
+
+    public ?bool $throwOnMaxTries = false;
+
     /**
      * The Base URL of the API
      */
