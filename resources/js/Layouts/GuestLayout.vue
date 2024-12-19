@@ -36,7 +36,7 @@ const logout = () => {
         <Banner/>
 
         <!-- Page Content -->
-        <main class="min-h-screen text-white">
+        <div class="min-h-screen text-white">
             <nav class="bg-[#424b57]">
                 <div class="flex md:hidden justify-between items-center p-1">
                     <Link class="flex items-center" :href="route('home.index')">
@@ -128,7 +128,7 @@ const logout = () => {
             <main>
                 <slot/>
             </main>
-        </main>
+        </div>
     </div>
 </template>
 
