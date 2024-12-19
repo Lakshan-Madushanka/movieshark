@@ -25,5 +25,13 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->isProduction()) {
             URL::forceScheme('https');
         }
+
+        seo()
+            ->site('Movieshark - Browse and search movies.')
+            ->description('Browse and search movies and may more functionalities.')
+            ->withUrl()
+            ->locale('en_US')
+            ->twitter()
+            ->favicon();
     }
 }
