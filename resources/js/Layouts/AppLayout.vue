@@ -9,6 +9,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
+import FooterComponent from "@/Components/FooterComponent.vue";
 
 defineProps({
     title: String,
@@ -297,5 +298,7 @@ const logout = () => {
                 <slot />
             </main>
         </div>
+
+        <FooterComponent/>
     </div>
 </template>

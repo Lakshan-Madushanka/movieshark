@@ -9,6 +9,7 @@ import {truncate} from "@/Helpers.js";
 import Toast from "primevue/toast";
 import ApplicationMark from "@/Components/ApplicationMark.vue";
 import Button from "@/Components/Button.vue"
+import FooterComponent from "@/Components/FooterComponent.vue";
 
 defineProps({
     title: String,
@@ -129,6 +130,8 @@ const logout = () => {
                 <slot/>
             </main>
         </div>
+
+        <FooterComponent/>
     </div>
 </template>
 
