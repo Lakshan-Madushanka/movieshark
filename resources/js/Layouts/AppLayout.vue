@@ -39,7 +39,7 @@ const logout = () => {
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <main class="min-h-screen bg-gray-100">
             <nav class="bg-[#424b57] border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -296,6 +296,6 @@ const logout = () => {
             <main>
                 <slot />
             </main>
-        </div>
+        </main>
     </div>
 </template>
