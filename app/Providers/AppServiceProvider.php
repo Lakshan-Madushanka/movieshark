@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
             ->withUrl()
             ->locale('en_US')
             ->twitter()
+            ->twitterCreator('epmadushanka')
+            ->image(asset('images/og-image.png'))
             ->favicon();
     }
 }
