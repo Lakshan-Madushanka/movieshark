@@ -42,26 +42,6 @@ const {toggleFromWatchList: toggleMovieFromWatchList} = useToggleMovieFromWatchL
 const showDownloadBox = ref(false);
 const showTrailer = ref(false);
 
-onMounted(() => {
-    if (!props.movie['description_full'] && !plot.value) {
-        router.reload({
-            'only': ['additionalData'],
-            data: {imdbId: props.movie.imdb_code},
-            onSuccess: (page) => {
-                plot.value = page.props.additionalData.plot;
-
-            },
-            onStart: () => {
-                plotLoading.value = true
-            },
-            onFinish: () => {
-                plotLoading.value = false
-            },
-        })
-
-    }
-})
-
 const downloadSubtitles = function (imdbId) {
     let url = `https://yifysubtitles.ch/movie-imdb/${imdbId}`;
     window.open(url, '_blank').focus();
@@ -331,11 +311,8 @@ const toggleFromWatchList = () => {
                     <template #header>
                         <h2 class="mb-0">Plot Summary</h2>
                     </template>
-                    <p v-if="movie['description_full']" class="m-0">
+                    <p class="m-0">
                         {{ movie['description_full'] }}
-                    </p>
-                    <p v-else class="m-0">
-                        {{ plot }}
                     </p>
                     <ProgressSpinner v-if="plotLoading"/>
                 </Panel>

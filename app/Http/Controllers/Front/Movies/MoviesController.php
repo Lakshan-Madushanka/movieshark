@@ -36,6 +36,12 @@ class MoviesController extends Controller
 
         $watchListHas = Auth::user()?->movies()->where('yts_id', $id)->exists();
 
+        if (empty($ytsMovieDetailsResponseData->description_full)) {
+            $plot = $this->loadPlot($ytsMovieDetailsResponseData->imdb_code);
+            $ytsMovieDetailsResponseData = $ytsMovieDetailsResponseData->toArray();
+            $ytsMovieDetailsResponseData['description_full'] = $plot;
+        }
+
         return Inertia::render(
             component: 'Movies/Show',
             props: [
