@@ -217,6 +217,14 @@ const sendRequest = function (
     let data = {...queryStringData, ...pagination};
     let query = {};
 
+    const queryParams = new URLSearchParams(router.page.url.split('/').pop());
+
+    for (const [key, value] of  queryParams.entries()) {
+        if (key in queryStringData) {
+            data[key] = value
+        }
+    }
+
     for (const key in data) {
         if (data[key] !== '') {
             query[key] = data[key];
