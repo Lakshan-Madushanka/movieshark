@@ -10,6 +10,8 @@ import Toast from "primevue/toast";
 import ApplicationMark from "@/Components/ApplicationMark.vue";
 import Button from "@/Components/Button.vue"
 import FooterComponent from "@/Components/FooterComponent.vue";
+import StickyAd from "@/Components/Ads/StickyAd.vue";
+import PopupAd from "@/Components/Ads/PopupAd.vue";
 
 defineProps({
     title: String,
@@ -131,7 +133,9 @@ const logout = () => {
             </main>
         </div>
 
-        <FooterComponent/>
+        <PopupAd/>
+        <StickyAd/>
+        <FooterComponent class="mb-12"/>
     </div>
 </template>
 
