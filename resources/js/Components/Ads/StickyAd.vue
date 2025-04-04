@@ -7,7 +7,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="fixed text-center bottom-0 w-full z-50 top bg-purple-600 hover:bg-purple-800 transition">
+    <div class="fixed text-center max-h-[3rem] bottom-0 w-full z-50 top bg-purple-600 hover:bg-purple-800 transition">
         <AnchorLink href="http://truereviewer.netlify.app" class="!border-0 !p-0">
             <img
                 src="/images/reviewer-logo.png"

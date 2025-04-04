@@ -16,7 +16,7 @@
     "buildCommand": "vite build",
     "outputDirectory": "public",
     "env": {
-        "APP_NAME": "Movieshark",
+        "APP_NAME": "MovieShark",
         "APP_URL": "https://movieshark.vercel.app",
         "ASSET_URL": "https://movieshark.vercel.app",
         "APP_KEY": "base64:TGaVaXwhWgjn9akhE4SCSIjGG/cQqvICUQ+PgLA3Bs0=",
