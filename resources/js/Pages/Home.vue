@@ -1,13 +1,13 @@
 <script setup>
-import {Link, usePage, router} from '@inertiajs/vue3';
+import {Link, usePage, router, useRemember} from '@inertiajs/vue3';
 import Badge from 'primevue/badge';
 import Checkbox from 'primevue/checkbox';
 import Dropdown from 'primevue/dropdown';
 import PrimeButton from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Dialog from "primevue/dialog";
-import { useToast } from 'primevue/usetoast';
-import {onMounted, reactive, ref, watch} from "vue";
+import {useToast} from 'primevue/usetoast';
+import {onBeforeMount, onMounted, reactive, ref, watch} from "vue";
 import MovieFiltersData from "@/Data/MovieFiltersData";
 import MovieTile from "@/Components/Movie/MovieTile.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
@@ -53,25 +53,61 @@ const preferredFilters = reactive({
     auto_apply: '',
 })
 
-const queryStringData = reactive({
+const noOfAppliedFilters = ref(0);
+
+const initialQueryStringData = {
     query_term: '',
     genre: '',
     quality: '',
     minimum_rating: '',
     sort_by: '',
     order_by: '',
+}
+
+const getQueryParams = () => {
+    return new URLSearchParams(router.page.url.split('/').pop());
+}
+
+const getFiltersFromHistory = () => {
+    const queryParams = getQueryParams();
+
+    const tmpQueryString = {...initialQueryStringData};
+
+    for (const [key, value] of queryParams.entries()) {
+        if (key in pagination) {
+            pagination[key] = parseInt(value)
+        }
+
+        if (key in tmpQueryString) {
+            tmpQueryString[key] = value
+        }
+
+    }
+
+    return tmpQueryString;
+}
+
+const queryStringData = reactive({...getFiltersFromHistory()})
+
+onBeforeMount(() => {
+    setupPreferredFilters();
+    noOfAppliedFilters.value = getActiveQueriesCount();
 })
 
-const noOfAppliedFilters = ref(0);
-
-onMounted(() => setupPreferredFilters());
 
 watch(() => props.meta, function (meta) {
     offset.value = meta.limit * (meta.page - 1)
     pagination.limit = meta.limit
 }, {immediate: true})
 
+const resetPagination = () => {
+    pagination.page = 1;
+    pagination.limit = 20;
+}
+
 watch(queryStringData, (newQuery, oldQuery) => {
+    resetPagination()
+
     if (newQuery.query_term !== oldQuery.query_term) {
         debounce(() => search(), 500)()
         return;
@@ -81,17 +117,6 @@ watch(queryStringData, (newQuery, oldQuery) => {
     noOfAppliedFilters.value = getActiveQueriesCount();
 })
 
-const hasQueryStringDataChanged = () => {
-    let pf = {...preferredFilters}
-    delete pf['auto_apply'];
-
-    let filters = {...queryStringData}
-    delete filters['limit'];
-    delete filters['page'];
-
-    return !isEqual(pf, filters);
-}
-
 const setPage = function (event) {
     pagination.page = event.page + 1;
     pagination.limit = event.rows;
@@ -100,11 +125,6 @@ const setPage = function (event) {
 }
 
 const search = function () {
-    if (hasQueryStringDataChanged()) {
-        pagination.page = 1;
-        pagination.limit = 20;
-    }
-
     sendRequest(
         () => {
             if (getActiveQueriesCount() === 0) {
@@ -129,7 +149,7 @@ const applyPreferredFilters = () => {
         tmpQueryString[key] = preferredFilters[key];
     }
 
-    const urlParams = Object.fromEntries(new URLSearchParams(router.page.url.split('/').pop()))
+    const urlParams = Object.fromEntries(getQueryParams())
 
     if (urlParams['page'] && urlParams['limit']) {
         pagination.page = parseInt(urlParams['page']);
@@ -177,7 +197,7 @@ const savePreferredFilters = () => {
 
     showPreferredFilters.value = false;
 
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Preferred filters saved successfully.', life: 3000 });
+    toast.add({severity: 'success', summary: 'Success', detail: 'Preferred filters saved successfully.', life: 3000});
 }
 
 const resetPreferredFilters = () => {
@@ -189,7 +209,7 @@ const resetPreferredFilters = () => {
 
     clearPreferredFilters();
 
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Preferred filters cleared successfully.', life: 3000 });
+    toast.add({severity: 'success', summary: 'Success', detail: 'Preferred filters cleared successfully.', life: 3000});
 }
 
 const onPreferredFilterCheckboxChanged = () => {
@@ -217,9 +237,9 @@ const sendRequest = function (
     let data = {...queryStringData, ...pagination};
     let query = {};
 
-    const queryParams = new URLSearchParams(router.page.url.split('/').pop());
+    const queryParams = getQueryParams();
 
-    for (const [key, value] of  queryParams.entries()) {
+    for (const [key, value] of queryParams.entries()) {
         if (!key in queryStringData) {
             data[key] = value
         }
@@ -249,6 +269,8 @@ const clearFilters = () => {
 
     noOfAppliedFilters.value = 0;
     preferredFiltersApplied.value = false;
+
+    resetPagination();
 
 }
 
@@ -398,7 +420,7 @@ const getActiveQueriesCount = () => {
             <!-- End of Filters -->
 
             <!--        Search Success Message-->
-            <div v-if="searchStatus === 'success'">
+            <div v-if="searchStatus === 'success' || noOfAppliedFilters > 0">
                 <p class="text-center text-4xl font-extrabold">Results &nbsp; [{{ meta.movie_count }}]</p>
             </div>
 
