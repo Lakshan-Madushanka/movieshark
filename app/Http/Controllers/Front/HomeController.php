@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Front;
 
+use App\data\QueryString;
 use App\Http\Controllers\Controller;
 use App\Http\Integrations\YTS\MovieData;
 use App\Http\Integrations\YTS\MovieMetaData;
@@ -20,7 +21,7 @@ class HomeController extends Controller
     public function index(Request $httpRequest): Response
     {
         /** @var array<string, mixed> $queryString */
-        $queryString = $httpRequest->query();
+        $queryString = QueryString::fromArray($httpRequest->query())->getAll();
 
         $yts = new YTSConnector();
 
