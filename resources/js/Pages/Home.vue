@@ -220,7 +220,7 @@ const sendRequest = function (
     const queryParams = new URLSearchParams(router.page.url.split('/').pop());
 
     for (const [key, value] of  queryParams.entries()) {
-        if (key in queryStringData) {
+        if (!key in queryStringData) {
             data[key] = value
         }
     }
