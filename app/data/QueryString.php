@@ -17,7 +17,6 @@ final readonly class QueryString
         public string $order_by = '',
         public string $page = '',
         public string $limit = '',
-
     ) {}
 
     public static function fromArray(array $data): self
