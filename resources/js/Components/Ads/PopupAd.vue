@@ -4,24 +4,17 @@ import Dialog from 'primevue/dialog';
 import {onBeforeMount, ref} from "vue";
 import moment from "moment";
 
-defineProps({
-    on: Boolean,
-});
 
 const show = ref(false);
 
 onBeforeMount(() => {
     const showedAt = localStorage.getItem('popupShowedAt');
 
-    if (!showedAt) {
-        show.value = true;
-        localStorage.setItem('popupShowedAt', moment().unix().toString());
-        return;
-    }
-
-    if (moment().unix() > moment.unix(parseInt(showedAt)).add(6, 'h').unix()) {
-        show.value = true;
-        localStorage.setItem('popupShowedAt', moment().unix().toString());
+    if (!showedAt || (moment().unix() > moment.unix(parseInt(showedAt)).add(6, 'h').unix())) {
+        setTimeout(() => {
+            show.value = true;
+            localStorage.setItem('popupShowedAt', moment().unix().toString());
+        }, 5000);
     }
 })
 </script>

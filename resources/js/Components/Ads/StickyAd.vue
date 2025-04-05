@@ -1,9 +1,6 @@
 <script setup>
 import AnchorLink from "@/Components/AnchorLink.vue";
 
-defineProps({
-    on: Boolean,
-});
 </script>
 
 <template>

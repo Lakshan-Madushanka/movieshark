@@ -271,7 +271,6 @@ const clearFilters = () => {
     preferredFiltersApplied.value = false;
 
     resetPagination();
-
 }
 
 const getActiveQueries = () => {
