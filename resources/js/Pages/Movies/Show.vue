@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import {Link, router} from '@inertiajs/vue3';
 import Image from 'primevue/image';
 import PrimeButton from 'primevue/button';
@@ -31,8 +31,6 @@ const authenticated = props.auth.user !== null;
 
 const toast = useToast();
 
-const plot = ref('');
-
 const plotLoading = ref(false)
 
 const watchListToggleProcessing = ref(false);
@@ -41,6 +39,51 @@ const {toggleFromWatchList: toggleMovieFromWatchList} = useToggleMovieFromWatchL
 
 const showDownloadBox = ref(false);
 const showTrailer = ref(false);
+
+const commentsLoading = ref(false);
+const comments = ref('');
+
+const loadComments = () => {
+    commentsLoading.value = true;
+    fetch(`https://yts.mx/ajax/comments/${props.movie.id}?offset=100`)
+        .then((response) => {
+            return response.text()
+        })
+        .then((html) => {
+            comments.value = html;
+            console.log('response', html);
+
+            if (!html) {
+                comments.value = "No Comments Found!"
+                return;
+            }
+            nextTick(() => {
+                document.querySelectorAll('.icon.icon-heart2')
+                    .forEach((el) => {
+                        el.classList.add('pi', 'pi-heart-fill')
+                        el.style.marginInlineStart = '4px'
+                        el.style.color = 'green'
+                    })
+
+                document.querySelectorAll('.avatar-thumb')
+                    .forEach((el) => {
+                        el.setAttribute('href', '#')
+                    })
+
+                document.querySelectorAll('.comment-text span a')
+                    .forEach((el) => {
+                        el.setAttribute('href', '#')
+                    })
+            })
+
+        }).finally(() => {
+        commentsLoading.value = false;
+    })
+}
+
+onMounted(() => {
+    loadComments();
+})
 
 const downloadSubtitles = function (imdbId) {
     let url = `https://yifysubtitles.ch/movie-imdb/${imdbId}`;
@@ -344,8 +387,56 @@ const toggleFromWatchList = () => {
                 </TabView>
             </section>
             <!--End of Tech Details-->
+
+            <!-- Comments -->
+            <section>
+                <Panel :toggleable="false">
+                    <template #header>
+                        <h2 class="mb-0">Comments</h2>
+                    </template>
+                    <div class="space-y-8 m-0 max-h-[70vh] overflow-auto" v-html="comments">
+                    </div>
+                    <ProgressSpinner v-if="commentsLoading"/>
+                </Panel>
+            </section>
         </div>
     </GuestLayout>
 </template>`
 
 
+<style>
+.comment {
+    display: flex;
+    column-gap: 0.5rem;
+}
+
+.avatar-thumb {
+    flex-basis: 5%
+}
+
+.avatar-thumb img {
+    width: 2.5rem;
+    border-radius: 100%;
+}
+
+.comment-text {
+    flex: 1
+}
+
+.pull-right {
+    float: right
+}
+
+.comment-likes {
+    margin-inline-end: 1rem;
+}
+
+.comment-text > p {
+    margin-block-start: 4px;
+}
+
+.comment-text > span {
+    font-size: 1rem;
+    color: rgb(128, 128, 128);
+}
+</style>
