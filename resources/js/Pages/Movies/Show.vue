@@ -405,12 +405,6 @@ const toggleFromWatchList = () => {
 
 
 <style>
-
-.avatar-thumb img {
-    width: 2.5rem;
-    border-radius: 100%;
-}
-
 .comment {
     display: flex;
     column-gap: 0.5rem;
@@ -418,6 +412,11 @@ const toggleFromWatchList = () => {
 
 .avatar-thumb {
     flex-basis: 5%
+}
+
+.avatar-thumb img {
+    width: 2.5rem;
+    border-radius: 100%;
 }
 
 .comment-text {
