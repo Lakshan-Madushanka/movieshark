@@ -12,6 +12,7 @@ import {useToast} from "primevue/usetoast";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import {capitalizeFirstLetter} from "@/Helpers.js";
 import InputNumber from "primevue/inputnumber";
+import moment from "moment";
 
 const props = defineProps({
     movie: {
@@ -72,6 +73,10 @@ const editMovie = () => {
                             tempGenres.push(genre.value);
                         }
                     })
+                }
+
+                if (key === 'released_date' && value) {
+                    data[key] = moment(value).year()
                 }
             }
             return {...data, genres: tempGenres}
@@ -148,7 +153,7 @@ const editMovie = () => {
                 </div>
                 <div class="flex flex-col">
                     <label for="input-released_date">Released Date</label>
-                    <Calender v-model="form.released_date" inputId="input-released_date"/>
+                    <Calender view="year" dateFormat="yy" v-model="form.released_date" inputId="input-released_date"/>
                     <span v-if="form.errors.released_date"
                           class="text-sm text-red-500">{{ form.errors.released_date }}</span>
                 </div>

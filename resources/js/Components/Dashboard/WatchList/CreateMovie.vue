@@ -11,6 +11,7 @@ import InputNumber from 'primevue/inputnumber';
 import {useToast} from "primevue/usetoast";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
 import Image from "primevue/image";
+import moment from "moment";
 
 const toast = useToast();
 
@@ -54,6 +55,10 @@ const createMovie = () => {
                             tempGenres.push(genre.value);
                         }
                     })
+                }
+
+                if (key === 'released_date' && value) {
+                    data[key] = moment(value).year()
                 }
             }
             return {...data, genres: tempGenres}
@@ -131,7 +136,7 @@ const createMovie = () => {
                 </div>
                 <div class="flex flex-col">
                     <label for="input-released_date">Released Date</label>
-                    <Calender v-model="form.released_date" inputId="input-released_date"/>
+                    <Calender view="year" dateFormat="yy" v-model="form.released_date" inputId="input-released_date"/>
                     <span v-if="form.errors.released_date" class="text-sm text-red-500">{{form.errors.released_date}}</span>
                 </div>
                 <div class="flex flex-col">
