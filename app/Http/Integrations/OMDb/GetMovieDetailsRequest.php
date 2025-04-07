@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Integrations\OMDb;
 
+use Illuminate\Support\Arr;
 use JsonException;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -40,7 +41,7 @@ class GetMovieDetailsRequest extends Request
         $data = $response->json();
 
         return new MovieData(
-            plot: $data['Plot'],
+            plot: Arr::get($data, 'Plot', 'N/A'),
         );
     }
 }
