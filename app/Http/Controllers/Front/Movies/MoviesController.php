@@ -13,6 +13,7 @@ use App\Http\Integrations\YTS\Requests\BrowseMoviesRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieDetailsRequest;
 use App\Http\Integrations\YTS\Requests\GetMovieSuggestionsRequest;
 use App\Http\Integrations\YTS\YTSConnector;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -48,13 +49,13 @@ class MoviesController extends Controller
                 'movie' => $ytsMovieDetailsResponseData,
                 'suggestions' => $ytsMovieSuggestionsResponseData,
                 'watchListHas' => $watchListHas,
-                'allowTorrent' => config('app.allow_torrenting'),
+                'allowTorrent' => config('app.allow_torrenting') && Auth::user()?->canTorrenting(),
                 'additionalData' => Inertia::lazy(fn() => $this->loadPlot(request()->query('imdbId'))),
             ],
         );
     }
 
-    public function browse(Request $httpRequest)
+    public function browse(Request $httpRequest): RedirectResponse
     {
         /** @var array<string, mixed> $queryString */
         $queryString = $httpRequest->query();
