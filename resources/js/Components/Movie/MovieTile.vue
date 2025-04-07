@@ -99,7 +99,7 @@ const watchListButtonClicked = () => {
     </div>
     <div class="@container">
         <div :class="'flex justify-between text-xs @[10rem]:text-lg items-center mt-1 w-full ' + widthClass">
-            <p class="text-nowrap overflow-hidden text-ellipsis">{{ movie['name'] }}</p>
+            <p class="text-nowrap overflow-hidden text-ellipsis" :title="movie['name']">{{ movie['name'] }}</p>
             <span>[{{ movie['language'] }}]</span>
         </div>
     </div>
