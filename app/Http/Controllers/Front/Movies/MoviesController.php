@@ -49,7 +49,7 @@ class MoviesController extends Controller
                 'movie' => $ytsMovieDetailsResponseData,
                 'suggestions' => $ytsMovieSuggestionsResponseData,
                 'watchListHas' => $watchListHas,
-                'allowTorrent' => config('app.allow_torrenting') && Auth::user()?->canTorrenting(),
+                'allowTorrent' => config('app.allow_torrenting') || Auth::user()?->canTorrenting(),
                 'additionalData' => Inertia::lazy(fn() => $this->loadPlot(request()->query('imdbId'))),
             ],
         );
