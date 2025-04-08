@@ -678,7 +678,7 @@ const showCreateMoviePage = () => {
                             v-if="slotProps.data.yts_id"
                             :href="route('movies.show', {id: slotProps.data.yts_id})"
                             target="_blank"
-                            class="text-green-500 hover:no-underline !border-0"
+                            class="text-green-500 hover:no-underline !border-0 !p-0"
                         >
                             <i class="pi pi-eye text-blue-600 text-xs mr-1"/>
                             <span>View</span>
