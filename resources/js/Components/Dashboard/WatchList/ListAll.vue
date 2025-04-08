@@ -682,7 +682,7 @@ const showCreateMoviePage = () => {
                         >
                             <i class="pi pi-eye text-blue-600 text-xs mr-1"/>
                             <span>View</span>
-                            <span class="w-[2px] h-[1rem] bg-green-500 mx-1"></span>
+                            <span class="w-[2px] h-[1rem] bg-white mx-2"></span>
                         </AnchorLink>
                         <NavLink
                             :href="route('watch-list-movies.edit', {movie: slotProps.data.id})"
