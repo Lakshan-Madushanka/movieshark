@@ -18,7 +18,7 @@ import Slider from "primevue/slider";
 import {useToast} from "primevue/usetoast";
 import Calender from "primevue/calendar";
 import InputNumber from "primevue/inputnumber";
-import { useConfirm } from "primevue/useconfirm";
+import {useConfirm} from "primevue/useconfirm";
 import NavLink from "@/Components/NavLink.vue";
 import AnchorLink from "@/Components/AnchorLink.vue";
 import MovieFiltersData from "@/Data/MovieFiltersData.js";
@@ -101,11 +101,23 @@ const showColumns = reactive({
     downloaded_status: true,
     watched_status: true,
     actions: true,
-    created_at: true,
-    updated_at: true,
+    created_at: false,
+    updated_at: false,
 });
 const columns = ref(initialColumns);
-const selectedColumns = ref(initialColumns);
+const selectedColumns = ref([
+    {header: 'IMDB Id', field: 'imdb_id'},
+    {header: 'YTS Id', field: 'yts_id'},
+    {header: 'Name', field: 'name'},
+    {header: 'Image', field: 'image'},
+    {header: 'Genres', field: 'genres'},
+    {header: 'My Rating', field: 'my_rating'},
+    {header: 'Preference', field: 'preference'},
+    {header: 'Released Date', field: 'released_date'},
+    {header: 'Downloaded status', field: 'downloaded_status'},
+    {header: 'Watched Status', field: 'watched_status'},
+    {header: 'Actions', field: 'actions'},
+]);
 
 const watchStatusOptions = [
     {name: 'All', value: 'all'},
@@ -188,7 +200,7 @@ const deleteMovie = (movieId) => {
                     preserveState: true,
                     preserveScroll: true,
                     onSuccess: () => {
-                        toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+                        toast.add({severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000});
                     }
                 })
         },
@@ -666,7 +678,7 @@ const showCreateMoviePage = () => {
                             v-if="slotProps.data.yts_id"
                             :href="route('movies.show', {id: slotProps.data.yts_id})"
                             target="_blank"
-                            class="text-green-500"
+                            class="text-green-500 hover:no-underline !border-0"
                         >
                             <i class="pi pi-eye text-blue-600 text-xs mr-1"/>
                             <span>View</span>
@@ -674,17 +686,17 @@ const showCreateMoviePage = () => {
                         </AnchorLink>
                         <NavLink
                             :href="route('watch-list-movies.edit', {movie: slotProps.data.id})"
-                            class="text-green-500"
+                            class="text-green-500 !border-0 !p-0"
                         >
-                            <i class="pi pi-file-edit text-yellow-600 text-xs mr-1"/> <span>Edit</span>
-                            <span class="w-[2px] h-[1rem] mx-1 bg-green-500"></span>
+                            <i class="pi pi-file-edit text-yellow-600 text-xs mr-1 "/> <span>Edit</span>
+                            <span class="w-[2px] h-[1rem] mx-2 bg-white"></span>
                         </NavLink>
                         <span
                             @click.prevent="deleteMovie(slotProps.data.id)"
                             type="button"
-                            class="text-green-500 text-sm cursor-pointer hover:text-white hover:border-b"
+                            class="text-green-500 text-sm cursor-pointer hover:text-white"
                         >
-                            <i class="pi pi-trash text-red-600 text-xs mr-1"/> <span>Delete</span>
+                            <i class="pi pi-trash text-red-600 text-xs"/> <span>Delete</span>
                         </span>
                     </div>
                 </template>
