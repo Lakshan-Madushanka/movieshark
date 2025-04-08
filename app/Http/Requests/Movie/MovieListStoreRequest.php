@@ -49,9 +49,9 @@ class MovieListStoreRequest extends FormRequest
             image: $this->validated('image'),
             genres: $this->validated('genres'),
             my_rating: (int) $this->validated('my_rating'),
-            released_date: (string) $this->validated('released_date'),
-            downloaded_status: $this->validated('downloaded_status'),
-            watched_status: $this->validated('watched_status'),
+            released_date: $this->validated('released_date') ? (int) $this->validated('released_date') : null,
+            downloaded_status: $this->validated('downloaded_status') ? (string) $this->validated('downloaded_status') : null,
+            watched_status: $this->validated('watched_status') ? (string) $this->validated('watched_status') : null,
             description: $this->validated('description'),
         );
     }

@@ -15,7 +15,7 @@ final class WatchListPayload implements Arrayable
         public readonly ?string $image = null,
         public readonly ?array $genres = null,
         public readonly ?int $my_rating = null,
-        public readonly ?string $released_date = null,
+        public readonly ?int $released_date = null,
         public readonly ?string $downloaded_status = null,
         public readonly ?string $watched_status = null,
         public readonly ?string $description = null,

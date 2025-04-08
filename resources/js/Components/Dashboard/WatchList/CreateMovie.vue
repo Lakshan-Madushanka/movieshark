@@ -23,8 +23,8 @@ const form = useForm({
     genres: [],
     my_rating: null,
     released_date: '',
-    downloaded_date: '',
-    watched_date: '',
+    downloaded_status: '',
+    watched_status: '',
     description: '',
 })
 
@@ -59,6 +59,10 @@ const createMovie = () => {
 
                 if (key === 'released_date' && value) {
                     data[key] = moment(value).year()
+                }
+
+                if ((key === 'downloaded_status' || key === 'watched_status') && value) {
+                    data[key] = moment(value).format('YYYY-MM-DD')
                 }
             }
             return {...data, genres: tempGenres}
@@ -140,14 +144,14 @@ const createMovie = () => {
                     <span v-if="form.errors.released_date" class="text-sm text-red-500">{{form.errors.released_date}}</span>
                 </div>
                 <div class="flex flex-col">
-                    <label for="input-downloaded_date">Downloaded Date</label>
-                    <Calender v-model="form.downloaded_date" inputId="input-downloaded_date"/>
-                    <span v-if="form.errors.downloaded_date" class="text-sm text-red-500">{{form.errors.downloaded_date}}</span>
+                    <label for="input-downloaded_status">Downloaded Date</label>
+                    <Calender v-model="form.downloaded_status" inputId="input-downloaded_status"/>
+                    <span v-if="form.errors.downloaded_status" class="text-sm text-red-500">{{form.errors.downloaded_status}}</span>
                 </div>
                 <div class="flex flex-col col-span-2">
-                    <label for="input-watched_date">Watched Date</label>
-                    <Calender v-model="form.watched_date" inputId="input-watched_date"/>
-                    <span v-if="form.errors.watched_date" class="text-sm text-red-500">{{form.errors.watched_date}}</span>
+                    <label for="input-watched_status">Watched Date</label>
+                    <Calender v-model="form.watched_status" inputId="input-watched_status"/>
+                    <span v-if="form.errors.watched_status" class="text-sm text-red-500">{{form.errors.watched_status}}</span>
                 </div>
                 <div>
                     <label for="input-url">Image URL</label>
