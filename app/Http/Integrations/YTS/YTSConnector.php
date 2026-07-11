@@ -14,7 +14,7 @@ class YTSConnector extends Connector
 {
     use AcceptsJson;
 
-    const BASE_URLS = [
+    public const BASE_URLS = [
         'https://yts.lt/api/v2',
         'https://yts.mx/api/v2',
         'https://yts.am/api/v2',
