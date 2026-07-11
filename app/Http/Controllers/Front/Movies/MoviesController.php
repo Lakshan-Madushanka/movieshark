@@ -60,6 +60,10 @@ class MoviesController extends Controller
         /** @var array<string, mixed> $queryString */
         $queryString = $httpRequest->query();
 
+        if (blank($queryString['query_term'])) {
+            return back();
+        }
+
         $yts = new YTSConnector();
 
         $ytsRequest = new BrowseMoviesRequest($httpRequest);

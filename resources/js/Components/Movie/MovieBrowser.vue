@@ -56,7 +56,7 @@ const showResults = (event, show = true) => {
 };
 
 const submit = (event) => {
-    if (form.query_term === '') {
+    if (form.query_term.trim().length === 0) {
         page.props.browsedMovieData = [];
         showResults(event, false);
         return;
