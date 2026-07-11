@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 final readonly class QueryString
 {
     public function __construct(
-        public string $query_term = '',
+        public ?string $query_term = '',
         public string $genre = '',
         public string $quality = '',
         public string $minimum_rating = '',

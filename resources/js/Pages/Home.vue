@@ -108,10 +108,17 @@ const resetPagination = () => {
 watch(queryStringData, (newQuery, oldQuery) => {
     resetPagination()
 
+    const activeQueryList = getActiveQueries()
+
+    if (Object.hasOwn(activeQueryList, 'query_term') && activeQueryList['query_term'].trim().length === 0) {
+        queryStringData['query_term'] = "";
+    }
+
     if (newQuery.query_term !== oldQuery.query_term) {
         debounce(() => search(), 500)()
         return;
     }
+
     search();
 
     noOfAppliedFilters.value = getActiveQueriesCount();
@@ -246,7 +253,7 @@ const sendRequest = function (
     }
 
     for (const key in data) {
-        if (data[key] !== '') {
+        if (typeof data[key] === 'string' && data[key].trim().length > 0) {
             query[key] = data[key];
         }
     }
